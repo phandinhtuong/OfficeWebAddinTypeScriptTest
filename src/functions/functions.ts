@@ -64,3 +64,21 @@ export function logMessage(message: string): string {
 
   return message;
 }
+/**
+ * Returns the input string.
+ * @customfunction
+ * @param message String to be returned.
+ * @returns Input string.
+ */
+export function show(message: string): string {
+  return message;
+}
+/**
+ * Returns the input number plus 15.
+ * @customfunction
+ * @param number The input number.
+ * @returns The input number plus 15.
+ */
+export function add15(x: number): number{
+  return x + 15;
+}
