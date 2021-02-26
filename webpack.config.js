@@ -12,6 +12,11 @@ module.exports = async (env, options) => {
   const dev = options.mode === "development";
   const buildType = dev ? "dev" : "prod";
   const config = {
+    node: {
+      net: "empty",
+      fs: "empty", 
+      tls: "empty"
+    },
     devtool: "source-map",
     entry: {
       functions: "./src/functions/functions.ts",

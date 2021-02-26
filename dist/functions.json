@@ -100,13 +100,47 @@
             "name": "TACGIA",
             "parameters": [
                 {
-                    "description": "The author's name and ID as a string.",
+                    "description": "The author's name and ID, ex: \"Phan Dinh Tuong 20164582\".",
                     "name": "nameAndID",
                     "type": "string"
                 }
             ],
             "result": {
                 "dimensionality": "matrix",
+                "type": "string"
+            }
+        },
+        {
+            "description": "Lấy tỷ giá hối đoái ngoại tệ và vnđ theo niêm yết tại pỏtal.vietcombank.com.vn",
+            "id": "TYGIA",
+            "name": "TYGIA",
+            "parameters": [
+                {
+                    "description": "Mã ngoại tệ.",
+                    "name": "currency",
+                    "type": "string"
+                },
+                {
+                    "description": "Loại tỷ giá.",
+                    "name": "type",
+                    "type": "string"
+                },
+                {
+                    "description": "Ngày lấy tỷ giá.",
+                    "name": "date",
+                    "type": "string"
+                }
+            ],
+            "result": {
+                "type": "string"
+            }
+        },
+        {
+            "description": "crawler",
+            "id": "CRAW",
+            "name": "CRAW",
+            "parameters": [],
+            "result": {
                 "type": "string"
             }
         }

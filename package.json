@@ -30,8 +30,13 @@
     "doc": "tsc ./src/functions/functions.ts && jsdoc -c ./jsdoc.json -t ./node_modules/foodoc/template ./src/functions/"
   },
   "dependencies": {
+    "cheerio": "^1.0.0-rc.5",
     "foodoc": "0.0.9",
-    "jsdoc": "^3.6.6"
+    "jsdoc": "^3.6.6",
+    "phantomjs-prebuilt": "^2.1.16",
+    "request": "^2.88.2",
+    "request-promise": "^4.2.6",
+    "xmlhttprequest": "^1.8.0"
   },
   "devDependencies": {
     "@babel/core": "^7.11.6",

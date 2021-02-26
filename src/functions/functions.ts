@@ -85,8 +85,8 @@ export function add15(x: number): number{
 /**
  * Returns author's name and ID in 4 cells.
  * @customfunction
- * @param nameAndID The author's name and ID as a string.
- * @returns The name and ID of author separated.
+ * @param nameAndID - The author's name and ID, ex: "Phan Dinh Tuong 20164582".
+ * @returns The name and ID of author separatedly.
  */
 export function TacGia(nameAndID: string): string[][] {
   if (Number(nameAndID)) //the input is only number
@@ -125,4 +125,70 @@ export function TacGia(nameAndID: string): string[][] {
   authorName.shift(); //shift to the left / remove first name in array
   var middleName = authorName.join(" ");// get middle name in string
   return [[firstName,middleName],[lastName,authorID]];
+}
+/**
+ * Lấy tỷ giá hối đoái ngoại tệ và vnđ theo niêm yết tại pỏtal.vietcombank.com.vn
+ * @customfunction
+ * @param currency Mã ngoại tệ.
+ * @param type Loại tỷ giá.
+ * @param date Ngày lấy tỷ giá.
+ * @returns Tỷ giá.
+ */
+export function TyGia(currency: string, type: string, date :string): string {
+  // Loại ngoại tệ
+  currency = currency.toUpperCase();
+  if (currency == "VND") return "1"; // Vietnam Dong
+  if (!(currency == "AUD" || currency == "CAD" || currency == "CHF" || currency == "CNY" || currency == "DKK" || currency == "EUR"
+  || currency == "GBP" || currency == "HKD" || currency == "INR" || currency == "JPY" || currency == "KRW" || currency == "KWD"
+  || currency == "MYR" || currency == "NOK" || currency == "RUB" || currency == "SAR" || currency == "SEK" || currency == "SGD"
+  || currency == "THB" || currency == "USD")) return "Unknown currency";
+  
+  // Loại ngày lấy tỷ giá
+  if (date != "")
+  {
+    //check valid date
+    //var excha = Date.parse("01/01/2020");
+    //var newDate = excha.toLocaleString();
+    //return newDate; //1,577,811,600,000
+    //return excha.toString(); // 157781600000
+    //return "01/01/2020".toLocaleUpperCase();
+  }
+
+  // Loại tỷ giá mua/bán
+  type = type.toUpperCase();
+  if (type == "MUA" || type == "BUY") type = "Buy";
+
+
+  
+}
+/**
+ * crawler
+ * @customfunction
+ * @returns Input string.
+ */
+export function craw(): string {
+  getPageContent('https://chuyencuadev.com/').then($ => {
+    return $('title').text();
+  })
+  return "errOUT";
+}
+const request = require('request-promise')
+const cheerio = require('cheerio')
+/**
+ * Get content for each page
+ *
+ * @param {*} uri (Ex: ${URL}page/2)
+ */
+const getPageContent = (uri) => {
+  const options = {
+    uri,
+    headers: {
+      'User-Agent': 'Request-Promise'
+    },
+    transform: (body) => {
+      return cheerio.load(body)
+    }
+  }
+
+  return request(options)
 }
