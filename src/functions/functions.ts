@@ -80,5 +80,49 @@ export function show(message: string): string {
  * @returns The input number plus 15.
  */
 export function add15(x: number): number{
-  return x + 15;
+  return x + 15; 
+}
+/**
+ * Returns author's name and ID in 4 cells.
+ * @customfunction
+ * @param nameAndID The author's name and ID as a string.
+ * @returns The name and ID of author separated.
+ */
+export function TacGia(nameAndID: string): string[][] {
+  if (Number(nameAndID)) //the input is only number
+    return [["ERROR: input only number"]];
+  
+  var splitted = nameAndID.split(" "); //split input by spaces
+
+  if (splitted.length<=1) // input length is not enough
+    return [["ERROR: input length <=1"]];
+
+  var authorID = splitted.pop(); // pop the last element / author's ID
+
+  if (isNaN(Number(authorID))) //author's ID is not number
+    return [["ERROR: input wrong ID (not number)"]];
+  
+  var authorName = splitted; //get fullname array
+
+  if (authorName.length==1) //input only last name
+    return [["ERROR: only one in name, please input fullname"]];
+  
+  for (let entry of authorName){//check if name array contains number
+    if (!isNaN(Number(entry))) return [["ERROR: number inside name"]];
+  }
+
+  var lastNameArray = authorName.pop(); //get last name array
+  var lastName=lastNameArray.toString(); //last name in string type
+
+  if (authorName.length==1){ //the remain name is one left / only first name, no middle name
+    var firstName = authorName[0].toString();
+    return [[firstName,''],[lastName,authorID]]; //this author has no middle name
+  }
+
+  //get first name, middle name
+  var firstNameArray = authorName[0]; //get first name in array type
+  var firstName = firstNameArray.toString(); //first name in string type
+  authorName.shift(); //shift to the left / remove first name in array
+  var middleName = authorName.join(" ");// get middle name in string
+  return [[firstName,middleName],[lastName,authorID]];
 }

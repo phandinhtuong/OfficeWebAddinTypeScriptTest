@@ -79,6 +79,36 @@
             "result": {
                 "type": "string"
             }
+        },
+        {
+            "description": "Returns the input number plus 15.",
+            "id": "ADD15",
+            "name": "ADD15",
+            "parameters": [
+                {
+                    "name": "x",
+                    "type": "number"
+                }
+            ],
+            "result": {
+                "type": "number"
+            }
+        },
+        {
+            "description": "Returns author's name and ID in 4 cells.",
+            "id": "TACGIA",
+            "name": "TACGIA",
+            "parameters": [
+                {
+                    "description": "The author's name and ID as a string.",
+                    "name": "nameAndID",
+                    "type": "string"
+                }
+            ],
+            "result": {
+                "dimensionality": "matrix",
+                "type": "string"
+            }
         }
     ]
 }
