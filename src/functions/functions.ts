@@ -157,38 +157,54 @@ export function TyGia(currency: string, type: string, date :string): string {
   // Loại tỷ giá mua/bán
   type = type.toUpperCase();
   if (type == "MUA" || type == "BUY") type = "Buy";
-
-
   
+  //var result = crawlTyGiaAsync().toString();
+  var result;
+  crawlTyGiaAsync().then(
+    (res)=> {
+      // console.log('res at then: ',res);
+        return res;
+    });  
+  // return result;
 }
-/**
- * crawler
- * @customfunction
- * @returns Input string.
- */
-export function craw(): string {
-  getPageContent('https://chuyencuadev.com/').then($ => {
-    return $('title').text();
-  })
-  return "errOUT";
-}
-const request = require('request-promise')
-const cheerio = require('cheerio')
-/**
- * Get content for each page
- *
- * @param {*} uri (Ex: ${URL}page/2)
- */
-const getPageContent = (uri) => {
-  const options = {
-    uri,
-    headers: {
-      'User-Agent': 'Request-Promise'
-    },
-    transform: (body) => {
-      return cheerio.load(body)
-    }
-  }
 
-  return request(options)
+
+async function crawlTyGiaAsync(){
+  const rp = require("request-promise");
+  const cheerio = require("cheerio");
+  const fs = require("fs");
+  var resGlobal;
+//const URL = 'https://portal.vietcombank.com.vn/Usercontrols/TVPortal.TyGia/pXML.aspx';
+const URL = 'https://portal.vietcombank.com.vn/UserControls/TVPortal.TyGia/pListTyGia.aspx?BacrhID=68&isEn=True&txttungay={0}';
+const options = {
+  uri: URL,
+  transform: function (body) {
+    //Khi lấy dữ liệu từ trang thành công nó sẽ tự động parse DOM
+    return cheerio.load(body);
+  },
+};
+//var res;
+await crawler();
+async function crawler() {
+  try {
+    // Lấy dữ liệu từ trang crawl đã được parseDOM
+    var $ = await rp(options);
+  } catch (error) {
+    return error;
+  }
+  for(var i = 2;i<22;i++){
+      if ($('tbody').children('tr').eq(i).children('td[style="text-align:center;"]').text()==="CNY"){
+          resGlobal = $('tbody').children('tr').eq(i).children('td').eq(3).text();
+          console.log('assign: ',resGlobal);
+          break;
+      }
+      // console.log($('tbody').children('tr').eq(4).children('td[style="text-align:center;"]').text());
+  }
+};
+
+// console.log('after func: ',resGlobal);
+//   return res;
+return resGlobal;
 }
+
+// TyGia("usd","buy","");

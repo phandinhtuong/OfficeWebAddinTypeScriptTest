@@ -43,9 +43,14 @@ const options = {
 //     console.log(chaperTitle);
     // let chaperTitle = $(".tbl-01 rateTable").find("tbody").text();
     // console.log(chaperTitle);
-    let pages = $('tbody > tr').toArray();
-    console.log(pages[0]); // Elements parsed correctly
-    let htmlPages = pages.map(page => $.html(page));
+    // let pages = $('tbody > tr').toArray();
+    // console.log(pages[0]); // Elements parsed correctly
+    // let htmlPages = pages.map(page => $.html(page));
+    $('tbody').children('tr').children('td').filter(function()
+    { 
+        //console.log($(this).text()==="DKK") ;
+        if ($(this).text()=="DKK") console.log($(this).parent().children('td').eq(3).text());
+    });
     //console.log(htmlPages[0]);
 //   // Lưu dữ liệu về máy
    //fs.writeFileSync('data.json', JSON.stringify(data))

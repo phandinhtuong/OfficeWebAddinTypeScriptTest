@@ -44,6 +44,7 @@
 											<li><a href="global.html#logMessage">logMessage</a></li>
 											<li><a href="global.html#show">show</a></li>
 											<li><a href="global.html#TacGia">TacGia</a></li>
+											<li><a href="global.html#TyGia">TyGia</a></li>
 									</ul>
 								</li>
 				</ul>
@@ -126,7 +127,7 @@
 							<div class="form-group">
 								<label class="col-sm-3 control-label">Source</label>
 								<div class="col-sm-9">
-									<p class="form-control-static"><a href="functions.js.html">functions.js</a>, <a href="functions.js.html#line-21">line 21</a></p>
+									<p class="form-control-static"><a href="functions.js.html">functions.js</a>, <a href="functions.js.html#line-57">line 57</a></p>
 								</div>
 							</div>
 			
@@ -171,7 +172,7 @@
 							<div class="form-group">
 								<label class="col-sm-3 control-label">Source</label>
 								<div class="col-sm-9">
-									<p class="form-control-static"><a href="functions.js.html">functions.js</a>, <a href="functions.js.html#line-35">line 35</a></p>
+									<p class="form-control-static"><a href="functions.js.html">functions.js</a>, <a href="functions.js.html#line-71">line 71</a></p>
 								</div>
 							</div>
 			
@@ -236,7 +237,7 @@
 							<div class="form-group">
 								<label class="col-sm-3 control-label">Source</label>
 								<div class="col-sm-9">
-									<p class="form-control-static"><a href="functions.js.html">functions.js</a>, <a href="functions.js.html#line-45">line 45</a></p>
+									<p class="form-control-static"><a href="functions.js.html">functions.js</a>, <a href="functions.js.html#line-81">line 81</a></p>
 								</div>
 							</div>
 			
@@ -302,7 +303,7 @@
 							<div class="form-group">
 								<label class="col-sm-3 control-label">Source</label>
 								<div class="col-sm-9">
-									<p class="form-control-static"><a href="functions.js.html">functions.js</a>, <a href="functions.js.html#line-62">line 62</a></p>
+									<p class="form-control-static"><a href="functions.js.html">functions.js</a>, <a href="functions.js.html#line-98">line 98</a></p>
 								</div>
 							</div>
 			
@@ -368,7 +369,7 @@
 							<div class="form-group">
 								<label class="col-sm-3 control-label">Source</label>
 								<div class="col-sm-9">
-									<p class="form-control-static"><a href="functions.js.html">functions.js</a>, <a href="functions.js.html#line-73">line 73</a></p>
+									<p class="form-control-static"><a href="functions.js.html">functions.js</a>, <a href="functions.js.html#line-109">line 109</a></p>
 								</div>
 							</div>
 			
@@ -434,7 +435,7 @@
 							<div class="form-group">
 								<label class="col-sm-3 control-label">Source</label>
 								<div class="col-sm-9">
-									<p class="form-control-static"><a href="functions.js.html">functions.js</a>, <a href="functions.js.html#line-83">line 83</a></p>
+									<p class="form-control-static"><a href="functions.js.html">functions.js</a>, <a href="functions.js.html#line-119">line 119</a></p>
 								</div>
 							</div>
 			
@@ -466,7 +467,7 @@
 								<td><code>nameAndID</code></td>
 							<td></td>
 							<td class="last">
-									The author's name and ID as a string.
+									The author's name and ID, ex: "Phan Dinh Tuong 20164582".
 							</td>
 						</tr>
 					</tbody>
@@ -476,7 +477,7 @@
 							<div class="form-group">
 								<label class="col-sm-3 control-label returns-type"></label>
 								<div class="col-sm-9">
-									<div class="form-control-static returns-description">The name and ID of author separated.</div>
+									<div class="form-control-static returns-description">The name and ID of author separatedly.</div>
 								</div>
 							</div>
 					</form>
@@ -500,7 +501,87 @@
 							<div class="form-group">
 								<label class="col-sm-3 control-label">Source</label>
 								<div class="col-sm-9">
-									<p class="form-control-static"><a href="functions.js.html">functions.js</a>, <a href="functions.js.html#line-93">line 93</a></p>
+									<p class="form-control-static"><a href="functions.js.html">functions.js</a>, <a href="functions.js.html#line-129">line 129</a></p>
+								</div>
+							</div>
+			
+			
+			
+			
+					</form>
+			</div>	</div>
+</dd>
+											<hr/>
+											<dt class="symbol-title function public collapsible-symbol">
+			<h4 id="TyGia" class="function public"><span class="name">TyGia</span><span class="signature-params">( <span class="signature-param">currency</span>, <span class="signature-param">type</span>, <span class="signature-param">date</span>&nbsp;)</span><span class="signature-type"></span></h4>
+		</dt>
+<dd class="symbol-details function public  collapsible-symbol">
+	<div class="symbol-details-inner">
+			<div class="callout callout-primary"><h5>Description</h5>		<div class="description">Lấy tỷ giá hối đoái ngoại tệ và vnđ theo niêm yết tại pỏtal.vietcombank.com.vn</div>
+			</div>			<div class="callout callout-info">
+				<h5>Parameters</h5>
+				<table class="params table table-striped">
+					<thead>
+					<tr>
+							<th>Name</th>
+						<th>Type</th>
+						<th class="last">Description</th>
+					</tr>
+					</thead>
+					<tbody>
+						<tr>
+								<td><code>currency</code></td>
+							<td></td>
+							<td class="last">
+									Mã ngoại tệ.
+							</td>
+						</tr>
+						<tr>
+								<td><code>type</code></td>
+							<td></td>
+							<td class="last">
+									Loại tỷ giá.
+							</td>
+						</tr>
+						<tr>
+								<td><code>date</code></td>
+							<td></td>
+							<td class="last">
+									Ngày lấy tỷ giá.
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+			<div class="callout callout-success"><h5>Returns</h5>		<form class="form-horizontal returns">
+							<div class="form-group">
+								<label class="col-sm-3 control-label returns-type"></label>
+								<div class="col-sm-9">
+									<div class="form-control-static returns-description">Tỷ giá.</div>
+								</div>
+							</div>
+					</form>
+			</div>			<div class="callout callout-default"><h5>Details</h5>		<form class="form-horizontal details">
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+							<!-- source -->
+							<div class="form-group">
+								<label class="col-sm-3 control-label">Source</label>
+								<div class="col-sm-9">
+									<p class="form-control-static"><a href="functions.js.html">functions.js</a>, <a href="functions.js.html#line-168">line 168</a></p>
 								</div>
 							</div>
 			
@@ -521,7 +602,7 @@
 	</div>
 	<footer>
 				<div class="copyright">FooDoc Copyright © 2016 The contributors to the JSDoc3 and FooDoc projects.</div>
-			<div class="generated-by">Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.6</a> on 26th Feb 2021 using the <a href="https://github.com/steveush/foodoc">FooDoc template</a>.</div>
+			<div class="generated-by">Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.6</a> on 27th Feb 2021 using the <a href="https://github.com/steveush/foodoc">FooDoc template</a>.</div>
 	</footer>
 	<script src="js/jquery.min.js"></script>
 	<script src="js/bootstrap.min.js"></script>

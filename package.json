@@ -27,10 +27,12 @@
     "validate": "office-addin-manifest validate manifest.xml",
     "watch": "webpack --mode development --watch",
     "test": "jest",
-    "doc": "tsc ./src/functions/functions.ts && jsdoc -c ./jsdoc.json -t ./node_modules/foodoc/template ./src/functions/"
+    "doc": "tsc ./src/functions/functions.ts && jsdoc -c ./jsdoc.json -t ./node_modules/foodoc/template ./src/functions/",
+    "async": "crawlTestFunc.js"
   },
   "dependencies": {
     "cheerio": "^1.0.0-rc.5",
+    "child-process": "^1.0.2",
     "foodoc": "0.0.9",
     "jsdoc": "^3.6.6",
     "phantomjs-prebuilt": "^2.1.16",

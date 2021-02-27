@@ -134,15 +134,6 @@
             "result": {
                 "type": "string"
             }
-        },
-        {
-            "description": "crawler",
-            "id": "CRAW",
-            "name": "CRAW",
-            "parameters": [],
-            "result": {
-                "type": "string"
-            }
         }
     ]
 }
