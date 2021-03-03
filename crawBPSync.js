@@ -1,5 +1,5 @@
 
-async function crawlTyGiaAsync(){
+async function crawlTyGiaAsyncFromJS(){
     const rp = require("request-promise");
     const cheerio = require("cheerio");
     const fs = require("fs");
@@ -41,12 +41,16 @@ function xmlHtml(){
     var XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest;
 var x = new XMLHttpRequest();
 //var res;
-//x.open("GET", "https://portal.vietcombank.com.vn/Usercontrols/TVPortal.TyGia/pXML.aspx", true);
-x.open("GET", "https://portal.vietcombank.com.vn/UserControls/TVPortal.TyGia/pListTyGia.aspx?BacrhID=68&isEn=True&txttungay={0}", true);
-x.send(null);
+// x.open("GET", "https://portal.vietcombank.com.vn/Usercontrols/TVPortal.TyGia/pXML.aspx", true);
+x.open("GET", "https://github.com/phandinhtuong/", true);
+// x.open("GET", "https://portal.vietcombank.com.vn/UserControls/TVPortal.TyGia/pListTyGia.aspx?BacrhID=68&isEn=True&txttungay={0}", true);
+// x.open("GET", "https://portal.vietcombank.com.vn/Personal/TG/Pages/ty-gia.aspx?devicechannel=default", true);
+// x.open("GET", "https://www.vietcombank.com.vn/exchangerates/ExrateXML.aspx", true);
+
 x.onreadystatechange = function () {
   if (x.readyState == 4 && x.status == 200)
   {
+    console.log(x.responseText);
     //var doc = x.responseXML;
     const cherrio = require('cheerio');
     const $ = cherrio.load(x.responseText);
@@ -60,27 +64,28 @@ x.onreadystatechange = function () {
     //     //console.log($(this).text()==="DKK") ;
     //     if ($(this).text()=="DKK") console.log($(this).parent().children('td').eq(3).text());
     // });
-    for(var i = 2;i<22;i++){
-      if ($('tbody').children('tr').eq(i).children('td[style="text-align:center;"]').text()==="CNY"){
-          resGlobal = $('tbody').children('tr').eq(i).children('td').eq(3).text();
-          console.log('assign: ',resGlobal);
-          break;
-      }
-      // console.log($('tbody').children('tr').eq(4).children('td[style="text-align:center;"]').text());
-  }
+  //   for(var i = 2;i<22;i++){
+  //     if ($('tbody').children('tr').eq(i).children('td[style="text-align:center;"]').text()==="CNY"){
+  //         resGlobal = $('tbody').children('tr').eq(i).children('td').eq(3).text();
+  //         console.log('assign: ',resGlobal);
+  //         break;
+  //     }
+  //     // console.log($('tbody').children('tr').eq(4).children('td[style="text-align:center;"]').text());
+  // }
+  // console.log($('tbody').children('tr').eq(5).children('td[style="text-align:center;"]').text());
     //.filter(function(){return $(this).text()=='USD';})
   }
 };
-
+x.send();
 //return res;
 }
-  
+
   // var result = await crawlTyGiaAsync();
 //   var resu = crawlTyGiaAsync();
- // xmlHtml();
+ xmlHtml();
 
-//   crawlTyGiaAsync().then(
-//       (res)=> {
-//           console.log('final: ',res);
-//           console.log('final: ',res);
-//       }); 
+  // crawlTyGiaAsyncFromJS().then(
+  //     (res)=> {
+  //         console.log('final: ',res);
+  //         // console.log('final: ',res);
+  //     }); 

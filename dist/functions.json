@@ -114,6 +114,9 @@
             "description": "Lấy tỷ giá hối đoái ngoại tệ và vnđ theo niêm yết tại pỏtal.vietcombank.com.vn",
             "id": "TYGIA",
             "name": "TYGIA",
+            "options": {
+                "stream": true
+            },
             "parameters": [
                 {
                     "description": "Mã ngoại tệ.",
@@ -131,6 +134,77 @@
                     "type": "string"
                 }
             ],
+            "result": {
+                "type": "string"
+            }
+        },
+        {
+            "description": "Crawl ty gia",
+            "id": "CRAWLTYGIAASYNC",
+            "name": "CRAWLTYGIAASYNC",
+            "options": {
+                "stream": true
+            },
+            "parameters": [
+                {
+                    "description": "url to request",
+                    "name": "url",
+                    "type": "string"
+                }
+            ],
+            "result": {
+                "type": "string"
+            }
+        },
+        {
+            "description": "xml html request",
+            "id": "XMLHTML",
+            "name": "XMLHTML",
+            "options": {
+                "stream": true
+            },
+            "parameters": [
+                {
+                    "description": "url to request",
+                    "name": "url",
+                    "type": "string"
+                }
+            ],
+            "result": {
+                "type": "string"
+            }
+        },
+        {
+            "description": "Gets the star count for a given Github organization or user and repository.",
+            "id": "GETSTARCOUNT",
+            "name": "GETSTARCOUNT",
+            "options": {
+                "stream": true
+            },
+            "parameters": [
+                {
+                    "description": "string name of organization or user.",
+                    "name": "userName",
+                    "type": "string"
+                },
+                {
+                    "description": "string name of the repository.",
+                    "name": "repoName",
+                    "type": "string"
+                }
+            ],
+            "result": {
+                "type": "string"
+            }
+        },
+        {
+            "description": "Test get data from python",
+            "id": "TESTGETDATAFROMPY",
+            "name": "TESTGETDATAFROMPY",
+            "options": {
+                "stream": true
+            },
+            "parameters": [],
             "result": {
                 "type": "string"
             }

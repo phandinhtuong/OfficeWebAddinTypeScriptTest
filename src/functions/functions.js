@@ -44,7 +44,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 exports.__esModule = true;
-exports.TyGia = exports.TacGia = exports.add15 = exports.show = exports.logMessage = exports.increment = exports.currentTime = exports.clock = exports.add = void 0;
+exports.testGetDataFromCSharp = exports.testGetDataFromPy = exports.xmlHtml = exports.crawlTyGiaAsync = exports.TyGia = exports.TacGia = exports.add15 = exports.show = exports.logMessage = exports.increment = exports.currentTime = exports.clock = exports.add = void 0;
 function add(first, second) {
     return first + second;
 }
@@ -127,34 +127,46 @@ exports.add15 = add15;
  * @returns The name and ID of author separatedly.
  */
 function TacGia(nameAndID) {
-    if (Number(nameAndID)) //the input is only number
+    if (Number(nameAndID))
+        //the input is only number
         return [["ERROR: input only number"]];
     var splitted = nameAndID.split(" "); //split input by spaces
-    if (splitted.length <= 1) // input length is not enough
+    if (splitted.length <= 1)
+        // input length is not enough
         return [["ERROR: input length <=1"]];
     var authorID = splitted.pop(); // pop the last element / author's ID
-    if (isNaN(Number(authorID))) //author's ID is not number
+    if (isNaN(Number(authorID)))
+        //author's ID is not number
         return [["ERROR: input wrong ID (not number)"]];
     var authorName = splitted; //get fullname array
-    if (authorName.length == 1) //input only last name
+    if (authorName.length == 1)
+        //input only last name
         return [["ERROR: only one in name, please input fullname"]];
-    for (var _i = 0, authorName_1 = authorName; _i < authorName_1.length; _i++) { //check if name array contains number
+    for (var _i = 0, authorName_1 = authorName; _i < authorName_1.length; _i++) {
         var entry = authorName_1[_i];
+        //check if name array contains number
         if (!isNaN(Number(entry)))
             return [["ERROR: number inside name"]];
     }
     var lastNameArray = authorName.pop(); //get last name array
     var lastName = lastNameArray.toString(); //last name in string type
-    if (authorName.length == 1) { //the remain name is one left / only first name, no middle name
+    if (authorName.length == 1) {
+        //the remain name is one left / only first name, no middle name
         var firstName = authorName[0].toString();
-        return [[firstName, ''], [lastName, authorID]]; //this author has no middle name
+        return [
+            [firstName, ""],
+            [lastName, authorID]
+        ]; //this author has no middle name
     }
     //get first name, middle name
     var firstNameArray = authorName[0]; //get first name in array type
     var firstName = firstNameArray.toString(); //first name in string type
     authorName.shift(); //shift to the left / remove first name in array
     var middleName = authorName.join(" "); // get middle name in string
-    return [[firstName, middleName], [lastName, authorID]];
+    return [
+        [firstName, middleName],
+        [lastName, authorID]
+    ];
 }
 exports.TacGia = TacGia;
 /**
@@ -163,18 +175,34 @@ exports.TacGia = TacGia;
  * @param currency Mã ngoại tệ.
  * @param type Loại tỷ giá.
  * @param date Ngày lấy tỷ giá.
- * @returns Tỷ giá.
+ * @param invocation Invocation for updating cell's value
  */
-function TyGia(currency, type, date) {
+function TyGia(currency, type, date, invocation) {
     // Loại ngoại tệ
     currency = currency.toUpperCase();
     if (currency == "VND")
-        return "1"; // Vietnam Dong
-    if (!(currency == "AUD" || currency == "CAD" || currency == "CHF" || currency == "CNY" || currency == "DKK" || currency == "EUR"
-        || currency == "GBP" || currency == "HKD" || currency == "INR" || currency == "JPY" || currency == "KRW" || currency == "KWD"
-        || currency == "MYR" || currency == "NOK" || currency == "RUB" || currency == "SAR" || currency == "SEK" || currency == "SGD"
-        || currency == "THB" || currency == "USD"))
-        return "Unknown currency";
+        invocation.setResult("1"); // Vietnam Dong
+    if (!(currency == "AUD" ||
+        currency == "CAD" ||
+        currency == "CHF" ||
+        currency == "CNY" ||
+        currency == "DKK" ||
+        currency == "EUR" ||
+        currency == "GBP" ||
+        currency == "HKD" ||
+        currency == "INR" ||
+        currency == "JPY" ||
+        currency == "KRW" ||
+        currency == "KWD" ||
+        currency == "MYR" ||
+        currency == "NOK" ||
+        currency == "RUB" ||
+        currency == "SAR" ||
+        currency == "SEK" ||
+        currency == "SGD" ||
+        currency == "THB" ||
+        currency == "USD"))
+        invocation.setResult("Unknown currency");
     // Loại ngày lấy tỷ giá
     if (date != "") {
         //check valid date
@@ -189,39 +217,37 @@ function TyGia(currency, type, date) {
     if (type == "MUA" || type == "BUY")
         type = "Buy";
     //var result = crawlTyGiaAsync().toString();
-    var result;
-    crawlTyGiaAsync().then(function (res) {
-        // console.log('res at then: ',res);
-        return res;
-    });
+    //var result;
+    crawlTyGiaAsync(invocation);
     // return result;
 }
 exports.TyGia = TyGia;
-function crawlTyGiaAsync() {
+/**
+ * Crawl ty gia
+ * @customfunction
+ * @param invocation invocation for updating
+ */
+function crawlTyGiaAsync(invocation) {
     return __awaiter(this, void 0, void 0, function () {
         function crawler() {
             return __awaiter(this, void 0, void 0, function () {
-                var $, error_1, i;
+                var $, error_1;
                 return __generator(this, function (_a) {
                     switch (_a.label) {
                         case 0:
                             _a.trys.push([0, 2, , 3]);
+                            // Lấy dữ liệu từ trang crawl đã được parseDOM
+                            invocation.setResult("at crawler");
                             return [4 /*yield*/, rp(options)];
                         case 1:
                             $ = _a.sent();
                             return [3 /*break*/, 3];
                         case 2:
                             error_1 = _a.sent();
+                            invocation.setResult(error_1.toString());
                             return [2 /*return*/, error_1];
                         case 3:
-                            for (i = 2; i < 22; i++) {
-                                if ($('tbody').children('tr').eq(i).children('td[style="text-align:center;"]').text() === "CNY") {
-                                    resGlobal = $('tbody').children('tr').eq(i).children('td').eq(3).text();
-                                    console.log('assign: ', resGlobal);
-                                    break;
-                                }
-                                // console.log($('tbody').children('tr').eq(4).children('td[style="text-align:center;"]').text());
-                            }
+                            invocation.setResult("after $");
                             return [2 /*return*/];
                     }
                 });
@@ -231,13 +257,15 @@ function crawlTyGiaAsync() {
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
+                    invocation.setResult("at begin");
                     rp = require("request-promise");
                     cheerio = require("cheerio");
                     fs = require("fs");
-                    URL = 'https://portal.vietcombank.com.vn/UserControls/TVPortal.TyGia/pListTyGia.aspx?BacrhID=68&isEn=True&txttungay={0}';
+                    URL = "https://portal.vietcombank.com.vn/UserControls/TVPortal.TyGia/pListTyGia.aspx?BacrhID=68&isEn=True&txttungay={0}";
                     options = {
                         uri: URL,
                         transform: function (body) {
+                            invocation.setResult("cheerio load");
                             //Khi lấy dữ liệu từ trang thành công nó sẽ tự động parse DOM
                             return cheerio.load(body);
                         }
@@ -247,12 +275,192 @@ function crawlTyGiaAsync() {
                 case 1:
                     //var res;
                     _a.sent();
-                    ;
-                    // console.log('after func: ',resGlobal);
-                    //   return res;
-                    return [2 /*return*/, resGlobal];
+                    return [2 /*return*/];
             }
         });
     });
 }
-// TyGia("usd","buy","");
+exports.crawlTyGiaAsync = crawlTyGiaAsync;
+/**
+ * xml html request
+ * @customfunction
+ * @param invocation invo
+ */
+function xmlHtml(invocation) {
+    invocation.setResult("egin xml");
+    //  var XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest;
+    invocation.setResult("eafet");
+    var x = new XMLHttpRequest();
+    invocation.setResult("rff");
+    // //var res;
+    // //x.open("GET", "https://portal.vietcombank.com.vn/Usercontrols/TVPortal.TyGia/pXML.aspx", true);
+    //x.open("GET", "https://portal.vietcombank.com.vn/UserControls/TVPortal.TyGia/pListTyGia.aspx", true);
+    x.open("GET", "https://api.github.com/repos/bk-blockchain/20192-web-programming", true);
+    invocation.setResult("fdfd");
+    invocation.setResult("sss outside");
+    x.onreadystatechange = function () {
+        invocation.setResult(x.responseText);
+        if (x.readyState == 4 && x.status == 200) {
+            invocation.setResult("sss insdile");
+            //var doc = x.responseXML;
+            // const cherrio = require('cheerio');
+            // const $ = cherrio.load(x.responseText);
+            //console.log($('[CurrencyCode=SGD]').attr('transfer')); //worked with no date
+            //console.log($('tbody').find('tr')[3]);
+            // console.log($('tbody').children('tr').children('td').filter(function()
+            // {return $(this).text();}));
+            // $('tbody').children('tr').children('td').filter(function()
+            // {
+            //     //console.log($(this).text()==="DKK") ;
+            //     if ($(this).text()=="DKK") console.log($(this).parent().children('td').eq(3).text());
+            // });
+            //   for(var i = 2;i<22;i++){
+            //     if ($('tbody').children('tr').eq(i).children('td[style="text-align:center;"]').text()==="CNY"){
+            //         resGlobal = $('tbody').children('tr').eq(i).children('td').eq(3).text();
+            //         console.log('assign: ',resGlobal);
+            //         break;
+            //     }
+            //     // console.log($('tbody').children('tr').eq(4).children('td[style="text-align:center;"]').text());
+            // }
+            //.filter(function(){return $(this).text()=='USD';})
+        }
+    };
+    try {
+        x.send();
+        invocation.setResult("sent ");
+    }
+    catch (error) {
+        invocation.setResult("erroo: " + error.toString());
+    }
+    //return res;
+}
+exports.xmlHtml = xmlHtml;
+/**
+ * Gets the star count for a given Github organization or user and repository.
+ * @customfunction
+ * @param userName string name of organization or user.
+ * @param repoName string name of the repository.
+ * @return number of stars.
+ */
+function getStarCount(userName, repoName, invocation) {
+    return __awaiter(this, void 0, void 0, function () {
+        var url, xhttp;
+        return __generator(this, function (_a) {
+            url = "https://www.vietcombank.com.vn/exchangerates/ExrateXML.aspx";
+            xhttp = new XMLHttpRequest();
+            return [2 /*return*/, new Promise(function (resolve, reject) {
+                    xhttp.onreadystatechange = function () {
+                        invocation.setResult(xhttp.responseText);
+                        // invocation.setResult(xhttp.responseText);
+                        if (xhttp.readyState !== 4)
+                            return;
+                        if (xhttp.status == 200) {
+                            // invocation.setResult(xhttp.responseText);
+                            // resolve(xhttp.responseText);
+                        }
+                        else {
+                            reject({
+                                status: xhttp.status,
+                                statusText: xhttp.statusText
+                            });
+                            // invocation.setResult("rejectedffff");
+                        }
+                    };
+                    xhttp.open("GET", url, true);
+                    xhttp.send();
+                })];
+        });
+    });
+}
+/**
+ * Test get data from python
+ * @customfunction
+ * @param invocation invo
+ */
+function testGetDataFromPy(invocation) {
+    // const {spawn} = require('../../node_modules/@types/node/child_process');
+    // const {spawn} = require('child_process');
+    // // const {spawn} = require('E:/Thesis/starcountTypeScript/node_modules/@types/node/child_process.d.ts');
+    // // const {spawn} = require.main.require('../../node_modules/@types/node/child_process');
+    // // const {spawn} = require('../../node_modules/@types/node/child_process.d.ts');
+    // // const {spawn} = module.require('../../node_modules/@types/node/child_process');
+    // const pythonf = spawn('python', ['../sendDataToNode.py']);
+    // // invocation.setResult("out");
+    // pythonf.stdout.on('data', (data) => {
+    //     // Do something with the data returned from python script
+    //     // console.log(data.toString());
+    //     invocation.setResult("s");
+    //     // invocation.setResult(data.toString());
+    // });
+}
+exports.testGetDataFromPy = testGetDataFromPy;
+/**
+ * Test get data from C Sharp
+ * @customfunction
+ * @param invocation invo
+ */
+function testGetDataFromCSharp(invocation) {
+    // var edge = require('edge-js');
+    var edge = require("edge-js");
+    var getPerson = edge.func(function () {
+        /*
+        using System.Threading.Tasks;
+        using System;
+        using System.Net;
+        using System.IO;
+        using System.Text;
+    
+        public class Person
+        {
+            public int anInteger = 1;
+            public double aNumber = 3.1415;
+            public string aString = "foo";
+            public bool aBoolean = true;
+            public byte[] aBuffer = new byte[10];
+            public object[] anArray = new object[] { 1, "foo" };
+            public object anObject = new { a = "foo", b = 12 };
+            
+        }
+        public class Startup
+        {
+            public async Task<object> Invoke(dynamic input)
+            {
+                Person person = new Person();
+                person.anInteger = input.anInteger;
+                ///tyGiaObject.TyGia("usd","buy","");
+                string reply;
+                string currency = "USD";
+                string type = "Buy";
+                // WebClient client = new WebClient();
+                // client.Headers.Add("User-Agent: BrowseAndDownload");
+                // ServicePointManager.Expect100Continue = true;
+                // ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
+                // StringBuilder VCBCrawedURL = new StringBuilder(150);
+                    
+                // VCBCrawedURL.Append("https://portal.vietcombank.com.vn/Usercontrols/TVPortal.TyGia/pXML.aspx");
+                // // VCBCrawedURL.Append("https://portal.vietcombank.com.vn/UserControls/TVPortal.TyGia/pListTyGia.aspx?BacrhID=68&isEn=True&txttungay={0}");
+                
+                // reply = client.DownloadString(VCBCrawedURL.ToString());
+                
+                // VCBCrawedURL.Clear();
+                
+                return "reply";
+                
+                
+            }
+        }
+    */
+    });
+    var payload = {
+        anInteger: 2,
+        aNumber: 3.1415,
+        aString: "foo"
+    };
+    getPerson(payload, function (error, result) {
+        if (error)
+            throw error;
+        console.log(result);
+        invocation.setResult(result);
+    });
+}
+exports.testGetDataFromCSharp = testGetDataFromCSharp;

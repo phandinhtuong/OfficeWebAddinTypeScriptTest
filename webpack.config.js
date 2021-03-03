@@ -12,11 +12,7 @@ module.exports = async (env, options) => {
   const dev = options.mode === "development";
   const buildType = dev ? "dev" : "prod";
   const config = {
-    node: {
-      net: "empty",
-      fs: "empty", 
-      tls: "empty"
-    },
+    target: 'node',
     devtool: "source-map",
     entry: {
       functions: "./src/functions/functions.ts",
@@ -25,7 +21,10 @@ module.exports = async (env, options) => {
       commands: "./src/commands/commands.ts"
     },
     resolve: {
-      extensions: [".ts", ".tsx", ".html", ".js"]
+      extensions: [".ts", ".tsx", ".html", ".js"],
+      alias: {
+        child_process: './node_modules/@types/node/child_process'
+      }
     },
     module: {
       rules: [

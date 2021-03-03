@@ -7,6 +7,6 @@ var functions_1 = require("../functions/functions");
 // // it('show1 ', ()=>{
 // //     expect(show('s')).toBe('s');
 // // });
-it('show ', function () {
-    expect(functions_1.TyGia("USD", "buy", "")).toBe("23,060.00");
+it("show ", function() {
+  expect(functions_1.TyGia("USD", "buy", "")).toBe("23,060.00");
 });
