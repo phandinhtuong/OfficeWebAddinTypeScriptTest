@@ -181,18 +181,7 @@
             "options": {
                 "stream": true
             },
-            "parameters": [
-                {
-                    "description": "string name of organization or user.",
-                    "name": "userName",
-                    "type": "string"
-                },
-                {
-                    "description": "string name of the repository.",
-                    "name": "repoName",
-                    "type": "string"
-                }
-            ],
+            "parameters": [],
             "result": {
                 "type": "string"
             }
@@ -201,6 +190,18 @@
             "description": "Test get data from python",
             "id": "TESTGETDATAFROMPY",
             "name": "TESTGETDATAFROMPY",
+            "options": {
+                "stream": true
+            },
+            "parameters": [],
+            "result": {
+                "type": "string"
+            }
+        },
+        {
+            "description": "Test Web API",
+            "id": "TESTWEBAPI",
+            "name": "TESTWEBAPI",
             "options": {
                 "stream": true
             },

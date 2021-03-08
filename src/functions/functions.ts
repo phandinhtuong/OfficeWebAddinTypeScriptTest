@@ -313,22 +313,17 @@ export function xmlHtml(url: string,invocation: CustomFunctions.StreamingInvocat
 /**
  * Gets the star count for a given Github organization or user and repository.
  * @customfunction
- * @param userName string name of organization or user.
- * @param repoName string name of the repository.
- * @return number of stars.
+ * @param invocation invo
  */
 
-async function getStarCount(
-  userName: string,
-  repoName: string,
-  invocation: CustomFunctions.StreamingInvocation<string>
-) {
+async function getStarCount(invocation: CustomFunctions.StreamingInvocation<string>) {
   // const url = "https://api.github.com/repos/" + userName + "/" + repoName;
   // const url = "https://portal.vietcombank.com.vn/UserControls/TVPortal.TyGia/pListTyGia.aspx";
   //const url = "https://portal.vietcombank.com.vn/Usercontrols/TVPortal.TyGia/pXML.aspx";
   // const url = "https://api.github.com/repos/bk-blockchain/20192-web-programming";
   // const url = "https://portal.vietcombank.com.vn/Personal/TG/Pages/ty-gia.aspx?devicechannel=default";
-  const url = "https://www.vietcombank.com.vn/exchangerates/ExrateXML.aspx";
+  // const url = "https://www.vietcombank.com.vn/exchangerates/ExrateXML.aspx";
+  const url = "http://127.0.0.1:10010/crawl";
 
   let xhttp = new XMLHttpRequest();
   return new Promise(function(resolve, reject) {
@@ -377,4 +372,11 @@ export function testGetDataFromPy(invocation: CustomFunctions.StreamingInvocatio
       // invocation.setResult(data.toString());
   });
 }
-
+/**
+ * Test Web API
+ * @customfunction
+ * @param invocation Invo
+ */
+export function testWebAPI(invocation: CustomFunctions.StreamingInvocation<string>):void{
+  
+}

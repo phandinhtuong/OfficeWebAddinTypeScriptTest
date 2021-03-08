@@ -62502,7 +62502,7 @@ var __generator = this && this.__generator || function (thisArg, body) {
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.testGetDataFromPy = exports.xmlHtml = exports.crawlTyGiaAsync = exports.TyGia = exports.TacGia = exports.add15 = exports.show = exports.logMessage = exports.increment = exports.currentTime = exports.clock = exports.add = void 0;
+exports.testWebAPI = exports.testGetDataFromPy = exports.xmlHtml = exports.crawlTyGiaAsync = exports.TyGia = exports.TacGia = exports.add15 = exports.show = exports.logMessage = exports.increment = exports.currentTime = exports.clock = exports.add = void 0;
 
 function add(first, second) {
   return first + second;
@@ -62825,16 +62825,14 @@ exports.xmlHtml = xmlHtml;
 /**
  * Gets the star count for a given Github organization or user and repository.
  * @customfunction
- * @param userName string name of organization or user.
- * @param repoName string name of the repository.
- * @return number of stars.
+ * @param invocation invo
  */
 
-function getStarCount(userName, repoName, invocation) {
+function getStarCount(invocation) {
   return __awaiter(this, void 0, void 0, function () {
     var url, xhttp;
     return __generator(this, function (_a) {
-      url = "https://www.vietcombank.com.vn/exchangerates/ExrateXML.aspx";
+      url = "http://127.0.0.1:10010/crawl";
       xhttp = new XMLHttpRequest();
       return [2
       /*return*/
@@ -62885,6 +62883,15 @@ function testGetDataFromPy(invocation) {
 }
 
 exports.testGetDataFromPy = testGetDataFromPy;
+/**
+ * Test Web API
+ * @customfunction
+ * @param invocation Invo
+ */
+
+function testWebAPI(invocation) {}
+
+exports.testWebAPI = testWebAPI;
 CustomFunctions.associate("ADD", add);
 CustomFunctions.associate("CLOCK", clock);
 CustomFunctions.associate("INCREMENT", increment);
@@ -62897,6 +62904,7 @@ CustomFunctions.associate("CRAWLTYGIAASYNC", crawlTyGiaAsync);
 CustomFunctions.associate("XMLHTML", xmlHtml);
 CustomFunctions.associate("GETSTARCOUNT", getStarCount);
 CustomFunctions.associate("TESTGETDATAFROMPY", testGetDataFromPy);
+CustomFunctions.associate("TESTWEBAPI", testWebAPI);
 
 /***/ }),
 
