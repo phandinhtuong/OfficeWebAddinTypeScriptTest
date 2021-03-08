@@ -147,15 +147,18 @@ export function TacGia(nameAndID: string): string[][] {
  * @param date Ngày lấy tỷ giá.
  * @param invocation Invocation for updating cell's value
  */
-export function TyGia(
+export async function TyGia(
   currency: string,
   type: string,
   date: string,
   invocation: CustomFunctions.StreamingInvocation<string>
-): void {
+) {
   // Loại ngoại tệ
   currency = currency.toUpperCase();
-  if (currency == "VND") invocation.setResult("1"); // Vietnam Dong
+  if (currency == "VND") {
+    invocation.setResult("1"); // Vietnam Dong
+    return;
+  }
   if (
     !(
       currency == "AUD" ||
@@ -179,8 +182,11 @@ export function TyGia(
       currency == "THB" ||
       currency == "USD"
     )
-  )
+  ){
     invocation.setResult("Unknown currency");
+    return;
+  }
+    
 
   // Loại ngày lấy tỷ giá
   if (date != "") {
@@ -195,120 +201,41 @@ export function TyGia(
   // Loại tỷ giá mua/bán
   type = type.toUpperCase();
   if (type == "MUA" || type == "BUY") type = "Buy";
-
-  //var result = crawlTyGiaAsync().toString();
-  //var result;
-  //crawlTyGiaAsync(invocation);
-
-  // return result;
-}
-
-/**
- * Crawl ty gia
- * @customfunction
- * @param url url to request
- * @param invocation invocation for updating
- */
-export async function crawlTyGiaAsync(url: string,invocation: CustomFunctions.StreamingInvocation<string>) {
-  invocation.setResult("at begin");
-  const rp = require("request-promise");
-  const cheerio = require("cheerio");
-  const fs = require("fs");
-  var resGlobal;
-  //const URL = 'https://portal.vietcombank.com.vn/Usercontrols/TVPortal.TyGia/pXML.aspx';
-  // const URL =
-  //   "https://portal.vietcombank.com.vn/UserControls/TVPortal.TyGia/pListTyGia.aspx?BacrhID=68&isEn=True&txttungay={0}";
-  const URL = url;
-  const options = {
-    uri: URL,
-    transform: function(body) {
-      invocation.setResult("cheerio load");
-      //Khi lấy dữ liệu từ trang thành công nó sẽ tự động parse DOM
-      return cheerio.load(body);
-    }
-  };
-  //var res;
-  await crawler();
-  async function crawler() {
-    try {
-      // Lấy dữ liệu từ trang crawl đã được parseDOM
-      invocation.setResult("at crawler");
-      var $ = await rp(options);
-    } catch (error) {
-      invocation.setResult(error.toString());
-      return error;
-    }
-    invocation.setResult("after $");
-    // for(var i = 2;i<22;i++){
-    //     if ($('tbody').children('tr').eq(i).children('td[style="text-align:center;"]').text()==="CNY"){
-    //         resGlobal = $('tbody').children('tr').eq(i).children('td').eq(3).text();
-    //         //console.log('assign: ',resGlobal);
-    //         invocation.setResult(resGlobal);
-    //         break;
-    //     }
-    // console.log($('tbody').children('tr').eq(4).children('td[style="text-align:center;"]').text());
+  else if (type == "BÁN" || type == "SELL") type = "Sell";
+  else if (type == "CHUYỂN KHOẢN" || type == "TRANSFER") type = "Transfer";
+  else {
+    invocation.setResult("Unknown type");
+    return;
   }
-}
-/**
- * xml html request
- * @customfunction
- * @param url url to request
- * @param invocation invo
- */
-export function xmlHtml(url: string,invocation: CustomFunctions.StreamingInvocation<string>): void {
-  invocation.setResult("egin xml");
 
-  //  var XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest;
+  const url = "http://127.0.0.1:10010/crawl?currency="+currency+"&type="+type+"&date="+date;
 
-  invocation.setResult("eafet");
+  let xhttp = new XMLHttpRequest();
+  return new Promise(function(resolve, reject) {
+    xhttp.onreadystatechange = function() {
+      // invocation.setResult(xhttp.responseText);
+      // invocation.setResult(xhttp.responseText);
 
-  var x = new XMLHttpRequest();
-  invocation.setResult("rff");
-  // //var res;
-  // //x.open("GET", "https://portal.vietcombank.com.vn/Usercontrols/TVPortal.TyGia/pXML.aspx", true);
-  //x.open("GET", "https://portal.vietcombank.com.vn/UserControls/TVPortal.TyGia/pListTyGia.aspx", true);
-  //"https://api.github.com/repos/bk-blockchain/20192-web-programming"
-  x.open("GET", url, true);
-  invocation.setResult("fdfd");
+      if (xhttp.readyState !== 4) return;
 
-  invocation.setResult("sss outside");
-  x.onreadystatechange = function() {
-    invocation.setResult('out: '+x.responseText);
-    if (x.readyState == 4 && x.status == 200) {
-      invocation.setResult("sss insdile");
-      invocation.setResult('200: '+x.responseText);
-      
-      //var doc = x.responseXML;
-      // const cherrio = require('cheerio');
-      // const $ = cherrio.load(x.responseText);
+      if (xhttp.status == 200) {
+        invocation.setResult(xhttp.responseText);
+        // resolve(xhttp.responseText);
+      } else {
+        reject({
+          status: xhttp.status,
 
-      //console.log($('[CurrencyCode=SGD]').attr('transfer')); //worked with no date
-      //console.log($('tbody').find('tr')[3]);
-      // console.log($('tbody').children('tr').children('td').filter(function()
-      // {return $(this).text();}));
-      // $('tbody').children('tr').children('td').filter(function()
-      // {
-      //     //console.log($(this).text()==="DKK") ;
-      //     if ($(this).text()=="DKK") console.log($(this).parent().children('td').eq(3).text());
-      // });
-      //   for(var i = 2;i<22;i++){
-      //     if ($('tbody').children('tr').eq(i).children('td[style="text-align:center;"]').text()==="CNY"){
-      //         resGlobal = $('tbody').children('tr').eq(i).children('td').eq(3).text();
-      //         console.log('assign: ',resGlobal);
-      //         break;
-      //     }
-      //     // console.log($('tbody').children('tr').eq(4).children('td[style="text-align:center;"]').text());
-      // }
-      //.filter(function(){return $(this).text()=='USD';})
-    }
-  };
-  try {
-    x.send();
-    invocation.setResult("sent ");
-  } catch (error) {
-    invocation.setResult("erroo: " + error.toString());
-  }
-  //return res;
+          statusText: xhttp.statusText
+        });
+        // invocation.setResult("rejectedffff");
+      }
+    };
+
+    xhttp.open("GET", url, true);
+
+    xhttp.send();
+  });
+
 }
 /**
  * Gets the star count for a given Github organization or user and repository.
@@ -328,13 +255,13 @@ async function getStarCount(invocation: CustomFunctions.StreamingInvocation<stri
   let xhttp = new XMLHttpRequest();
   return new Promise(function(resolve, reject) {
     xhttp.onreadystatechange = function() {
-      invocation.setResult(xhttp.responseText);
+      // invocation.setResult(xhttp.responseText);
       // invocation.setResult(xhttp.responseText);
 
       if (xhttp.readyState !== 4) return;
 
       if (xhttp.status == 200) {
-        // invocation.setResult(xhttp.responseText);
+        invocation.setResult(xhttp.responseText);
         // resolve(xhttp.responseText);
       } else {
         reject({
@@ -350,33 +277,4 @@ async function getStarCount(invocation: CustomFunctions.StreamingInvocation<stri
 
     xhttp.send();
   });
-}
-/**
- * Test get data from python
- * @customfunction
- * @param invocation invo
- */
-export function testGetDataFromPy(invocation: CustomFunctions.StreamingInvocation<string>): void {
-  // const {spawn} = require('../../node_modules/@types/node/child_process');
-  const {spawn} = require('child_process');
-  // const {spawn} = require('E:/Thesis/starcountTypeScript/node_modules/@types/node/child_process.d.ts');
-  // const {spawn} = require.main.require('../../node_modules/@types/node/child_process');
-  // const {spawn} = require('../../node_modules/@types/node/child_process.d.ts');
-  // const {spawn} = module.require('../../node_modules/@types/node/child_process');
-  const pythonf = spawn('python', ['../../sendDataToNode.py']);
-  invocation.setResult("out");
-  pythonf.stdout.on('data', (data) => {
-      // Do something with the data returned from python script
-      // console.log(data.toString());
-      invocation.setResult("s");
-      // invocation.setResult(data.toString());
-  });
-}
-/**
- * Test Web API
- * @customfunction
- * @param invocation Invo
- */
-export function testWebAPI(invocation: CustomFunctions.StreamingInvocation<string>):void{
-  
 }

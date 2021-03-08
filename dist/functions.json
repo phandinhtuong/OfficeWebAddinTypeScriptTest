@@ -139,69 +139,9 @@
             }
         },
         {
-            "description": "Crawl ty gia",
-            "id": "CRAWLTYGIAASYNC",
-            "name": "CRAWLTYGIAASYNC",
-            "options": {
-                "stream": true
-            },
-            "parameters": [
-                {
-                    "description": "url to request",
-                    "name": "url",
-                    "type": "string"
-                }
-            ],
-            "result": {
-                "type": "string"
-            }
-        },
-        {
-            "description": "xml html request",
-            "id": "XMLHTML",
-            "name": "XMLHTML",
-            "options": {
-                "stream": true
-            },
-            "parameters": [
-                {
-                    "description": "url to request",
-                    "name": "url",
-                    "type": "string"
-                }
-            ],
-            "result": {
-                "type": "string"
-            }
-        },
-        {
             "description": "Gets the star count for a given Github organization or user and repository.",
             "id": "GETSTARCOUNT",
             "name": "GETSTARCOUNT",
-            "options": {
-                "stream": true
-            },
-            "parameters": [],
-            "result": {
-                "type": "string"
-            }
-        },
-        {
-            "description": "Test get data from python",
-            "id": "TESTGETDATAFROMPY",
-            "name": "TESTGETDATAFROMPY",
-            "options": {
-                "stream": true
-            },
-            "parameters": [],
-            "result": {
-                "type": "string"
-            }
-        },
-        {
-            "description": "Test Web API",
-            "id": "TESTWEBAPI",
-            "name": "TESTWEBAPI",
             "options": {
                 "stream": true
             },
