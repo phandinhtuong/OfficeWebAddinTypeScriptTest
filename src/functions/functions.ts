@@ -191,11 +191,19 @@ export async function TyGia(
   // Loại ngày lấy tỷ giá
   if (date != "") {
     //check valid date
-    //var excha = Date.parse("01/01/2020");
-    //var newDate = excha.toLocaleString();
-    //return newDate; //1,577,811,600,000
-    //return excha.toString(); // 157781600000
-    //return "01/01/2020".toLocaleUpperCase();
+    var moment = require('moment'); //moment library
+    var exchangeDate = moment(date,"DD/MM/YYYY",true);
+    var today = moment();
+    if (isNaN(exchangeDate)){
+      invocation.setResult("Invalid date");
+      return;
+    }else if (exchangeDate>today){
+      invocation.setResult('Out of date');
+      return;
+    }else{
+      date = exchangeDate.format('DD/MM/YYYY');
+    }
+
   }
 
   // Loại tỷ giá mua/bán
@@ -207,74 +215,26 @@ export async function TyGia(
     invocation.setResult("Unknown type");
     return;
   }
-
+  // request to WebAPI / must start WebAPI first
   const url = "http://127.0.0.1:10010/crawl?currency="+currency+"&type="+type+"&date="+date;
 
   let xhttp = new XMLHttpRequest();
   return new Promise(function(resolve, reject) {
     xhttp.onreadystatechange = function() {
-      // invocation.setResult(xhttp.responseText);
-      // invocation.setResult(xhttp.responseText);
-
       if (xhttp.readyState !== 4) return;
-
       if (xhttp.status == 200) {
-        invocation.setResult(xhttp.responseText);
-        // resolve(xhttp.responseText);
+        // resolve(JSON.parse(xhttp.responseText).result);
+        invocation.setResult(JSON.parse(xhttp.responseText).result);
       } else {
         reject({
           status: xhttp.status,
-
           statusText: xhttp.statusText
         });
-        // invocation.setResult("rejectedffff");
+        invocation.setResult("Request was rejected");
       }
     };
-
     xhttp.open("GET", url, true);
-
     xhttp.send();
   });
 
-}
-/**
- * Gets the star count for a given Github organization or user and repository.
- * @customfunction
- * @param invocation invo
- */
-
-async function getStarCount(invocation: CustomFunctions.StreamingInvocation<string>) {
-  // const url = "https://api.github.com/repos/" + userName + "/" + repoName;
-  // const url = "https://portal.vietcombank.com.vn/UserControls/TVPortal.TyGia/pListTyGia.aspx";
-  //const url = "https://portal.vietcombank.com.vn/Usercontrols/TVPortal.TyGia/pXML.aspx";
-  // const url = "https://api.github.com/repos/bk-blockchain/20192-web-programming";
-  // const url = "https://portal.vietcombank.com.vn/Personal/TG/Pages/ty-gia.aspx?devicechannel=default";
-  // const url = "https://www.vietcombank.com.vn/exchangerates/ExrateXML.aspx";
-  const url = "http://127.0.0.1:10010/crawl";
-
-  let xhttp = new XMLHttpRequest();
-  return new Promise(function(resolve, reject) {
-    xhttp.onreadystatechange = function() {
-      // invocation.setResult(xhttp.responseText);
-      // invocation.setResult(xhttp.responseText);
-
-      if (xhttp.readyState !== 4) return;
-
-      if (xhttp.status == 200) {
-        invocation.setResult(xhttp.responseText);
-        // resolve(xhttp.responseText);
-      } else {
-        reject({
-          status: xhttp.status,
-
-          statusText: xhttp.statusText
-        });
-        // invocation.setResult("rejectedffff");
-      }
-    };
-
-    xhttp.open("GET", url, true);
-
-    xhttp.send();
-  });
 }

@@ -137,18 +137,6 @@
             "result": {
                 "type": "string"
             }
-        },
-        {
-            "description": "Gets the star count for a given Github organization or user and repository.",
-            "id": "GETSTARCOUNT",
-            "name": "GETSTARCOUNT",
-            "options": {
-                "stream": true
-            },
-            "parameters": [],
-            "result": {
-                "type": "string"
-            }
         }
     ]
 }
