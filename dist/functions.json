@@ -17,7 +17,7 @@
             }
         },
         {
-            "description": "Lấy tỷ giá hối đoái ngoại tệ và vnđ theo niêm yết tại pỏtal.vietcombank.com.vn",
+            "description": "Lấy tỷ giá hối đoái ngoại tệ và vnđ theo niêm yết tại portal.vietcombank.com.vn",
             "id": "TYGIA",
             "name": "TYGIA",
             "options": {

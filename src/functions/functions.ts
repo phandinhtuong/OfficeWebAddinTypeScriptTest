@@ -56,7 +56,7 @@ export function TacGia(nameAndID: string): string[][] {
   ];
 }
 /**
- * Lấy tỷ giá hối đoái ngoại tệ và vnđ theo niêm yết tại pỏtal.vietcombank.com.vn
+ * Lấy tỷ giá hối đoái ngoại tệ và vnđ theo niêm yết tại portal.vietcombank.com.vn
  * @customfunction
  * @param currency Mã ngoại tệ.
  * @param type Loại tỷ giá.

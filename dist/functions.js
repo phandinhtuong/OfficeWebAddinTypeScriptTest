@@ -21900,7 +21900,7 @@ function TacGia(nameAndID) {
 
 exports.TacGia = TacGia;
 /**
- * Lấy tỷ giá hối đoái ngoại tệ và vnđ theo niêm yết tại pỏtal.vietcombank.com.vn
+ * Lấy tỷ giá hối đoái ngoại tệ và vnđ theo niêm yết tại portal.vietcombank.com.vn
  * @customfunction
  * @param currency Mã ngoại tệ.
  * @param type Loại tỷ giá.
@@ -21959,7 +21959,7 @@ function TyGia(currency, type, date, invocation) {
         /*return*/
         ];
       }
-      url = "http://127.0.0.1:10010/crawl?currency=" + currency + "&type=" + type + "&date=" + date;
+      url = "http://127.0.0.1:10010/crawlTyGia?currency=" + currency + "&type=" + type + "&date=" + date;
       xhttp = new XMLHttpRequest();
       return [2
       /*return*/
