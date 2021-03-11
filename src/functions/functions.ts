@@ -1,88 +1,4 @@
 ﻿/**
- * Adds two numbers.
- * @customfunction
- * @param first First number
- * @param second Second number
- * @returns The sum of the two numbers.
- */
-/* global clearInterval, console, setInterval */
-
-export function add(first: number, second: number): number {
-  return first + second;
-}
-
-/**
- * Displays the current time once a second.
- * @customfunction
- * @param invocation Custom function handler
- */
-export function clock(invocation: CustomFunctions.StreamingInvocation<string>): void {
-  const timer = setInterval(() => {
-    const time = currentTime();
-    invocation.setResult(time);
-  }, 1000);
-
-  invocation.onCanceled = () => {
-    clearInterval(timer);
-  };
-}
-
-/**
- * Returns the current time.
- * @returns String with the current time formatted for the current locale.
- */
-export function currentTime(): string {
-  return new Date().toLocaleTimeString();
-}
-
-/**
- * Increments a value once a second.
- * @customfunction
- * @param incrementBy Amount to increment
- * @param invocation Custom function handler
- */
-export function increment(incrementBy: number, invocation: CustomFunctions.StreamingInvocation<number>): void {
-  let result = 0;
-  const timer = setInterval(() => {
-    result += incrementBy;
-    invocation.setResult(result);
-  }, 1000);
-
-  invocation.onCanceled = () => {
-    clearInterval(timer);
-  };
-}
-
-/**
- * Writes a message to console.log().
- * @customfunction LOG
- * @param message String to write.
- * @returns String to write.
- */
-export function logMessage(message: string): string {
-  console.log(message);
-
-  return message;
-}
-/**
- * Returns the input string.
- * @customfunction
- * @param message String to be returned.
- * @returns Input string.
- */
-export function show(message: string): string {
-  return message;
-}
-/**
- * Returns the input number plus 15.
- * @customfunction
- * @param number The input number.
- * @returns The input number plus 15.
- */
-export function add15(x: number): number {
-  return x + 15;
-}
-/**
  * Returns author's name and ID in 4 cells.
  * @customfunction
  * @param nameAndID - The author's name and ID, ex: "Phan Dinh Tuong 20164582".
@@ -187,7 +103,6 @@ export async function TyGia(
     return;
   }
     
-
   // Loại ngày lấy tỷ giá
   if (date != "") {
     //check valid date
@@ -203,7 +118,6 @@ export async function TyGia(
     }else{
       date = exchangeDate.format('DD/MM/YYYY');
     }
-
   }
 
   // Loại tỷ giá mua/bán
@@ -216,7 +130,7 @@ export async function TyGia(
     return;
   }
   // request to WebAPI / must start WebAPI first
-  const url = "http://127.0.0.1:10010/crawl?currency="+currency+"&type="+type+"&date="+date;
+  const url = "http://127.0.0.1:10010/crawlTyGia?currency="+currency+"&type="+type+"&date="+date;
 
   let xhttp = new XMLHttpRequest();
   return new Promise(function(resolve, reject) {
@@ -236,5 +150,4 @@ export async function TyGia(
     xhttp.open("GET", url, true);
     xhttp.send();
   });
-
 }

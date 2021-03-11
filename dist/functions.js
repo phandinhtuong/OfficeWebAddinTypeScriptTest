@@ -21699,15 +21699,6 @@ module.exports = function(module) {
 
 "use strict";
 
-/**
- * Adds two numbers.
- * @customfunction
- * @param first First number
- * @param second Second number
- * @returns The sum of the two numbers.
- */
-
-/* global clearInterval, console, setInterval */
 
 var __awaiter = this && this.__awaiter || function (thisArg, _arguments, P, generator) {
   function adopt(value) {
@@ -21853,98 +21844,7 @@ var __generator = this && this.__generator || function (thisArg, body) {
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.TyGia = exports.TacGia = exports.add15 = exports.show = exports.logMessage = exports.increment = exports.currentTime = exports.clock = exports.add = void 0;
-
-function add(first, second) {
-  return first + second;
-}
-
-exports.add = add;
-/**
- * Displays the current time once a second.
- * @customfunction
- * @param invocation Custom function handler
- */
-
-function clock(invocation) {
-  var timer = setInterval(function () {
-    var time = currentTime();
-    invocation.setResult(time);
-  }, 1000);
-
-  invocation.onCanceled = function () {
-    clearInterval(timer);
-  };
-}
-
-exports.clock = clock;
-/**
- * Returns the current time.
- * @returns String with the current time formatted for the current locale.
- */
-
-function currentTime() {
-  return new Date().toLocaleTimeString();
-}
-
-exports.currentTime = currentTime;
-/**
- * Increments a value once a second.
- * @customfunction
- * @param incrementBy Amount to increment
- * @param invocation Custom function handler
- */
-
-function increment(incrementBy, invocation) {
-  var result = 0;
-  var timer = setInterval(function () {
-    result += incrementBy;
-    invocation.setResult(result);
-  }, 1000);
-
-  invocation.onCanceled = function () {
-    clearInterval(timer);
-  };
-}
-
-exports.increment = increment;
-/**
- * Writes a message to console.log().
- * @customfunction LOG
- * @param message String to write.
- * @returns String to write.
- */
-
-function logMessage(message) {
-  console.log(message);
-  return message;
-}
-
-exports.logMessage = logMessage;
-/**
- * Returns the input string.
- * @customfunction
- * @param message String to be returned.
- * @returns Input string.
- */
-
-function show(message) {
-  return message;
-}
-
-exports.show = show;
-/**
- * Returns the input number plus 15.
- * @customfunction
- * @param number The input number.
- * @returns The input number plus 15.
- */
-
-function add15(x) {
-  return x + 15;
-}
-
-exports.add15 = add15;
+exports.TyGia = exports.TacGia = void 0;
 /**
  * Returns author's name and ID in 4 cells.
  * @customfunction
@@ -22065,18 +21965,17 @@ function TyGia(currency, type, date, invocation) {
       /*return*/
       , new Promise(function (resolve, reject) {
         xhttp.onreadystatechange = function () {
-          // invocation.setResult(xhttp.responseText);
-          // invocation.setResult(xhttp.responseText);
           if (xhttp.readyState !== 4) return;
 
           if (xhttp.status == 200) {
             // resolve(JSON.parse(xhttp.responseText).result);
-            invocation.setResult(JSON.parse(xhttp.responseText).result); // resolve(xhttp.responseText);
+            invocation.setResult(JSON.parse(xhttp.responseText).result);
           } else {
             reject({
               status: xhttp.status,
               statusText: xhttp.statusText
-            }); // invocation.setResult("rejectedffff");
+            });
+            invocation.setResult("Request was rejected");
           }
         };
 
@@ -22088,54 +21987,8 @@ function TyGia(currency, type, date, invocation) {
 }
 
 exports.TyGia = TyGia;
-/**
- * Gets the star count for a given Github organization or user and repository.
- * @customfunction
- * @param invocation invo
- */
-
-function getStarCount(invocation) {
-  return __awaiter(this, void 0, void 0, function () {
-    var url, xhttp;
-    return __generator(this, function (_a) {
-      url = "http://127.0.0.1:10010/crawl";
-      xhttp = new XMLHttpRequest();
-      return [2
-      /*return*/
-      , new Promise(function (resolve, reject) {
-        xhttp.onreadystatechange = function () {
-          // invocation.setResult(xhttp.responseText);
-          // invocation.setResult(xhttp.responseText);
-          if (xhttp.readyState !== 4) return;
-
-          if (xhttp.status == 200) {
-            // invocation.setResult(xhttp.responseText);
-            invocation.setResult(JSON.parse(xhttp.responseText).result); // var res = JSON.parse(xhttp.response);
-            // invocation.setResult(res.count);
-            // resolve(xhttp.responseText);
-          } else {
-            reject({
-              status: xhttp.status,
-              statusText: xhttp.statusText
-            }); // invocation.setResult("rejectedffff");
-          }
-        };
-
-        xhttp.open("GET", url, true);
-        xhttp.send();
-      })];
-    });
-  });
-}
-CustomFunctions.associate("ADD", add);
-CustomFunctions.associate("CLOCK", clock);
-CustomFunctions.associate("INCREMENT", increment);
-CustomFunctions.associate("LOG", logMessage);
-CustomFunctions.associate("SHOW", show);
-CustomFunctions.associate("ADD15", add15);
 CustomFunctions.associate("TACGIA", TacGia);
 CustomFunctions.associate("TYGIA", TyGia);
-CustomFunctions.associate("GETSTARCOUNT", getStarCount);
 
 /***/ })
 
