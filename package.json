@@ -27,8 +27,7 @@
     "validate": "office-addin-manifest validate manifest.xml",
     "watch": "webpack --mode development --watch",
     "test": "jest",
-    "doc": "tsc ./src/functions/functions.ts && jsdoc -c ./jsdoc.json -t ./node_modules/foodoc/template ./src/functions/",
-    "async": "crawlTestFunc.js"
+    "doc": "tsc ./src/functions/functions.ts && jsdoc -c ./jsdoc.json -t ./node_modules/foodoc/template ./src/functions/"
   },
   "dependencies": {
     "cheerio": "^1.0.0-rc.5",

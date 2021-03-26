@@ -21844,7 +21844,7 @@ var __generator = this && this.__generator || function (thisArg, body) {
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.TyGia = exports.TacGia = void 0;
+exports.StringFontFormatter = exports.StringCellFormatter = exports.KipThi = exports.TyGia = exports.TacGia = void 0;
 /**
  * Returns author's name and ID in 4 cells.
  * @customfunction
@@ -21942,12 +21942,12 @@ function TyGia(currency, type, date, invocation) {
           /*return*/
           ];
         } else if (exchangeDate > today) {
-          invocation.setResult('Out of date');
+          invocation.setResult("Out of date");
           return [2
           /*return*/
           ];
         } else {
-          date = exchangeDate.format('DD/MM/YYYY');
+          date = exchangeDate.format("DDMMYYYY");
         }
       } // Loại tỷ giá mua/bán
 
@@ -21987,8 +21987,116 @@ function TyGia(currency, type, date, invocation) {
 }
 
 exports.TyGia = TyGia;
+/**
+ * Returns starting time of the exam
+ * @customfunction
+ * @param kip Kip thi index
+ * @returns Starting time of the exam
+ */
+
+function KipThi(kip) {
+  var startingTime;
+
+  switch (kip) {
+    case 1:
+      startingTime = "07:00";
+      break;
+
+    case 2:
+      startingTime = "09:30";
+      break;
+
+    case 3:
+      startingTime = "12:30";
+      break;
+
+    case 4:
+      startingTime = "15:00";
+      break;
+
+    default:
+      startingTime = "Invalid";
+      break;
+  }
+
+  return startingTime;
+}
+
+exports.KipThi = KipThi;
+/**
+ * Return input text and change background color.
+ * @customfunction
+ * @param text Input text.
+ * @param cellBackgroundColor Background color of cell to be applied.
+ * @param invocation Invocation object to get current cell.
+ * @requiresAddress
+ * @returns Input text and change background color.
+ */
+
+function StringCellFormatter(text, cellBackgroundColor, invocation) {
+  var address = invocation.address; //get address of the invocation / current cell, eg: Sheet1!A4
+
+  var addressWithoutSheet = address.split("!")[1]; //split to get address without sheet
+
+  Excel.run(function (context) {
+    var sheet = context.workbook.worksheets.getActiveWorksheet();
+    var range = sheet.getRange(addressWithoutSheet);
+    range.select();
+    range.format.fill.color = cellBackgroundColor;
+    return context.sync();
+  }).catch(function (error) {
+    console.log("Error: " + error);
+
+    if (error instanceof OfficeExtension.Error) {
+      console.log("Debug info: " + JSON.stringify(error.debugInfo));
+    }
+  });
+  return text;
+}
+
+exports.StringCellFormatter = StringCellFormatter;
+/**
+ * Return the input text and change the font type, font size, font color.
+ * @customfunction
+ * @param text Input text.
+ * @param fontName Font name.
+ * @param fontSize Font size.
+ * @param fontColor Font color.
+ * @param invocation Invocation object to get current cell.
+ * @requiresAddress
+ * @returns Input text.
+ */
+
+function StringFontFormatter(text, fontName, fontSize, fontColor, invocation) {
+  var address = invocation.address; //get address of the invocation / current cell, eg: Sheet1!A4
+
+  var addressWithoutSheet = address.split("!")[1]; //split to get address without sheet
+
+  Excel.run(function (context) {
+    var sheet = context.workbook.worksheets.getActiveWorksheet();
+    var range = sheet.getRange(addressWithoutSheet);
+    range.select();
+    range.format.font.name = fontName; //eg 'Times New Roman'
+
+    range.format.font.color = fontColor;
+    range.format.font.size = fontSize;
+    return context.sync();
+  }).catch(function (error) {
+    console.log("Error: " + error);
+
+    if (error instanceof OfficeExtension.Error) {
+      console.log("Debug info: " + JSON.stringify(error.debugInfo));
+    }
+  });
+  return text;
+}
+
+exports.StringFontFormatter = StringFontFormatter;
 CustomFunctions.associate("TACGIA", TacGia);
 CustomFunctions.associate("TYGIA", TyGia);
+CustomFunctions.associate("KIPTHI", KipThi);
+CustomFunctions.associate("STRINGCELLFORMATTER", StringCellFormatter);
+CustomFunctions.associate("STRINGFONTFORMATTER", StringFontFormatter);
 
 /***/ })
 

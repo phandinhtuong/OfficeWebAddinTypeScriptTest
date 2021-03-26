@@ -98,25 +98,25 @@ export async function TyGia(
       currency == "THB" ||
       currency == "USD"
     )
-  ){
+  ) {
     invocation.setResult("Unknown currency");
     return;
   }
-    
+
   // Loại ngày lấy tỷ giá
   if (date != "") {
     //check valid date
-    var moment = require('moment'); //moment library
-    var exchangeDate = moment(date,"DD/MM/YYYY",true);
+    var moment = require("moment"); //moment library
+    var exchangeDate = moment(date, "DD/MM/YYYY", true);
     var today = moment();
-    if (isNaN(exchangeDate)){
+    if (isNaN(exchangeDate)) {
       invocation.setResult("Invalid date");
       return;
-    }else if (exchangeDate>today){
-      invocation.setResult('Out of date');
+    } else if (exchangeDate > today) {
+      invocation.setResult("Out of date");
       return;
-    }else{
-      date = exchangeDate.format('DD/MM/YYYY');
+    } else {
+      date = exchangeDate.format("DDMMYYYY");
     }
   }
 
@@ -130,7 +130,7 @@ export async function TyGia(
     return;
   }
   // request to WebAPI / must start WebAPI first
-  const url = "http://127.0.0.1:10010/crawlTyGia?currency="+currency+"&type="+type+"&date="+date;
+  const url = "http://127.0.0.1:10010/crawlTyGia?currency=" + currency + "&type=" + type + "&date=" + date;
 
   let xhttp = new XMLHttpRequest();
   return new Promise(function(resolve, reject) {
@@ -150,4 +150,97 @@ export async function TyGia(
     xhttp.open("GET", url, true);
     xhttp.send();
   });
+}
+/**
+ * Returns starting time of the exam
+ * @customfunction
+ * @param kip Kip thi index
+ * @returns Starting time of the exam
+ */
+export function KipThi(kip: number): string {
+  var startingTime;
+  switch (kip) {
+    case 1:
+      startingTime = "07:00";
+      break;
+    case 2:
+      startingTime = "09:30";
+      break;
+    case 3:
+      startingTime = "12:30";
+      break;
+    case 4:
+      startingTime = "15:00";
+      break;
+    default:
+      startingTime = "Invalid";
+      break;
+  }
+  return startingTime;
+}
+/**
+ * Return input text and change background color.
+ * @customfunction
+ * @param text Input text.
+ * @param cellBackgroundColor Background color of cell to be applied.
+ * @param invocation Invocation object to get current cell.
+ * @requiresAddress
+ * @returns Input text and change background color.
+ */
+export function StringCellFormatter(
+  text: string,
+  cellBackgroundColor: string,
+  invocation: CustomFunctions.Invocation
+): string {
+  var address = invocation.address; //get address of the invocation / current cell, eg: Sheet1!A4
+  var addressWithoutSheet = address.split("!")[1]; //split to get address without sheet
+  Excel.run(function(context) {
+    var sheet = context.workbook.worksheets.getActiveWorksheet();
+    var range = sheet.getRange(addressWithoutSheet);
+    range.select();
+    range.format.fill.color = cellBackgroundColor;
+    return context.sync();
+  }).catch(function(error) {
+    console.log("Error: " + error);
+    if (error instanceof OfficeExtension.Error) {
+      console.log("Debug info: " + JSON.stringify(error.debugInfo));
+    }
+  });
+  return text;
+}
+/**
+ * Return the input text and change the font type, font size, font color.
+ * @customfunction
+ * @param text Input text.
+ * @param fontName Font name.
+ * @param fontSize Font size.
+ * @param fontColor Font color.
+ * @param invocation Invocation object to get current cell.
+ * @requiresAddress
+ * @returns Input text.
+ */
+export function StringFontFormatter(
+  text: string,
+  fontName: string,
+  fontSize: number,
+  fontColor: string,
+  invocation: CustomFunctions.Invocation
+): string {
+  var address = invocation.address; //get address of the invocation / current cell, eg: Sheet1!A4
+  var addressWithoutSheet = address.split("!")[1]; //split to get address without sheet
+  Excel.run(function(context) {
+    var sheet = context.workbook.worksheets.getActiveWorksheet();
+    var range = sheet.getRange(addressWithoutSheet);
+    range.select();
+    range.format.font.name = fontName; //eg 'Times New Roman'
+    range.format.font.color = fontColor;
+    range.format.font.size = fontSize;
+    return context.sync();
+  }).catch(function(error) {
+    console.log("Error: " + error);
+    if (error instanceof OfficeExtension.Error) {
+      console.log("Debug info: " + JSON.stringify(error.debugInfo));
+    }
+  });
+  return text;
 }

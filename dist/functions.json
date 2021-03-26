@@ -43,6 +43,77 @@
             "result": {
                 "type": "string"
             }
+        },
+        {
+            "description": "Returns starting time of the exam",
+            "id": "KIPTHI",
+            "name": "KIPTHI",
+            "parameters": [
+                {
+                    "description": "Kip thi index",
+                    "name": "kip",
+                    "type": "number"
+                }
+            ],
+            "result": {
+                "type": "string"
+            }
+        },
+        {
+            "description": "Return input text and change background color.",
+            "id": "STRINGCELLFORMATTER",
+            "name": "STRINGCELLFORMATTER",
+            "options": {
+                "requiresAddress": true
+            },
+            "parameters": [
+                {
+                    "description": "Input text.",
+                    "name": "text",
+                    "type": "string"
+                },
+                {
+                    "description": "Background color of cell to be applied.",
+                    "name": "cellBackgroundColor",
+                    "type": "string"
+                }
+            ],
+            "result": {
+                "type": "string"
+            }
+        },
+        {
+            "description": "Return the input text and change the font type, font size, font color.",
+            "id": "STRINGFONTFORMATTER",
+            "name": "STRINGFONTFORMATTER",
+            "options": {
+                "requiresAddress": true
+            },
+            "parameters": [
+                {
+                    "description": "Input text.",
+                    "name": "text",
+                    "type": "string"
+                },
+                {
+                    "description": "Font name.",
+                    "name": "fontName",
+                    "type": "string"
+                },
+                {
+                    "description": "Font size.",
+                    "name": "fontSize",
+                    "type": "number"
+                },
+                {
+                    "description": "Font color.",
+                    "name": "fontColor",
+                    "type": "string"
+                }
+            ],
+            "result": {
+                "type": "string"
+            }
         }
     ]
 }
