@@ -114,6 +114,29 @@
             "result": {
                 "type": "string"
             }
+        },
+        {
+            "description": "Generate QR code from text.",
+            "id": "QRCODE",
+            "name": "QRCODE",
+            "options": {
+                "stream": true
+            },
+            "parameters": [
+                {
+                    "description": "Context of QR code.",
+                    "name": "text",
+                    "type": "string"
+                },
+                {
+                    "description": "Name of the shape will be filled with QR code.",
+                    "name": "ShapeName",
+                    "type": "string"
+                }
+            ],
+            "result": {
+                "type": "string"
+            }
         }
     ]
 }
