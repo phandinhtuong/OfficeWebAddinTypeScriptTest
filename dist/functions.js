@@ -21844,7 +21844,7 @@ var __generator = this && this.__generator || function (thisArg, body) {
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.QRCode = exports.StringFontFormatter = exports.StringCellFormatter = exports.KipThi = exports.TyGia = exports.TacGia = void 0;
+exports.testCellProperties = exports.QRCode = exports.StringFontFormatter = exports.StringCellFormatter = exports.KipThi = exports.TyGia = exports.TacGia = void 0;
 /**
  * Returns author's name and ID in 4 cells.
  * @customfunction
@@ -22098,11 +22098,10 @@ exports.StringFontFormatter = StringFontFormatter;
  * @param text Context of QR code.
  * @param ShapeName Name of the shape will be filled with QR code.
  * @param invocation Invocation object to get current cell.
+ * @requiresAddress
  */
 
 function QRCode(text, ShapeName, invocation) {
-  //var address = invocation.address; //get address of the invocation / current cell, eg: Sheet1!A4
-  //var addressWithoutSheet = address.split("!")[1]; //split to get address without sheet
   Excel.run(function (context) {
     //var range = sheet.getRange(addressWithoutSheet);
     //range.select();
@@ -22111,27 +22110,123 @@ function QRCode(text, ShapeName, invocation) {
     var xhttp = new XMLHttpRequest();
     return new Promise(function (resolve, reject) {
       xhttp.onreadystatechange = function () {
-        if (xhttp.readyState !== 4) return;
+        return __awaiter(this, void 0, void 0, function () {
+          var result, address, addressWithoutSheet, sheet, range, shapes, myShape;
+          return __generator(this, function (_a) {
+            switch (_a.label) {
+              case 0:
+                if (xhttp.readyState !== 4) return [2
+                /*return*/
+                ];
+                if (!(xhttp.status == 200)) return [3
+                /*break*/
+                , 3];
+                result = JSON.parse(xhttp.responseText).result;
+                result = result.substring(22); //get substring from index 22 to avoid 'data:image/png;base64,'
 
-        if (xhttp.status == 200) {
-          // resolve(JSON.parse(xhttp.responseText).result);
-          var sheet = context.workbook.worksheets.getActiveWorksheet();
-          var result = JSON.parse(xhttp.responseText).result;
-          result = result.substring(22);
-          var image = sheet.shapes.addImage(result);
-          console.log(result);
-          image.name = "image";
-          invocation.setResult(text); //return JSON.parse(xhttp.responseText).result;
+                address = invocation.address;
+                addressWithoutSheet = address.split("!")[1];
+                console.log(addressWithoutSheet);
+                sheet = context.workbook.worksheets.getActiveWorksheet();
+                range = sheet.getRange(addressWithoutSheet);
+                range.select();
+                range.load(["left", "top", "height", "width"]);
+                return [4
+                /*yield*/
+                , context.sync()];
 
-          return context.sync(); // return text;
-          //
-        } else {
-          reject({
-            status: xhttp.status,
-            statusText: xhttp.statusText
+              case 1:
+                _a.sent();
+
+                console.log(range.top, range.left, range.height, range.width);
+                shapes = context.workbook.worksheets.getActiveWorksheet().shapes;
+                myShape = sheet.shapes.addImage(result);
+                myShape.name = ShapeName;
+                myShape.set({
+                  placement: "TwoCell",
+                  left: range.left,
+                  top: range.top,
+                  height: range.height,
+                  width: range.width
+                }); // }else{
+                // }
+                // var j = shapes.getCount();
+                // // var stemp[j]
+                // context.sync();
+                // console.log("Sss");
+                // console.log(j.value);
+                // var i, stemp;
+                // for (i = 0; i < j.value; i++) {
+                //   stemp = shapes.getItemAt(i);
+                //   stemp.load("name");
+                //   context.sync();
+                //   console.log(i);
+                //   if (stemp.name == "newImage") {
+                //     context.sync();
+                //     console.log("yes");
+                //   } else {
+                //     console.log("no");
+                //   }
+                // }
+                //var image = sheet.shapes.addImage(result);
+                //TODO: find shape by name and fill
+                //console.log(result);
+                //image.name = "image";
+                //streamingInvocation.setResult(text);
+                //return JSON.parse(xhttp.responseText).result;
+
+                return [4
+                /*yield*/
+                , context.sync()];
+
+              case 2:
+                // }else{
+                // }
+                // var j = shapes.getCount();
+                // // var stemp[j]
+                // context.sync();
+                // console.log("Sss");
+                // console.log(j.value);
+                // var i, stemp;
+                // for (i = 0; i < j.value; i++) {
+                //   stemp = shapes.getItemAt(i);
+                //   stemp.load("name");
+                //   context.sync();
+                //   console.log(i);
+                //   if (stemp.name == "newImage") {
+                //     context.sync();
+                //     console.log("yes");
+                //   } else {
+                //     console.log("no");
+                //   }
+                // }
+                //var image = sheet.shapes.addImage(result);
+                //TODO: find shape by name and fill
+                //console.log(result);
+                //image.name = "image";
+                //streamingInvocation.setResult(text);
+                //return JSON.parse(xhttp.responseText).result;
+                _a.sent();
+
+                return [3
+                /*break*/
+                , 4];
+
+              case 3:
+                reject({
+                  status: xhttp.status,
+                  statusText: xhttp.statusText
+                });
+                console.log("Request was rejected");
+                _a.label = 4;
+
+              case 4:
+                return [2
+                /*return*/
+                ];
+            }
           });
-          console.log("Request was rejected");
-        }
+        });
       };
 
       xhttp.open("GET", url, true);
@@ -22144,15 +22239,64 @@ function QRCode(text, ShapeName, invocation) {
       console.log("Debug info: " + JSON.stringify(error.debugInfo));
     }
   });
+  return text;
 }
 
 exports.QRCode = QRCode;
+/**
+ * Returns cell's properties
+ * @customfunction
+ * @param invocation invocation of the function
+ * @requiresAddress
+ */
+
+function testCellProperties(invocation) {
+  var address = invocation.address; //get address of the invocation / current cell, eg: Sheet1!A4
+
+  var addressWithoutSheet = address.split("!")[1]; //split to get address without sheet
+
+  Excel.run(function (context) {
+    return __awaiter(this, void 0, void 0, function () {
+      var sheet, range;
+      return __generator(this, function (_a) {
+        switch (_a.label) {
+          case 0:
+            sheet = context.workbook.worksheets.getActiveWorksheet();
+            range = sheet.getRange(addressWithoutSheet); //range.select();
+
+            range.load("left");
+            return [4
+            /*yield*/
+            , context.sync()];
+
+          case 1:
+            _a.sent(); //range.format.fill.color = "red";
+
+
+            console.log(range.left);
+            return [2
+            /*return*/
+            , context.sync()];
+        }
+      });
+    });
+  }).catch(function (error) {
+    console.log("Error: " + error);
+
+    if (error instanceof OfficeExtension.Error) {
+      console.log("Debug info: " + JSON.stringify(error.debugInfo));
+    }
+  });
+}
+
+exports.testCellProperties = testCellProperties;
 CustomFunctions.associate("TACGIA", TacGia);
 CustomFunctions.associate("TYGIA", TyGia);
 CustomFunctions.associate("KIPTHI", KipThi);
 CustomFunctions.associate("STRINGCELLFORMATTER", StringCellFormatter);
 CustomFunctions.associate("STRINGFONTFORMATTER", StringFontFormatter);
 CustomFunctions.associate("QRCODE", QRCode);
+CustomFunctions.associate("TESTCELLPROPERTIES", testCellProperties);
 
 /***/ })
 

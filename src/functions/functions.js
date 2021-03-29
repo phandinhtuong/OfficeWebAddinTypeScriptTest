@@ -36,7 +36,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 exports.__esModule = true;
-exports.StringFontFormatter = exports.StringCellFormatter = exports.KipThi = exports.TyGia = exports.TacGia = void 0;
+exports.QRCode = exports.StringFontFormatter = exports.StringCellFormatter = exports.KipThi = exports.TyGia = exports.TacGia = void 0;
 /**
  * Returns author's name and ID in 4 cells.
  * @customfunction
@@ -142,7 +142,7 @@ function TyGia(currency, type, date, invocation) {
                     return [2 /*return*/];
                 }
                 else {
-                    date = exchangeDate.format("DD/MM/YYYY");
+                    date = exchangeDate.format("DDMMYYYY");
                 }
             }
             // Loại tỷ giá mua/bán
@@ -268,3 +268,123 @@ function StringFontFormatter(text, fontName, fontSize, fontColor, invocation) {
     return text;
 }
 exports.StringFontFormatter = StringFontFormatter;
+/**
+ * Generate QR code from text.
+ * @customfunction
+ * @param text Context of QR code.
+ * @param ShapeName Name of the shape will be filled with QR code.
+ * @param invocation Invocation object to get current cell.
+ * @requiresAddress
+ */
+function QRCode(text, ShapeName, invocation) {
+    Excel.run(function (context) {
+        // request to WebAPI / must start WebAPI first
+        var url = "http://127.0.0.1:10010/qrcode?text=" + text;
+        var xhttp = new XMLHttpRequest();
+        return new Promise(function (resolve, reject) {
+            xhttp.onreadystatechange = function () {
+                return __awaiter(this, void 0, void 0, function () {
+                    var result, address, addressWithoutSheet, sheet, range, shapes, myShape;
+                    return __generator(this, function (_a) {
+                        switch (_a.label) {
+                            case 0:
+                                if (xhttp.readyState !== 4)
+                                    return [2 /*return*/];
+                                if (!(xhttp.status == 200)) return [3 /*break*/, 3];
+                                result = JSON.parse(xhttp.responseText).result;
+                                result = result.substring(22); //get substring from index 22 to avoid 'data:image/png;base64,'
+                                address = invocation.address;
+                                addressWithoutSheet = address.split("!")[1];
+                                sheet = context.workbook.worksheets.getActiveWorksheet();
+                                range = sheet.getRange(addressWithoutSheet);
+                                range.select();
+                                range.load(["left", "top", "height", "width"]); // load left, top, height, width of the cell to place QR code image
+                                return [4 /*yield*/, context.sync()];
+                            case 1:
+                                _a.sent(); //always call sync after loading
+                                shapes = context.workbook.worksheets.getActiveWorksheet().shapes;
+                                myShape = sheet.shapes.addImage(result);
+                                myShape.name = ShapeName;
+                                //placement: two cell: shape is moved with the cell.
+                                //left, top, height, width: properties of the cell that the shape follows
+                                myShape.set({ placement: "TwoCell", left: range.left, top: range.top, height: range.height, width: range.width });
+                                // }else{
+                                // }
+                                // var j = shapes.getCount();
+                                // // var stemp[j]
+                                // context.sync();
+                                // console.log("Sss");
+                                // console.log(j.value);
+                                // var i, stemp;
+                                // for (i = 0; i < j.value; i++) {
+                                //   stemp = shapes.getItemAt(i);
+                                //   stemp.load("name");
+                                //   context.sync();
+                                //   console.log(i);
+                                //   if (stemp.name == "newImage") {
+                                //     context.sync();
+                                //     console.log("yes");
+                                //   } else {
+                                //     console.log("no");
+                                //   }
+                                // }
+                                //var image = sheet.shapes.addImage(result);
+                                //TODO: find shape by name and fill
+                                //console.log(result);
+                                //image.name = "image";
+                                //streamingInvocation.setResult(text);
+                                //return JSON.parse(xhttp.responseText).result;
+                                return [4 /*yield*/, context.sync()];
+                            case 2:
+                                // }else{
+                                // }
+                                // var j = shapes.getCount();
+                                // // var stemp[j]
+                                // context.sync();
+                                // console.log("Sss");
+                                // console.log(j.value);
+                                // var i, stemp;
+                                // for (i = 0; i < j.value; i++) {
+                                //   stemp = shapes.getItemAt(i);
+                                //   stemp.load("name");
+                                //   context.sync();
+                                //   console.log(i);
+                                //   if (stemp.name == "newImage") {
+                                //     context.sync();
+                                //     console.log("yes");
+                                //   } else {
+                                //     console.log("no");
+                                //   }
+                                // }
+                                //var image = sheet.shapes.addImage(result);
+                                //TODO: find shape by name and fill
+                                //console.log(result);
+                                //image.name = "image";
+                                //streamingInvocation.setResult(text);
+                                //return JSON.parse(xhttp.responseText).result;
+                                _a.sent();
+                                return [3 /*break*/, 4];
+                            case 3:
+                                reject({
+                                    status: xhttp.status,
+                                    statusText: xhttp.statusText
+                                });
+                                console.log("Request was rejected");
+                                _a.label = 4;
+                            case 4: return [2 /*return*/];
+                        }
+                    });
+                });
+            };
+            xhttp.open("GET", url, true);
+            xhttp.send();
+        });
+    })["catch"](function (error) {
+        console.log("Error: " + error);
+        if (error instanceof OfficeExtension.Error) {
+            console.log("Debug info: " + JSON.stringify(error.debugInfo));
+        }
+    });
+    return text;
+}
+exports.QRCode = QRCode;

@@ -250,36 +250,70 @@ export function StringFontFormatter(
  * @param text Context of QR code.
  * @param ShapeName Name of the shape will be filled with QR code.
  * @param invocation Invocation object to get current cell.
+ * @requiresAddress
  */
-export function QRCode(text: string, ShapeName: string, invocation: CustomFunctions.StreamingInvocation<string>) {
-  //var address = invocation.address; //get address of the invocation / current cell, eg: Sheet1!A4
-  //var addressWithoutSheet = address.split("!")[1]; //split to get address without sheet
-
+export function QRCode(text: string, ShapeName: string, invocation: CustomFunctions.Invocation) {
   Excel.run(function(context) {
-    
-    //var range = sheet.getRange(addressWithoutSheet);
-    //range.select();
     // request to WebAPI / must start WebAPI first
     const url = "http://127.0.0.1:10010/qrcode?text=" + text;
 
     let xhttp = new XMLHttpRequest();
     return new Promise(function(resolve, reject) {
-      xhttp.onreadystatechange = function() {
+      xhttp.onreadystatechange = async function() {
         if (xhttp.readyState !== 4) return;
-        if (xhttp.status == 200) {
-          // resolve(JSON.parse(xhttp.responseText).result);
-          
+        if (xhttp.status == 200) { // success status
+          var result = JSON.parse(xhttp.responseText).result; 
+          result = result.substring(22); //get substring from index 22 to avoid 'data:image/png;base64,'
+
+          var address = invocation.address; //get address of the invocation / current cell, eg: Sheet1!A4
+          var addressWithoutSheet = address.split("!")[1]; //split to get address without sheet, eg: A4
           var sheet = context.workbook.worksheets.getActiveWorksheet();
-          var result =JSON.parse(xhttp.responseText).result;
-          result = result.substring(22);
-          var image = sheet.shapes.addImage(result);
+          var range = sheet.getRange(addressWithoutSheet);
+          range.select();
+          range.load(["left", "top", "height", "width"]); // load left, top, height, width of the cell to place QR code image
+          await context.sync(); //always call sync after loading
+          
+          const shapes = context.workbook.worksheets.getActiveWorksheet().shapes;
+          // if (sheet.shapes.getItem(ShapeName) == null){
+          var myShape = sheet.shapes.addImage(result);
+          myShape.name = ShapeName;
+
+          //placement: two cell: shape is moved with the cell.
+          //left, top, height, width: properties of the cell that the shape follows
+          myShape.set({placement:"TwoCell", left: range.left, top: range.top, height: range.height, width: range.width });
+
+
+          // }else{
+
+          // }
+          // var j = shapes.getCount();
+          // // var stemp[j]
+          // context.sync();
+          // console.log("Sss");
+          // console.log(j.value);
+          // var i, stemp;
+          // for (i = 0; i < j.value; i++) {
+          //   stemp = shapes.getItemAt(i);
+          //   stemp.load("name");
+          //   context.sync();
+          //   console.log(i);
+          //   if (stemp.name == "newImage") {
+          //     context.sync();
+          //     console.log("yes");
+          //   } else {
+          //     console.log("no");
+          //   }
+          // }
+
+          //var image = sheet.shapes.addImage(result);
           //TODO: find shape by name and fill
-          console.log(result);
-          image.name = "image";
-          invocation.setResult(text);
+          //console.log(result);
+          //image.name = "image";
+          //streamingInvocation.setResult(text);
           //return JSON.parse(xhttp.responseText).result;
-          return context.sync();
-          // return text;
+          await context.sync();
+
+          //return text;
           //
         } else {
           reject({
@@ -288,17 +322,15 @@ export function QRCode(text: string, ShapeName: string, invocation: CustomFuncti
           });
           console.log("Request was rejected");
         }
-        
       };
       xhttp.open("GET", url, true);
       xhttp.send();
     });
-    
   }).catch(function(error) {
     console.log("Error: " + error);
     if (error instanceof OfficeExtension.Error) {
       console.log("Debug info: " + JSON.stringify(error.debugInfo));
     }
   });
-  
+  return text;
 }

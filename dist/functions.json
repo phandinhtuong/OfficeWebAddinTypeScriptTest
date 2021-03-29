@@ -120,7 +120,7 @@
             "id": "QRCODE",
             "name": "QRCODE",
             "options": {
-                "stream": true
+                "requiresAddress": true
             },
             "parameters": [
                 {
@@ -134,9 +134,7 @@
                     "type": "string"
                 }
             ],
-            "result": {
-                "type": "string"
-            }
+            "result": {}
         }
     ]
 }
