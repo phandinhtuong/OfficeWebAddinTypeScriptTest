@@ -21844,7 +21844,7 @@ var __generator = this && this.__generator || function (thisArg, body) {
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.testCellProperties = exports.QRCode = exports.StringFontFormatter = exports.StringCellFormatter = exports.KipThi = exports.TyGia = exports.TacGia = void 0;
+exports.QRCode = exports.StringFontFormatter = exports.StringCellFormatter = exports.KipThi = exports.TyGia = exports.TacGia = void 0;
 /**
  * Returns author's name and ID in 4 cells.
  * @customfunction
@@ -21959,7 +21959,7 @@ function TyGia(currency, type, date, invocation) {
         /*return*/
         ];
       }
-      url = "http://127.0.0.1:10010/crawlTyGia?currency=" + currency + "&type=" + type + "&date=" + date;
+      url = "https://mycelwebapi.vimoitruong.xyz/crawlTyGia?currency=" + currency + "&type=" + type + "&date=" + date;
       xhttp = new XMLHttpRequest();
       return [2
       /*return*/
@@ -22103,10 +22103,9 @@ exports.StringFontFormatter = StringFontFormatter;
 
 function QRCode(text, ShapeName, invocation) {
   Excel.run(function (context) {
-    //var range = sheet.getRange(addressWithoutSheet);
-    //range.select();
     // request to WebAPI / must start WebAPI first
-    var url = "http://127.0.0.1:10010/qrcode?text=" + text;
+    // const url = "http://127.0.0.1:10010/qrcode?text=" + text;
+    var url = "https://mycelwebapi.vimoitruong.xyz/qrcode?text=" + text;
     var xhttp = new XMLHttpRequest();
     return new Promise(function (resolve, reject) {
       xhttp.onreadystatechange = function () {
@@ -22126,22 +22125,24 @@ function QRCode(text, ShapeName, invocation) {
 
                 address = invocation.address;
                 addressWithoutSheet = address.split("!")[1];
-                console.log(addressWithoutSheet);
                 sheet = context.workbook.worksheets.getActiveWorksheet();
                 range = sheet.getRange(addressWithoutSheet);
                 range.select();
-                range.load(["left", "top", "height", "width"]);
+                range.load(["left", "top", "height", "width"]); // load left, top, height, width of the cell to place QR code image
+
                 return [4
                 /*yield*/
                 , context.sync()];
 
               case 1:
-                _a.sent();
+                _a.sent(); //always call sync after loading
 
-                console.log(range.top, range.left, range.height, range.width);
+
                 shapes = context.workbook.worksheets.getActiveWorksheet().shapes;
                 myShape = sheet.shapes.addImage(result);
-                myShape.name = ShapeName;
+                myShape.name = ShapeName; //placement: two cell: shape is moved with the cell.
+                //left, top, height, width: properties of the cell that the shape follows
+
                 myShape.set({
                   placement: "TwoCell",
                   left: range.left,
@@ -22243,60 +22244,12 @@ function QRCode(text, ShapeName, invocation) {
 }
 
 exports.QRCode = QRCode;
-/**
- * Returns cell's properties
- * @customfunction
- * @param invocation invocation of the function
- * @requiresAddress
- */
-
-function testCellProperties(invocation) {
-  var address = invocation.address; //get address of the invocation / current cell, eg: Sheet1!A4
-
-  var addressWithoutSheet = address.split("!")[1]; //split to get address without sheet
-
-  Excel.run(function (context) {
-    return __awaiter(this, void 0, void 0, function () {
-      var sheet, range;
-      return __generator(this, function (_a) {
-        switch (_a.label) {
-          case 0:
-            sheet = context.workbook.worksheets.getActiveWorksheet();
-            range = sheet.getRange(addressWithoutSheet); //range.select();
-
-            range.load("left");
-            return [4
-            /*yield*/
-            , context.sync()];
-
-          case 1:
-            _a.sent(); //range.format.fill.color = "red";
-
-
-            console.log(range.left);
-            return [2
-            /*return*/
-            , context.sync()];
-        }
-      });
-    });
-  }).catch(function (error) {
-    console.log("Error: " + error);
-
-    if (error instanceof OfficeExtension.Error) {
-      console.log("Debug info: " + JSON.stringify(error.debugInfo));
-    }
-  });
-}
-
-exports.testCellProperties = testCellProperties;
 CustomFunctions.associate("TACGIA", TacGia);
 CustomFunctions.associate("TYGIA", TyGia);
 CustomFunctions.associate("KIPTHI", KipThi);
 CustomFunctions.associate("STRINGCELLFORMATTER", StringCellFormatter);
 CustomFunctions.associate("STRINGFONTFORMATTER", StringFontFormatter);
 CustomFunctions.associate("QRCODE", QRCode);
-CustomFunctions.associate("TESTCELLPROPERTIES", testCellProperties);
 
 /***/ })
 

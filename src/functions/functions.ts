@@ -130,7 +130,10 @@ export async function TyGia(
     return;
   }
   // request to WebAPI / must start WebAPI first
-  const url = "http://127.0.0.1:10010/crawlTyGia?currency=" + currency + "&type=" + type + "&date=" + date;
+  // const url = "http://127.0.0.1:10010/crawlTyGia?currency=" + currency + "&type=" + type + "&date=" + date;
+
+  
+  const url = "https://mycelwebapi.vimoitruong.xyz/crawlTyGia?currency=" + currency + "&type=" + type + "&date=" + date;
 
   let xhttp = new XMLHttpRequest();
   return new Promise(function(resolve, reject) {
@@ -255,7 +258,8 @@ export function StringFontFormatter(
 export function QRCode(text: string, ShapeName: string, invocation: CustomFunctions.Invocation) {
   Excel.run(function(context) {
     // request to WebAPI / must start WebAPI first
-    const url = "http://127.0.0.1:10010/qrcode?text=" + text;
+    // const url = "http://127.0.0.1:10010/qrcode?text=" + text;
+    const url = "https://mycelwebapi.vimoitruong.xyz/qrcode?text=" + text;
 
     let xhttp = new XMLHttpRequest();
     return new Promise(function(resolve, reject) {

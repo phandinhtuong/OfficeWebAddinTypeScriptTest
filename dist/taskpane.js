@@ -292,6 +292,8 @@ Office.initialize = function () {
   document.getElementById("sideload-msg").style.display = "none";
   document.getElementById("app-body").style.display = "flex";
   document.getElementById("run").onclick = run;
+  document.getElementById("writeTextButton").onclick = writeText;
+  document.getElementById("scrollDownButton").onclick = scrollDown;
 };
 
 function run() {
@@ -355,6 +357,185 @@ function run() {
       }
     });
   });
+} // Reads data from current document selection and displays a notification
+
+
+function writeText() {
+  Excel.run(function (context) {
+    var range = context.workbook.getSelectedRange();
+    var saturation = document.getElementById("saturation").value;
+
+    if (isNaN(+saturation) || saturation == "") {
+      //TODO: Display error on dialog or something
+      range.getCell(0, 0).values = [["Saturation is NaN"]];
+    } else if (+saturation < 0 || +saturation > 255) {
+      //TODO: Display error on dialog or something
+      range.getCell(0, 0).values = [["Saturation is out of range"]];
+    } else {
+      var colorSelected = document.getElementById("color").value;
+      var saturationInHex = parseInt(saturation).toString(16);
+
+      if (saturationInHex.length < 2) {
+        saturationInHex = "0" + saturationInHex;
+      }
+
+      if (+saturation > 128) {
+        range.format.font.color = "black";
+      } else {
+        range.format.font.color = "white";
+      } //range.format.fill.color = "#873F11";
+
+
+      switch (colorSelected) {
+        case "Red":
+          range.format.fill.color = "#" + saturationInHex + "0000"; //range.values = [["#" + saturationInHex + "0000"]];
+
+          break;
+
+        case "Green":
+          range.format.fill.color = "#00" + saturationInHex + "00"; // range.values = [["#00" + saturationInHex + "00"]];
+
+          break;
+
+        case "Blue":
+          range.format.fill.color = "#0000" + saturationInHex; //range.values = [["#0000" + saturationInHex]];
+
+          break;
+
+        case "Gray":
+          range.format.fill.color = "#" + saturationInHex + saturationInHex + saturationInHex; //range.values = [["#" + saturationInHex + saturationInHex + saturationInHex]];
+
+          break;
+      }
+    }
+
+    return context.sync();
+  }).catch(function (error) {
+    console.log("Error: " + error);
+
+    if (error instanceof OfficeExtension.Error) {
+      console.log("Debug info: " + JSON.stringify(error.debugInfo));
+    }
+  }); // Office.context.document.setSelectedDataAsync("Data hereee",
+  //     function (asyncResult) {
+  //         var error = asyncResult.error;
+  //         if (asyncResult.status === "failed") {
+  //             //show error. Upcoming displayDialog API will help here.
+  //         }
+  //         else {
+  //             //show success.Upcoming displayDialog API will help here.
+  //         }
+  //     });
+} //Scroll down for easier viewing input list
+
+
+function scrollDown() {
+  Excel.run(function (context) {
+    return __awaiter(this, void 0, void 0, function () {
+      var scrollDownInput, sheet, range, i, j;
+      return __generator(this, function (_a) {
+        switch (_a.label) {
+          case 0:
+            scrollDownInput = document.getElementById("scrollDownInput").value;
+            sheet = context.workbook.worksheets.getActiveWorksheet();
+            range = context.workbook.getSelectedRange();
+            if (!(scrollDownInput == "")) return [3
+            /*break*/
+            , 2];
+            range.getCell(0, 0).values = [["Please input something"]];
+            return [4
+            /*yield*/
+            , context.sync()];
+
+          case 1:
+            _a.sent();
+
+            return [3
+            /*break*/
+            , 9];
+
+          case 2:
+            range.load(["rowCount", "columnCount"]); // range.getCell(0,0).values = [[scrollDownInput]];
+
+            return [4
+            /*yield*/
+            , context.sync()];
+
+          case 3:
+            // range.getCell(0,0).values = [[scrollDownInput]];
+            _a.sent();
+
+            for (i = 0; i < range.rowCount; i++) {
+              for (j = 0; j < range.columnCount; j++) {
+                range.getCell(i, j).values = [[scrollDownInput]];
+              }
+            }
+
+            return [4
+            /*yield*/
+            , context.sync()];
+
+          case 4:
+            _a.sent();
+
+            range = range.getRowsBelow(15);
+            range.select();
+            return [4
+            /*yield*/
+            , context.sync()];
+
+          case 5:
+            _a.sent();
+
+            range = range.getRowsBelow();
+            range.select();
+            return [4
+            /*yield*/
+            , context.sync()];
+
+          case 6:
+            _a.sent();
+
+            range = range.getRowsAbove(14);
+            range.select();
+            return [4
+            /*yield*/
+            , context.sync()];
+
+          case 7:
+            _a.sent();
+
+            range = range.getRowsAbove();
+            range.select();
+            return [4
+            /*yield*/
+            , context.sync()];
+
+          case 8:
+            _a.sent();
+
+            _a.label = 9;
+
+          case 9:
+            focusInputScrolldown();
+            return [2
+            /*return*/
+            ];
+        }
+      });
+    });
+  }).catch(function (error) {
+    console.log("Error: " + error);
+
+    if (error instanceof OfficeExtension.Error) {
+      console.log("Debug info: " + JSON.stringify(error.debugInfo));
+    }
+  });
+}
+
+function focusInputScrolldown() {
+  var input = document.getElementById("scrollDownInput");
+  input.select();
 }
 
 /***/ })
