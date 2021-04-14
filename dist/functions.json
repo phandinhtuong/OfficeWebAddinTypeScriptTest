@@ -135,6 +135,21 @@
                 }
             ],
             "result": {}
+        },
+        {
+            "description": "Speak the input number.",
+            "id": "NUMBERTOSPEECH",
+            "name": "NUMBERTOSPEECH",
+            "parameters": [
+                {
+                    "description": "Number to be spoken.",
+                    "name": "number",
+                    "type": "number"
+                }
+            ],
+            "result": {
+                "type": "string"
+            }
         }
     ]
 }
