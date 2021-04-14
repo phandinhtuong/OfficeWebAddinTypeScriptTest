@@ -150,6 +150,51 @@
             "result": {
                 "type": "string"
             }
+        },
+        {
+            "description": "Number to text in Vietnamese.",
+            "id": "NUMBERTOTEXT",
+            "name": "NUMBERTOTEXT",
+            "parameters": [
+                {
+                    "description": "Number to text.",
+                    "name": "number",
+                    "type": "number"
+                }
+            ],
+            "result": {
+                "type": "string"
+            }
+        },
+        {
+            "description": "Decimal number to speech.",
+            "id": "DECIMALTOSPEECH",
+            "name": "DECIMALTOSPEECH",
+            "parameters": [
+                {
+                    "description": "Number to be spoken.",
+                    "name": "number",
+                    "type": "number"
+                }
+            ],
+            "result": {
+                "type": "string"
+            }
+        },
+        {
+            "description": "Decimal number to text in Vietnamese.",
+            "id": "DECIMALTOTEXT",
+            "name": "DECIMALTOTEXT",
+            "parameters": [
+                {
+                    "description": "Number to text.",
+                    "name": "number",
+                    "type": "number"
+                }
+            ],
+            "result": {
+                "type": "string"
+            }
         }
     ]
 }

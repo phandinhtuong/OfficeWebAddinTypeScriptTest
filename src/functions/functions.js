@@ -36,7 +36,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 exports.__esModule = true;
-exports.QRCode = exports.StringFontFormatter = exports.StringCellFormatter = exports.KipThi = exports.TyGia = exports.TacGia = void 0;
+exports.decimalToText = exports.decimalToSpeech = exports.numberToText = exports.numberToSpeech = exports.QRCode = exports.StringFontFormatter = exports.StringCellFormatter = exports.KipThi = exports.TyGia = exports.TacGia = void 0;
 /**
  * Returns author's name and ID in 4 cells.
  * @customfunction
@@ -157,7 +157,7 @@ function TyGia(currency, type, date, invocation) {
                 invocation.setResult("Unknown type");
                 return [2 /*return*/];
             }
-            url = "http://127.0.0.1:10010/crawlTyGia?currency=" + currency + "&type=" + type + "&date=" + date;
+            url = "https://mycelwebapi.vimoitruong.xyz/crawlTyGia?currency=" + currency + "&type=" + type + "&date=" + date;
             xhttp = new XMLHttpRequest();
             return [2 /*return*/, new Promise(function (resolve, reject) {
                     xhttp.onreadystatechange = function () {
@@ -279,7 +279,8 @@ exports.StringFontFormatter = StringFontFormatter;
 function QRCode(text, ShapeName, invocation) {
     Excel.run(function (context) {
         // request to WebAPI / must start WebAPI first
-        var url = "http://127.0.0.1:10010/qrcode?text=" + text;
+        // const url = "http://127.0.0.1:10010/qrcode?text=" + text;
+        var url = "https://mycelwebapi.vimoitruong.xyz/qrcode?text=" + text;
         var xhttp = new XMLHttpRequest();
         return new Promise(function (resolve, reject) {
             xhttp.onreadystatechange = function () {
@@ -307,7 +308,13 @@ function QRCode(text, ShapeName, invocation) {
                                 myShape.name = ShapeName;
                                 //placement: two cell: shape is moved with the cell.
                                 //left, top, height, width: properties of the cell that the shape follows
-                                myShape.set({ placement: "TwoCell", left: range.left, top: range.top, height: range.height, width: range.width });
+                                myShape.set({
+                                    placement: "TwoCell",
+                                    left: range.left,
+                                    top: range.top,
+                                    height: range.height,
+                                    width: range.width
+                                });
                                 // }else{
                                 // }
                                 // var j = shapes.getCount();
@@ -388,3 +395,830 @@ function QRCode(text, ShapeName, invocation) {
     return text;
 }
 exports.QRCode = QRCode;
+/**
+ * Speak the input number.
+ * @customfunction
+ * @param number Number to be spoken.
+ * @returns Number in text.
+ */
+function numberToSpeech(number) {
+    console.log(typeof number);
+    console.log(number);
+    var chuSo = [" không", " một", " hai", " ba", " bốn", " năm", " sáu", " bẩy", " tám", " chín"];
+    var audioChuSo = [
+        new Audio("../../sound/0.wav"),
+        new Audio("../../sound/1.wav"),
+        new Audio("../../sound/2.wav"),
+        new Audio("../../sound/3.wav"),
+        new Audio("../../sound/4.wav"),
+        new Audio("../../sound/5.wav"),
+        new Audio("../../sound/6.wav"),
+        new Audio("../../sound/7.wav"),
+        new Audio("../../sound/8.wav"),
+        new Audio("../../sound/9.wav")
+    ];
+    var tien = [" GH", " nghìn", " triệu", " tỷ", " nghìn tỷ", " triệu tỷ"];
+    var audioTien = [
+        new Audio("../../sound/GolfHit.wav"),
+        new Audio("../../sound/nghin.wav"),
+        new Audio("../../sound/trieu.wav"),
+        new Audio("../../sound/ty.wav"),
+        new Audio("../../sound/nghinTy.wav"),
+        new Audio("../../sound/trieuTy.wav")
+    ];
+    var biggestNumber = 8999999999999999;
+    var lan, i, so, ketqua = "", tmp = "";
+    var vitri = new Array(6);
+    var sounds = new Array();
+    if (typeof number != "number") {
+        console.log("check number: not number");
+    }
+    else {
+        console.log("check number: number");
+        if (number == 0) {
+            console.log("number == 0");
+            sounds.push(audioChuSo[0]);
+            sounds.push(audioTien[0]);
+            ketqua += chuSo[0];
+        }
+        if (number > 0) {
+            console.log("number > 0");
+            so = number;
+        }
+        else {
+            console.log("number <0");
+            so = -number;
+        }
+        if (number > biggestNumber) {
+            return "";
+        }
+        vitri[5] = Math.floor(so / 1000000000000000);
+        console.log("vitri[5] = " + vitri[5]);
+        so -= vitri[5] * 1000000000000000;
+        vitri[4] = Math.floor(so / 1000000000000);
+        console.log("vitri[4] = " + vitri[4]);
+        so -= vitri[4] * 1000000000000;
+        vitri[3] = Math.floor(so / 1000000000);
+        console.log("vitri[3] = " + vitri[3]);
+        so -= vitri[3] * 1000000000;
+        vitri[2] = Math.floor(so / 1000000);
+        console.log("vitri[2] = " + vitri[2]);
+        vitri[1] = Math.floor((so % 1000000) / 1000);
+        console.log("vitri[1] = " + vitri[1]);
+        vitri[0] = so % 1000;
+        console.log("vitri[0] = " + vitri[0]);
+        if (vitri[5] > 0) {
+            lan = 5;
+        }
+        else if (vitri[4] > 0) {
+            lan = 4;
+        }
+        else if (vitri[3] > 0) {
+            lan = 3;
+        }
+        else if (vitri[2] > 0) {
+            lan = 2;
+        }
+        else if (vitri[1] > 0) {
+            lan = 1;
+        }
+        else {
+            lan = 0;
+        }
+        console.log("lan = " + lan);
+        for (i = lan; i >= 0; i--) {
+            console.log("i in for = " + i);
+            tmp = docSo3ChuSo(vitri[i]);
+            console.log("tmp = " + tmp);
+            ketqua += tmp;
+            console.log("ketqua inside for loop lan= " + ketqua);
+            if (vitri[i] != 0 || i == 0) {
+                if (i == 0 && ketqua.substring(ketqua.length - 1) == ",")
+                    ketqua = ketqua.substring(0, ketqua.length - 1);
+                ketqua += tien[i];
+                sounds.push(audioTien[i]);
+            }
+            console.log("ketqua before adding , = " + ketqua);
+            if (i > 0 && tmp != "")
+                ketqua += ",";
+            console.log("ketqua = after adding , = " + ketqua);
+        }
+        //console.log("ketqua.substring(ketqua.length - 1) = " + ketqua.substring(ketqua.length - 1));
+        if (ketqua.substring(ketqua.length - 1) == ",")
+            ketqua = ketqua.substring(0, ketqua.length - 1);
+        ketqua = ketqua.trim();
+        if (number < 0) {
+            ketqua = "âm " + ketqua;
+            sounds.unshift(new Audio("../../sound/am.wav"));
+        }
+        console.log("ketqua after add - = " + ketqua);
+        // var audio = new Audio("../../sound/0.wav");
+        // var audio2 = new Audio("../../sound/1.wav");
+        // sounds.push(audio);
+        // sounds.push(audio2);
+        // sounds.push(audio);
+        var soundIndex = -1;
+        //console.log("sounds.length outside func = " + sounds.length);
+        playSnd();
+        return ketqua.substring(0, 1).toUpperCase() + ketqua.substring(1);
+    }
+    function playSnd() {
+        //console.log("sounds.length inside func = " + sounds.length);
+        soundIndex++;
+        if (soundIndex == sounds.length) {
+            return;
+        }
+        sounds[soundIndex].addEventListener("ended", playSnd);
+        sounds[soundIndex].play();
+    }
+    function docSo3ChuSo(baso) {
+        console.log("baso = " + baso);
+        var tram, chuc, donvi;
+        var ketQua = "";
+        tram = Math.floor(baso / 100);
+        console.log("tram = " + tram);
+        chuc = Math.floor((baso % 100) / 10);
+        console.log("chuc = " + chuc);
+        donvi = baso % 10;
+        console.log("donvi = " + donvi);
+        if (tram == 0 && chuc == 0 && donvi == 0) {
+            return "";
+        }
+        if (ketqua.substring(ketqua.length - 1) == "," || tram != 0) {
+            ketQua += chuSo[tram] + " trăm";
+            sounds.push(audioChuSo[tram]);
+            sounds.push(new Audio("../../sound/tram.wav"));
+            if (chuc == 0 && donvi != 0) {
+                ketQua += " linh";
+                sounds.push(new Audio("../../sound/linh.wav"));
+            }
+        }
+        if (chuc != 0 && chuc != 1) {
+            ketQua += chuSo[chuc] + " mươi";
+            sounds.push(audioChuSo[chuc]);
+            sounds.push(new Audio("../../sound/muoi.wav"));
+            if (chuc == 0 && donvi != 0) {
+                ketQua += " linh";
+                sounds.push(new Audio("../../sound/linh.wav"));
+            }
+        }
+        if (chuc == 1) {
+            ketQua += " mười";
+            sounds.push(new Audio("../../sound/10.wav"));
+        }
+        switch (donvi) {
+            case 1:
+                if (chuc != 0 && chuc != 1) {
+                    ketQua += " mốt";
+                    sounds.push(new Audio("../../sound/mot.wav"));
+                }
+                else {
+                    ketQua += chuSo[donvi];
+                    sounds.push(audioChuSo[donvi]);
+                }
+                break;
+            case 5:
+                if (chuc == 0) {
+                    ketQua += chuSo[donvi];
+                    sounds.push(audioChuSo[donvi]);
+                }
+                else {
+                    ketQua += " lăm";
+                    sounds.push(new Audio("../../sound/lam.wav"));
+                }
+                break;
+            default:
+                if (donvi != 0) {
+                    ketQua += chuSo[donvi];
+                    sounds.push(audioChuSo[donvi]);
+                }
+                break;
+        }
+        return ketQua;
+    }
+}
+exports.numberToSpeech = numberToSpeech;
+/**
+ * Number to text in Vietnamese.
+ * @customfunction
+ * @param number Number to text.
+ * @returns Number in text.
+ */
+function numberToText(number) {
+    console.log(typeof number);
+    console.log(number);
+    var chuSo = [" không", " một", " hai", " ba", " bốn", " năm", " sáu", " bẩy", " tám", " chín"];
+    var tien = [" GH", " nghìn", " triệu", " tỷ", " nghìn tỷ", " triệu tỷ"];
+    var biggestNumber = 8999999999999999;
+    var lan, i, so, ketqua = "", tmp = "";
+    var vitri = new Array(6);
+    if (typeof number != "number") {
+        console.log("check number: not number");
+    }
+    else {
+        console.log("check number: number");
+        if (number == 0) {
+            console.log("number == 0");
+            ketqua += chuSo[0];
+        }
+        if (number > 0) {
+            console.log("number > 0");
+            so = number;
+        }
+        else {
+            console.log("number <0");
+            so = -number;
+        }
+        if (number > biggestNumber) {
+            return "";
+        }
+        vitri[5] = Math.floor(so / 1000000000000000);
+        console.log("vitri[5] = " + vitri[5]);
+        so -= vitri[5] * 1000000000000000;
+        vitri[4] = Math.floor(so / 1000000000000);
+        console.log("vitri[4] = " + vitri[4]);
+        so -= vitri[4] * 1000000000000;
+        vitri[3] = Math.floor(so / 1000000000);
+        console.log("vitri[3] = " + vitri[3]);
+        so -= vitri[3] * 1000000000;
+        vitri[2] = Math.floor(so / 1000000);
+        console.log("vitri[2] = " + vitri[2]);
+        vitri[1] = Math.floor((so % 1000000) / 1000);
+        console.log("vitri[1] = " + vitri[1]);
+        vitri[0] = so % 1000;
+        console.log("vitri[0] = " + vitri[0]);
+        if (vitri[5] > 0) {
+            lan = 5;
+        }
+        else if (vitri[4] > 0) {
+            lan = 4;
+        }
+        else if (vitri[3] > 0) {
+            lan = 3;
+        }
+        else if (vitri[2] > 0) {
+            lan = 2;
+        }
+        else if (vitri[1] > 0) {
+            lan = 1;
+        }
+        else {
+            lan = 0;
+        }
+        console.log("lan = " + lan);
+        for (i = lan; i >= 0; i--) {
+            console.log("i in for = " + i);
+            tmp = docSo3ChuSo(vitri[i]);
+            console.log("tmp = " + tmp);
+            ketqua += tmp;
+            console.log("ketqua inside for loop lan= " + ketqua);
+            if (vitri[i] != 0 || i == 0) {
+                if (i == 0 && ketqua.substring(ketqua.length - 1) == ",")
+                    ketqua = ketqua.substring(0, ketqua.length - 1);
+                ketqua += tien[i];
+            }
+            console.log("ketqua before adding , = " + ketqua);
+            if (i > 0 && tmp != "")
+                ketqua += ",";
+            console.log("ketqua = after adding , = " + ketqua);
+        }
+        //console.log("ketqua.substring(ketqua.length - 1) = " + ketqua.substring(ketqua.length - 1));
+        if (ketqua.substring(ketqua.length - 1) == ",")
+            ketqua = ketqua.substring(0, ketqua.length - 1);
+        ketqua = ketqua.trim();
+        if (number < 0) {
+            ketqua = "âm " + ketqua;
+        }
+        console.log("ketqua after add - = " + ketqua);
+        return ketqua.substring(0, 1).toUpperCase() + ketqua.substring(1);
+    }
+    function docSo3ChuSo(baso) {
+        console.log("baso = " + baso);
+        var tram, chuc, donvi;
+        var ketQua = "";
+        tram = Math.floor(baso / 100);
+        console.log("tram = " + tram);
+        chuc = Math.floor((baso % 100) / 10);
+        console.log("chuc = " + chuc);
+        donvi = baso % 10;
+        console.log("donvi = " + donvi);
+        if (tram == 0 && chuc == 0 && donvi == 0) {
+            return "";
+        }
+        if (ketqua.substring(ketqua.length - 1) == "," || tram != 0) {
+            ketQua += chuSo[tram] + " trăm";
+            if (chuc == 0 && donvi != 0) {
+                ketQua += " linh";
+            }
+        }
+        if (chuc != 0 && chuc != 1) {
+            ketQua += chuSo[chuc] + " mươi";
+            if (chuc == 0 && donvi != 0) {
+                ketQua += " linh";
+            }
+        }
+        if (chuc == 1) {
+            ketQua += " mười";
+        }
+        switch (donvi) {
+            case 1:
+                if (chuc != 0 && chuc != 1) {
+                    ketQua += " mốt";
+                }
+                else {
+                    ketQua += chuSo[donvi];
+                }
+                break;
+            case 5:
+                if (chuc == 0) {
+                    ketQua += chuSo[donvi];
+                }
+                else {
+                    ketQua += " lăm";
+                }
+                break;
+            default:
+                if (donvi != 0) {
+                    ketQua += chuSo[donvi];
+                }
+                break;
+        }
+        return ketQua;
+    }
+}
+exports.numberToText = numberToText;
+/**
+ * Decimal number to speech.
+ * @customfunction
+ * @param number Number to be spoken.
+ * @returns Decimal number in text.
+ */
+function decimalToSpeech(number) {
+    console.log(typeof number);
+    console.log(number);
+    var chuSo = [" không", " một", " hai", " ba", " bốn", " năm", " sáu", " bẩy", " tám", " chín"];
+    var audioChuSo = [
+        new Audio("../../sound/0.wav"),
+        new Audio("../../sound/1.wav"),
+        new Audio("../../sound/2.wav"),
+        new Audio("../../sound/3.wav"),
+        new Audio("../../sound/4.wav"),
+        new Audio("../../sound/5.wav"),
+        new Audio("../../sound/6.wav"),
+        new Audio("../../sound/7.wav"),
+        new Audio("../../sound/8.wav"),
+        new Audio("../../sound/9.wav")
+    ];
+    var tien = [" GH", " nghìn", " triệu", " tỷ", " nghìn tỷ", " triệu tỷ"];
+    var audioTien = [
+        new Audio("../../sound/GolfHit.wav"),
+        new Audio("../../sound/nghin.wav"),
+        new Audio("../../sound/trieu.wav"),
+        new Audio("../../sound/ty.wav"),
+        new Audio("../../sound/nghinTy.wav"),
+        new Audio("../../sound/trieuTy.wav")
+    ];
+    var biggestNumber = 8999999999999999;
+    var lan, i, so, ketqua = "", tmp = "";
+    var vitri = new Array(6);
+    var sounds = new Array();
+    if (typeof number != "number") {
+        console.log("check number: not number");
+    }
+    else {
+        console.log("check number: number");
+        if (number == 0) {
+            console.log("number == 0");
+            sounds.push(audioChuSo[0]);
+            sounds.push(audioTien[0]);
+            ketqua += chuSo[0];
+        }
+        if (number > 0) {
+            console.log("number > 0");
+            so = number;
+        }
+        else {
+            console.log("number <0");
+            so = -number;
+        }
+        if (number > biggestNumber) {
+            return "";
+        }
+        var decimalPart = so;
+        decimalPart = decimalPart - Math.floor(decimalPart);
+        console.log("decimalPart be4 = " + decimalPart);
+        decimalPart = Math.round((decimalPart + Number.EPSILON) * 10000) / 10000;
+        console.log("decimalPart aft = " + decimalPart);
+        var decimalPartInString = decimalPart.toString();
+        decimalPartInString = decimalPartInString.substring(2);
+        console.log("decimalPartInString = " + decimalPartInString);
+        // decimalPart = parseInt(decimalPartInString);
+        // console.log("decimalPart after transform = "+decimalPart);
+        so = Math.floor(so); // get integer part
+        vitri[5] = Math.floor(so / 1000000000000000);
+        console.log("vitri[5] = " + vitri[5]);
+        so -= vitri[5] * 1000000000000000;
+        vitri[4] = Math.floor(so / 1000000000000);
+        console.log("vitri[4] = " + vitri[4]);
+        so -= vitri[4] * 1000000000000;
+        vitri[3] = Math.floor(so / 1000000000);
+        console.log("vitri[3] = " + vitri[3]);
+        so -= vitri[3] * 1000000000;
+        vitri[2] = Math.floor(so / 1000000);
+        console.log("vitri[2] = " + vitri[2]);
+        vitri[1] = Math.floor((so % 1000000) / 1000);
+        console.log("vitri[1] = " + vitri[1]);
+        vitri[0] = so % 1000;
+        console.log("vitri[0] = " + vitri[0]);
+        if (vitri[5] > 0) {
+            lan = 5;
+        }
+        else if (vitri[4] > 0) {
+            lan = 4;
+        }
+        else if (vitri[3] > 0) {
+            lan = 3;
+        }
+        else if (vitri[2] > 0) {
+            lan = 2;
+        }
+        else if (vitri[1] > 0) {
+            lan = 1;
+        }
+        else {
+            lan = 0;
+        }
+        console.log("lan = " + lan);
+        for (i = lan; i >= 0; i--) {
+            console.log("i in for = " + i);
+            tmp = docSo3ChuSo(vitri[i]);
+            console.log("tmp = " + tmp);
+            ketqua += tmp;
+            console.log("ketqua inside for loop lan= " + ketqua);
+            if (vitri[i] != 0 || i == 0) {
+                if (i == 0 && ketqua.substring(ketqua.length - 1) == ",")
+                    ketqua = ketqua.substring(0, ketqua.length - 1);
+                ketqua += tien[i];
+                sounds.push(audioTien[i]);
+            }
+            console.log("ketqua before adding , = " + ketqua);
+            if (i > 0 && tmp != "")
+                ketqua += ",";
+            console.log("ketqua = after adding , = " + ketqua);
+        }
+        //console.log("ketqua.substring(ketqua.length - 1) = " + ketqua.substring(ketqua.length - 1));
+        if (ketqua.substring(ketqua.length - 1) == ",")
+            ketqua = ketqua.substring(0, ketqua.length - 1);
+        ketqua = ketqua.trim();
+        if (number < 0) {
+            ketqua = "âm " + ketqua;
+            sounds.unshift(new Audio("../../sound/am.wav"));
+        }
+        console.log("ketqua after add - = " + ketqua);
+        // var audio = new Audio("../../sound/0.wav");
+        // var audio2 = new Audio("../../sound/1.wav");
+        //add decimal part
+        ketqua += " phẩy";
+        sounds.push(new Audio("../../sound/phay.wav"));
+        ketqua += docSo(decimalPartInString);
+        // sounds.push(audio);
+        // sounds.push(audio2);
+        // sounds.push(audio);
+        var soundIndex = -1;
+        //console.log("sounds.length outside func = " + sounds.length);
+        playSnd();
+        return ketqua.substring(0, 1).toUpperCase() + ketqua.substring(1);
+    }
+    function docSo(num) {
+        var ketQua = "";
+        var i;
+        console.log("num.length = " + num.length);
+        for (i = 0; i < num.length; i++) {
+            console.log(num.substr(i, 1));
+            switch (num.substr(i, 1)) {
+                case "0":
+                    ketQua += " không";
+                    sounds.push(audioChuSo[0]);
+                    break;
+                case "1":
+                    ketQua += " một";
+                    sounds.push(audioChuSo[1]);
+                    break;
+                case "2":
+                    ketQua += " hai";
+                    sounds.push(audioChuSo[2]);
+                    break;
+                case "3":
+                    ketQua += " ba";
+                    sounds.push(audioChuSo[3]);
+                    break;
+                case "4":
+                    ketQua += " bốn";
+                    sounds.push(audioChuSo[4]);
+                    break;
+                case "5":
+                    ketQua += " năm";
+                    sounds.push(audioChuSo[5]);
+                    break;
+                case "6":
+                    ketQua += " sáu";
+                    sounds.push(audioChuSo[6]);
+                    break;
+                case "7":
+                    ketQua += " bẩy";
+                    sounds.push(audioChuSo[7]);
+                    break;
+                case "8":
+                    ketQua += " tám";
+                    sounds.push(audioChuSo[8]);
+                    break;
+                case "9":
+                    ketQua += " chín";
+                    sounds.push(audioChuSo[9]);
+                    break;
+                default: break;
+            }
+        }
+        return ketQua;
+    }
+    function playSnd() {
+        //console.log("sounds.length inside func = " + sounds.length);
+        soundIndex++;
+        if (soundIndex == sounds.length) {
+            return;
+        }
+        sounds[soundIndex].addEventListener("ended", playSnd);
+        sounds[soundIndex].play();
+    }
+    function docSo3ChuSo(baso) {
+        console.log("baso = " + baso);
+        var tram, chuc, donvi;
+        var ketQua = "";
+        tram = Math.floor(baso / 100);
+        console.log("tram = " + tram);
+        chuc = Math.floor((baso % 100) / 10);
+        console.log("chuc = " + chuc);
+        donvi = baso % 10;
+        console.log("donvi = " + donvi);
+        if (tram == 0 && chuc == 0 && donvi == 0) {
+            return "";
+        }
+        if (ketqua.substring(ketqua.length - 1) == "," || tram != 0) {
+            ketQua += chuSo[tram] + " trăm";
+            sounds.push(audioChuSo[tram]);
+            sounds.push(new Audio("../../sound/tram.wav"));
+            if (chuc == 0 && donvi != 0) {
+                ketQua += " linh";
+                sounds.push(new Audio("../../sound/linh.wav"));
+            }
+        }
+        if (chuc != 0 && chuc != 1) {
+            ketQua += chuSo[chuc] + " mươi";
+            sounds.push(audioChuSo[chuc]);
+            sounds.push(new Audio("../../sound/muoi.wav"));
+            if (chuc == 0 && donvi != 0) {
+                ketQua += " linh";
+                sounds.push(new Audio("../../sound/linh.wav"));
+            }
+        }
+        if (chuc == 1) {
+            ketQua += " mười";
+            sounds.push(new Audio("../../sound/10.wav"));
+        }
+        switch (donvi) {
+            case 1:
+                if (chuc != 0 && chuc != 1) {
+                    ketQua += " mốt";
+                    sounds.push(new Audio("../../sound/mot.wav"));
+                }
+                else {
+                    ketQua += chuSo[donvi];
+                    sounds.push(audioChuSo[donvi]);
+                }
+                break;
+            case 5:
+                if (chuc == 0) {
+                    ketQua += chuSo[donvi];
+                    sounds.push(audioChuSo[donvi]);
+                }
+                else {
+                    ketQua += " lăm";
+                    sounds.push(new Audio("../../sound/lam.wav"));
+                }
+                break;
+            default:
+                if (donvi != 0) {
+                    ketQua += chuSo[donvi];
+                    sounds.push(audioChuSo[donvi]);
+                }
+                break;
+        }
+        return ketQua;
+    }
+}
+exports.decimalToSpeech = decimalToSpeech;
+/**
+ * Decimal number to text in Vietnamese.
+ * @customfunction
+ * @param number Number to text.
+ * @returns Decimal number in text.
+ */
+function decimalToText(number) {
+    console.log(typeof number);
+    console.log(number);
+    var chuSo = [" không", " một", " hai", " ba", " bốn", " năm", " sáu", " bẩy", " tám", " chín"];
+    var tien = [" GH", " nghìn", " triệu", " tỷ", " nghìn tỷ", " triệu tỷ"];
+    var biggestNumber = 8999999999999999;
+    var lan, i, so, ketqua = "", tmp = "";
+    var vitri = new Array(6);
+    if (typeof number != "number") {
+        console.log("check number: not number");
+    }
+    else {
+        console.log("check number: number");
+        if (number == 0) {
+            console.log("number == 0");
+            ketqua += chuSo[0];
+        }
+        if (number > 0) {
+            console.log("number > 0");
+            so = number;
+        }
+        else {
+            console.log("number <0");
+            so = -number;
+        }
+        if (number > biggestNumber) {
+            return "";
+        }
+        var decimalPart = so;
+        decimalPart = decimalPart - Math.floor(decimalPart);
+        console.log("decimalPart be4 = " + decimalPart);
+        decimalPart = Math.round((decimalPart + Number.EPSILON) * 10000) / 10000;
+        console.log("decimalPart aft = " + decimalPart);
+        var decimalPartInString = decimalPart.toString();
+        decimalPartInString = decimalPartInString.substring(2);
+        console.log("decimalPartInString = " + decimalPartInString);
+        // decimalPart = parseInt(decimalPartInString);
+        // console.log("decimalPart after transform = "+decimalPart);
+        so = Math.floor(so); // get integer part
+        console.log("so = " + so);
+        vitri[5] = Math.floor(so / 1000000000000000);
+        console.log("vitri[5] = " + vitri[5]);
+        so -= vitri[5] * 1000000000000000;
+        vitri[4] = Math.floor(so / 1000000000000);
+        console.log("vitri[4] = " + vitri[4]);
+        so -= vitri[4] * 1000000000000;
+        vitri[3] = Math.floor(so / 1000000000);
+        console.log("vitri[3] = " + vitri[3]);
+        so -= vitri[3] * 1000000000;
+        vitri[2] = Math.floor(so / 1000000);
+        console.log("vitri[2] = " + vitri[2]);
+        vitri[1] = Math.floor((so % 1000000) / 1000);
+        console.log("vitri[1] = " + vitri[1]);
+        vitri[0] = so % 1000;
+        console.log("vitri[0] = " + vitri[0]);
+        if (vitri[5] > 0) {
+            lan = 5;
+        }
+        else if (vitri[4] > 0) {
+            lan = 4;
+        }
+        else if (vitri[3] > 0) {
+            lan = 3;
+        }
+        else if (vitri[2] > 0) {
+            lan = 2;
+        }
+        else if (vitri[1] > 0) {
+            lan = 1;
+        }
+        else {
+            lan = 0;
+        }
+        console.log("lan = " + lan);
+        for (i = lan; i >= 0; i--) {
+            console.log("i in for = " + i);
+            tmp = docSo3ChuSo(vitri[i]);
+            console.log("tmp = " + tmp);
+            ketqua += tmp;
+            console.log("ketqua inside for loop lan= " + ketqua);
+            if (vitri[i] != 0 && i != 0) {
+                // if (i == 0 && ketqua.substring(ketqua.length - 1) == ",") ketqua = ketqua.substring(0, ketqua.length - 1);
+                ketqua += tien[i];
+            }
+            console.log("ketqua before adding , = " + ketqua);
+            if (i > 0 && tmp != "")
+                ketqua += ",";
+            console.log("ketqua = after adding , = " + ketqua);
+        }
+        //console.log("ketqua.substring(ketqua.length - 1) = " + ketqua.substring(ketqua.length - 1));
+        if (ketqua.substring(ketqua.length - 1) == ",")
+            ketqua = ketqua.substring(0, ketqua.length - 1);
+        ketqua = ketqua.trim();
+        if (number < 0) {
+            ketqua = "âm " + ketqua;
+        }
+        console.log("ketqua after add - = " + ketqua);
+        //add decimal part
+        ketqua += " phẩy";
+        ketqua += docSo(decimalPartInString);
+        return ketqua.substring(0, 1).toUpperCase() + ketqua.substring(1);
+    }
+    function docSo(num) {
+        var ketQua = "";
+        var i;
+        console.log("num.length = " + num.length);
+        for (i = 0; i < num.length; i++) {
+            console.log(num.substr(i, 1));
+            switch (num.substr(i, 1)) {
+                case "0":
+                    ketQua += " không";
+                    break;
+                case "1":
+                    ketQua += " một";
+                    break;
+                case "2":
+                    ketQua += " hai";
+                    break;
+                case "3":
+                    ketQua += " ba";
+                    break;
+                case "4":
+                    ketQua += " bốn";
+                    break;
+                case "5":
+                    ketQua += " năm";
+                    break;
+                case "6":
+                    ketQua += " sáu";
+                    break;
+                case "7":
+                    ketQua += " bẩy";
+                    break;
+                case "8":
+                    ketQua += " tám";
+                    break;
+                case "9":
+                    ketQua += " chín";
+                    break;
+                default: break;
+            }
+        }
+        return ketQua;
+    }
+    function docSo3ChuSo(baso) {
+        console.log("baso = " + baso);
+        var tram, chuc, donvi;
+        var ketQua = "";
+        tram = Math.floor(baso / 100);
+        console.log("tram = " + tram);
+        chuc = Math.floor((baso % 100) / 10);
+        console.log("chuc = " + chuc);
+        donvi = baso % 10;
+        console.log("donvi = " + donvi);
+        if (tram == 0 && chuc == 0 && donvi == 0) {
+            return "";
+        }
+        if (ketqua.substring(ketqua.length - 1) == "," || tram != 0) {
+            ketQua += chuSo[tram] + " trăm";
+            if (chuc == 0 && donvi != 0) {
+                ketQua += " linh";
+            }
+        }
+        if (chuc != 0 && chuc != 1) {
+            ketQua += chuSo[chuc] + " mươi";
+            if (chuc == 0 && donvi != 0) {
+                ketQua += " linh";
+            }
+        }
+        if (chuc == 1) {
+            ketQua += " mười";
+        }
+        switch (donvi) {
+            case 1:
+                if (chuc != 0 && chuc != 1) {
+                    ketQua += " mốt";
+                }
+                else {
+                    ketQua += chuSo[donvi];
+                }
+                break;
+            case 5:
+                if (chuc == 0) {
+                    ketQua += chuSo[donvi];
+                }
+                else {
+                    ketQua += " lăm";
+                }
+                break;
+            default:
+                if (donvi != 0) {
+                    ketQua += chuSo[donvi];
+                }
+                break;
+        }
+        return ketQua;
+    }
+}
+exports.decimalToText = decimalToText;
