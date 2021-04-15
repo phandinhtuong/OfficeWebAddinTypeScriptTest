@@ -22745,11 +22745,14 @@ function decimalToSpeech(number) {
     // var audio2 = new Audio("../../sound/1.wav");
     //add decimal part
 
-    ketqua += " phẩy";
-    sounds.push(new Audio("../../sound/phay.wav"));
-    ketqua += docSo(decimalPartInString); // sounds.push(audio);
+    if (decimalPartInString != "") {
+      ketqua += " phẩy";
+      sounds.push(new Audio("../../sound/phay.wav"));
+      ketqua += docSo(decimalPartInString);
+    } // sounds.push(audio);
     // sounds.push(audio2);
     // sounds.push(audio);
+
 
     var soundIndex = -1; //console.log("sounds.length outside func = " + sounds.length);
 
@@ -23029,8 +23032,11 @@ function decimalToText(number) {
 
     console.log("ketqua after add - = " + ketqua); //add decimal part
 
-    ketqua += " phẩy";
-    ketqua += docSo(decimalPartInString);
+    if (decimalPartInString != "") {
+      ketqua += " phẩy";
+      ketqua += docSo(decimalPartInString);
+    }
+
     return ketqua.substring(0, 1).toUpperCase() + ketqua.substring(1);
   }
 

@@ -4,7 +4,7 @@
  * @param nameAndID - The author's name and ID, ex: "Phan Dinh Tuong 20164582".
  * @returns The name and ID of author separatedly.
  */
- export function TacGia(nameAndID: string): string[][] {
+export function TacGia(nameAndID: string): string[][] {
   if (Number(nameAndID))
     //the input is only number
     return [["ERROR: input only number"]];
@@ -630,7 +630,6 @@ export function numberToText(number: number): string {
     return ketqua.substring(0, 1).toUpperCase() + ketqua.substring(1);
   }
 
- 
   function docSo3ChuSo(baso: number): string {
     console.log("baso = " + baso);
     var tram: number, chuc: number, donvi: number;
@@ -689,7 +688,7 @@ export function numberToText(number: number): string {
  * @param number Number to be spoken.
  * @returns Decimal number in text.
  */
-export function decimalToSpeech(number: number):string{
+export function decimalToSpeech(number: number): string {
   console.log(typeof number);
   console.log(number);
   var chuSo = [" không", " một", " hai", " ba", " bốn", " năm", " sáu", " bẩy", " tám", " chín"];
@@ -745,18 +744,17 @@ export function decimalToSpeech(number: number):string{
 
     var decimalPart = so;
     decimalPart = decimalPart - Math.floor(decimalPart);
-    console.log("decimalPart be4 = "+decimalPart);
+    console.log("decimalPart be4 = " + decimalPart);
 
     decimalPart = Math.round((decimalPart + Number.EPSILON) * 10000) / 10000;
-    console.log("decimalPart aft = "+decimalPart);
+    console.log("decimalPart aft = " + decimalPart);
 
     var decimalPartInString = decimalPart.toString();
     decimalPartInString = decimalPartInString.substring(2);
-    console.log("decimalPartInString = "+decimalPartInString);
+    console.log("decimalPartInString = " + decimalPartInString);
 
     // decimalPart = parseInt(decimalPartInString);
     // console.log("decimalPart after transform = "+decimalPart);
-
 
     so = Math.floor(so); // get integer part
     vitri[5] = Math.floor(so / 1000000000000000);
@@ -815,10 +813,13 @@ export function decimalToSpeech(number: number):string{
     // var audio = new Audio("../../sound/0.wav");
     // var audio2 = new Audio("../../sound/1.wav");
     //add decimal part
-    ketqua += " phẩy";
-    sounds.push(new Audio("../../sound/phay.wav"))
+    if (decimalPartInString != "") {
+      ketqua += " phẩy";
+      sounds.push(new Audio("../../sound/phay.wav"));
 
-    ketqua += docSo(decimalPartInString);
+      ketqua += docSo(decimalPartInString);
+    }
+
     // sounds.push(audio);
     // sounds.push(audio2);
     // sounds.push(audio);
@@ -827,25 +828,55 @@ export function decimalToSpeech(number: number):string{
     playSnd();
     return ketqua.substring(0, 1).toUpperCase() + ketqua.substring(1);
   }
-  function docSo(num: string):string{
+  function docSo(num: string): string {
     var ketQua: string = "";
     var i: number;
-    console.log("num.length = "+num.length);
-    for (i=0;i<num.length;i++){
-      console.log(num.substr(i,1));
-      switch (num.substr(i,1)){
-        case "0" : ketQua += " không"; sounds.push(audioChuSo[0]); break;
-        case "1" : ketQua += " một"; sounds.push(audioChuSo[1]);break;
-        case "2" : ketQua += " hai"; sounds.push(audioChuSo[2]);break;
-        case "3" : ketQua += " ba"; sounds.push(audioChuSo[3]);break;
-        case "4" : ketQua += " bốn"; sounds.push(audioChuSo[4]);break;
-        case "5" : ketQua += " năm"; sounds.push(audioChuSo[5]);break;
-        case "6" : ketQua += " sáu"; sounds.push(audioChuSo[6]);break;
-        case "7" : ketQua += " bẩy"; sounds.push(audioChuSo[7]);break;
-        case "8" : ketQua += " tám"; sounds.push(audioChuSo[8]);break;
-        case "9" : ketQua += " chín"; sounds.push(audioChuSo[9]);break;
-        default: break;
-        
+    console.log("num.length = " + num.length);
+    for (i = 0; i < num.length; i++) {
+      console.log(num.substr(i, 1));
+      switch (num.substr(i, 1)) {
+        case "0":
+          ketQua += " không";
+          sounds.push(audioChuSo[0]);
+          break;
+        case "1":
+          ketQua += " một";
+          sounds.push(audioChuSo[1]);
+          break;
+        case "2":
+          ketQua += " hai";
+          sounds.push(audioChuSo[2]);
+          break;
+        case "3":
+          ketQua += " ba";
+          sounds.push(audioChuSo[3]);
+          break;
+        case "4":
+          ketQua += " bốn";
+          sounds.push(audioChuSo[4]);
+          break;
+        case "5":
+          ketQua += " năm";
+          sounds.push(audioChuSo[5]);
+          break;
+        case "6":
+          ketQua += " sáu";
+          sounds.push(audioChuSo[6]);
+          break;
+        case "7":
+          ketQua += " bẩy";
+          sounds.push(audioChuSo[7]);
+          break;
+        case "8":
+          ketQua += " tám";
+          sounds.push(audioChuSo[8]);
+          break;
+        case "9":
+          ketQua += " chín";
+          sounds.push(audioChuSo[9]);
+          break;
+        default:
+          break;
       }
     }
     return ketQua;
@@ -929,7 +960,7 @@ export function decimalToSpeech(number: number):string{
  * @param number Number to text.
  * @returns Decimal number in text.
  */
-export function decimalToText(number: number):string{
+export function decimalToText(number: number): string {
   console.log(typeof number);
   console.log(number);
   var chuSo = [" không", " một", " hai", " ba", " bốn", " năm", " sáu", " bẩy", " tám", " chín"];
@@ -961,21 +992,20 @@ export function decimalToText(number: number):string{
     }
     var decimalPart = so;
     decimalPart = decimalPart - Math.floor(decimalPart);
-    console.log("decimalPart be4 = "+decimalPart);
+    console.log("decimalPart be4 = " + decimalPart);
 
     decimalPart = Math.round((decimalPart + Number.EPSILON) * 10000) / 10000;
-    console.log("decimalPart aft = "+decimalPart);
+    console.log("decimalPart aft = " + decimalPart);
 
     var decimalPartInString = decimalPart.toString();
     decimalPartInString = decimalPartInString.substring(2);
-    console.log("decimalPartInString = "+decimalPartInString);
+    console.log("decimalPartInString = " + decimalPartInString);
 
     // decimalPart = parseInt(decimalPartInString);
     // console.log("decimalPart after transform = "+decimalPart);
 
-
     so = Math.floor(so); // get integer part
-    console.log("so = "+so);
+    console.log("so = " + so);
     vitri[5] = Math.floor(so / 1000000000000000);
     console.log("vitri[5] = " + vitri[5]);
     so -= vitri[5] * 1000000000000000;
@@ -1029,36 +1059,57 @@ export function decimalToText(number: number):string{
     console.log("ketqua after add - = " + ketqua);
 
     //add decimal part
-    ketqua += " phẩy";
-
-    ketqua += docSo(decimalPartInString);
+    if (decimalPartInString != "") {
+      ketqua += " phẩy";
+      ketqua += docSo(decimalPartInString);
+    }
 
     return ketqua.substring(0, 1).toUpperCase() + ketqua.substring(1);
   }
-  function docSo(num: string):string{
+  function docSo(num: string): string {
     var ketQua: string = "";
     var i: number;
-    console.log("num.length = "+num.length);
-    for (i=0;i<num.length;i++){
-      console.log(num.substr(i,1));
-      switch (num.substr(i,1)){
-        case "0" : ketQua += " không"; break;
-        case "1" : ketQua += " một"; break;
-        case "2" : ketQua += " hai"; break;
-        case "3" : ketQua += " ba"; break;
-        case "4" : ketQua += " bốn"; break;
-        case "5" : ketQua += " năm"; break;
-        case "6" : ketQua += " sáu"; break;
-        case "7" : ketQua += " bẩy"; break;
-        case "8" : ketQua += " tám"; break;
-        case "9" : ketQua += " chín"; break;
-        default: break;
-        
+    console.log("num.length = " + num.length);
+    for (i = 0; i < num.length; i++) {
+      console.log(num.substr(i, 1));
+      switch (num.substr(i, 1)) {
+        case "0":
+          ketQua += " không";
+          break;
+        case "1":
+          ketQua += " một";
+          break;
+        case "2":
+          ketQua += " hai";
+          break;
+        case "3":
+          ketQua += " ba";
+          break;
+        case "4":
+          ketQua += " bốn";
+          break;
+        case "5":
+          ketQua += " năm";
+          break;
+        case "6":
+          ketQua += " sáu";
+          break;
+        case "7":
+          ketQua += " bẩy";
+          break;
+        case "8":
+          ketQua += " tám";
+          break;
+        case "9":
+          ketQua += " chín";
+          break;
+        default:
+          break;
       }
     }
     return ketQua;
   }
- 
+
   function docSo3ChuSo(baso: number): string {
     console.log("baso = " + baso);
     var tram: number, chuc: number, donvi: number;
@@ -1110,5 +1161,4 @@ export function decimalToText(number: number):string{
     }
     return ketQua;
   }
-
 }
