@@ -295,6 +295,7 @@ Office.initialize = function () {
   document.getElementById("colorizeButton").onclick = colorize;
   document.getElementById("scrollDownButton").onclick = scrollDown;
   document.getElementById("speakNumberButton").onclick = speakNumber;
+  document.getElementById("speakNumberAndDownButton").onclick = speakNumberAndDown;
 };
 
 function run() {
@@ -552,12 +553,11 @@ function colorize() {
 function scrollDown() {
   Excel.run(function (context) {
     return __awaiter(this, void 0, void 0, function () {
-      var scrollDownInput, sheet, range, i, j;
+      var scrollDownInput, range, i, j;
       return __generator(this, function (_a) {
         switch (_a.label) {
           case 0:
             scrollDownInput = document.getElementById("scrollDownInput").value;
-            sheet = context.workbook.worksheets.getActiveWorksheet();
             range = context.workbook.getSelectedRange();
             if (!(scrollDownInput == "")) return [3
             /*break*/
@@ -657,72 +657,121 @@ function focusInputScrolldown() {
   var input = document.getElementById("scrollDownInput");
   input.select();
 }
+/**
+ * Speak decimal number inside cell and down one cell
+ */
+
+
+function speakNumberAndDown() {
+  speakNumber().then(function () {
+    Excel.run(function (context) {
+      return __awaiter(this, void 0, void 0, function () {
+        var range;
+        return __generator(this, function (_a) {
+          switch (_a.label) {
+            case 0:
+              range = context.workbook.getSelectedRange();
+              range = range.getRowsBelow();
+              range.select();
+              return [4
+              /*yield*/
+              , context.sync()];
+
+            case 1:
+              _a.sent();
+
+              return [2
+              /*return*/
+              ];
+          }
+        });
+      });
+    }).catch(function (error) {
+      console.log("Error: " + error);
+
+      if (error instanceof OfficeExtension.Error) {
+        console.log("Debug info: " + JSON.stringify(error.debugInfo));
+      }
+    });
+  });
+}
+/**
+ * Speak decimal number inside cell
+ */
+
 
 function speakNumber() {
-  Excel.run(function (context) {
-    return __awaiter(this, void 0, void 0, function () {
-      function playSoundArray() {
-        soundIndex++;
-        console.log("soundIndex = " + soundIndex);
+  return __awaiter(this, void 0, void 0, function () {
+    return __generator(this, function (_a) {
+      Excel.run(function (context) {
+        return __awaiter(this, void 0, void 0, function () {
+          function playSoundArray() {
+            soundIndex++;
+            console.log("soundIndex = " + soundIndex);
 
-        if (soundIndex == sounds.length) {
-          return;
-        } //TODO: check
+            if (soundIndex == sounds.length) {
+              return;
+            } //TODO: check
 
 
-        sounds[soundIndex].addEventListener("ended", playSoundArray);
-        sounds[soundIndex].play();
-      }
+            sounds[soundIndex].addEventListener("ended", playSoundArray);
+            sounds[soundIndex].play();
+          }
 
-      var range, cell, sounds, cellValueInString, soundIndex;
-      return __generator(this, function (_a) {
-        switch (_a.label) {
-          case 0:
-            range = context.workbook.getSelectedRange();
-            cell = range.getCell(0, 0);
-            cell.load("values");
-            return [4
-            /*yield*/
-            , context.sync()];
+          var range, cell, sounds, cellValueInString, soundIndex;
+          return __generator(this, function (_a) {
+            switch (_a.label) {
+              case 0:
+                range = context.workbook.getSelectedRange();
+                cell = range.getCell(0, 0);
+                cell.load("values");
+                return [4
+                /*yield*/
+                , context.sync()];
 
-          case 1:
-            _a.sent();
+              case 1:
+                _a.sent();
 
-            sounds = new Array();
-            console.log("cell.values = " + cell.values);
-            cellValueInString = cell.values.toString();
+                sounds = new Array();
+                console.log("cell.values = " + cell.values);
+                cellValueInString = cell.values.toString();
 
-            if (isNaN(+cellValueInString) || cellValueInString == "") {
-              console.log("check number: not number");
-              console.log("isNaN(+cellValueInString) = " + isNaN(+cellValueInString)); //TODO speak "not number type"
+                if (isNaN(+cellValueInString) || cellValueInString == "") {
+                  console.log("check number: not number");
+                  console.log("isNaN(+cellValueInString) = " + isNaN(+cellValueInString)); //TODO speak "not number type"
 
-              sounds.push(new Audio("../../sound/notNumber.wav"));
-            } else {
-              sounds = soundArrayFromCell(+cellValueInString);
+                  sounds.push(new Audio("../../sound/notNumber.wav"));
+                } else {
+                  sounds = soundArrayFromCell(+cellValueInString);
+                }
+
+                soundIndex = -1;
+                console.log("sounds.length = " + sounds.length);
+                playSoundArray();
+                return [4
+                /*yield*/
+                , context.sync()];
+
+              case 2:
+                _a.sent();
+
+                return [2
+                /*return*/
+                ];
             }
+          });
+        });
+      }).catch(function (error) {
+        console.log("Error: " + error);
 
-            soundIndex = -1;
-            console.log("sounds.length = " + sounds.length);
-            playSoundArray();
-            return [4
-            /*yield*/
-            , context.sync()];
-
-          case 2:
-            _a.sent();
-
-            return [2
-            /*return*/
-            ];
+        if (error instanceof OfficeExtension.Error) {
+          console.log("Debug info: " + JSON.stringify(error.debugInfo));
         }
       });
+      return [2
+      /*return*/
+      ];
     });
-  }).catch(function (error) {
-    console.log("Error: " + error);
-
-    if (error instanceof OfficeExtension.Error) {
-      console.log("Debug info: " + JSON.stringify(error.debugInfo));
-    }
   });
 }
 

@@ -16,6 +16,7 @@ Office.initialize = () => {
   document.getElementById("colorizeButton").onclick = colorize;
   document.getElementById("scrollDownButton").onclick = scrollDown;
   document.getElementById("speakNumberButton").onclick = speakNumber;
+  document.getElementById("speakNumberAndDownButton").onclick = speakNumberAndDown;
 };
 
 async function run() {
@@ -218,7 +219,7 @@ function colorize() {
 function scrollDown() {
   Excel.run(async function(context) {
     var scrollDownInput = (<HTMLInputElement>document.getElementById("scrollDownInput")).value;
-    var sheet = context.workbook.worksheets.getActiveWorksheet();
+    // var sheet = context.workbook.worksheets.getActiveWorksheet();
     var range = context.workbook.getSelectedRange();
     if (scrollDownInput == "") {
       range.getCell(0, 0).values = [["Please input something"]];
@@ -259,7 +260,30 @@ function focusInputScrolldown() {
   var input = document.getElementById("scrollDownInput");
   (<HTMLInputElement>input).select();
 }
-function speakNumber() {
+/**
+ * Speak decimal number inside cell and down one cell
+ */
+function speakNumberAndDown() {
+  speakNumber().then(() => {
+    Excel.run(async function(context) {
+      var range = context.workbook.getSelectedRange();
+      range = range.getRowsBelow();
+      range.select();
+      await context.sync();
+      // range.select();
+      // await context.sync();
+    }).catch(function(error) {
+      console.log("Error: " + error);
+      if (error instanceof OfficeExtension.Error) {
+        console.log("Debug info: " + JSON.stringify(error.debugInfo));
+      }
+    });
+  });
+}
+/**
+ * Speak decimal number inside cell
+ */
+async function speakNumber() {
   Excel.run(async function(context) {
     var range: Excel.Range = context.workbook.getSelectedRange();
     var cell: Excel.Range = range.getCell(0, 0);
@@ -267,27 +291,26 @@ function speakNumber() {
     await context.sync();
     var sounds: Array<HTMLAudioElement> = new Array();
     console.log("cell.values = " + cell.values);
-    var cellValueInString:string = cell.values.toString();
+    var cellValueInString: string = cell.values.toString();
     if (isNaN(+cellValueInString) || cellValueInString == "") {
       console.log("check number: not number");
-      console.log("isNaN(+cellValueInString) = "+isNaN(+cellValueInString));
+      console.log("isNaN(+cellValueInString) = " + isNaN(+cellValueInString));
       //TODO speak "not number type"
       sounds.push(new Audio("../../sound/notNumber.wav"));
     } else {
       sounds = soundArrayFromCell(+cellValueInString);
     }
     var soundIndex: number = -1;
-    console.log("sounds.length = "+sounds.length);
+    console.log("sounds.length = " + sounds.length);
     playSoundArray();
     function playSoundArray(): void {
       soundIndex++;
-      console.log("soundIndex = "+soundIndex);
+      console.log("soundIndex = " + soundIndex);
       if (soundIndex == sounds.length) {
         return;
       } //TODO: check
       sounds[soundIndex].addEventListener("ended", playSoundArray);
       sounds[soundIndex].play();
-      
     }
 
     await context.sync();
@@ -297,7 +320,6 @@ function speakNumber() {
       console.log("Debug info: " + JSON.stringify(error.debugInfo));
     }
   });
-  
 }
 
 function soundArrayFromCell(number: number): Array<HTMLAudioElement> {
@@ -321,7 +343,7 @@ function soundArrayFromCell(number: number): Array<HTMLAudioElement> {
     console.log("number == 0");
     soundArray.push(audioChuSo[0]);
     ketqua += chuSo[0];
-  }else if (number > biggestNumber){
+  } else if (number > biggestNumber) {
     console.log("number > biggestNumber");
     //TODO: speak too big number
     ketqua += "Number too large";
@@ -335,20 +357,21 @@ function soundArrayFromCell(number: number): Array<HTMLAudioElement> {
       new Audio("../../sound/nghinTy.wav"),
       new Audio("../../sound/trieuTy.wav")
     ];
-    
+
     var lan: number,
       i: number,
       integerPart: number,
       tmp: string = "";
     var vitri: Array<number> = new Array(6);
-    if (number > 0){ //Assign the absolute value to integerPart
+    if (number > 0) {
+      //Assign the absolute value to integerPart
       console.log("number > 0");
       integerPart = number;
-    }else {
+    } else {
       console.log("number < 0");
       integerPart = -number;
     }
-    var decimalPart:number = integerPart;
+    var decimalPart: number = integerPart;
     decimalPart = decimalPart - Math.floor(decimalPart);
     console.log("decimalPart be4 = " + decimalPart);
 
@@ -387,7 +410,8 @@ function soundArrayFromCell(number: number): Array<HTMLAudioElement> {
       lan = 1;
     } else {
       lan = 0;
-    }console.log("lan = " + lan);
+    }
+    console.log("lan = " + lan);
     for (i = lan; i >= 0; i--) {
       console.log("i in for = " + i);
       tmp = docSo3ChuSo(vitri[i]);
@@ -402,7 +426,8 @@ function soundArrayFromCell(number: number): Array<HTMLAudioElement> {
       console.log("ketqua before adding , = " + ketqua);
       if (i > 0 && tmp != "") ketqua += ",";
       console.log("ketqua = after adding , = " + ketqua);
-    }if (ketqua.substring(ketqua.length - 1) == ",") ketqua = ketqua.substring(0, ketqua.length - 1);
+    }
+    if (ketqua.substring(ketqua.length - 1) == ",") ketqua = ketqua.substring(0, ketqua.length - 1);
     ketqua = ketqua.trim();
     if (number < 0) {
       ketqua = "âm " + ketqua;
@@ -415,7 +440,6 @@ function soundArrayFromCell(number: number): Array<HTMLAudioElement> {
 
       ketqua += docSo(decimalPartInString);
     }
-
   }
 
   console.log("ketqua final = " + ketqua);
