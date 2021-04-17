@@ -76,17 +76,30 @@
           Excel.run(async function(context) {
             var range = context.workbook.getSelectedRange();
             //var cell = range.getCell(0, 0);
-            range.load("values");
-            await context.sync();
-            console.log("range.values = " + range.values);
+           
+            // range.load("values");
+            // await context.sync();
+            // console.log("range.values = " + range.values);
 
+            // //if range only contain "," means that it is empty
+            // if (range.values == "" || /^[,]*$/.test(range.values)) {
+            //   document.getElementById("testVoiceInput").value = "cell rỗng";
+            // } else {
+            //   document.getElementById("testVoiceInput").value = range.values;
+            // }
+            // responsiveVoice.speak(document.getElementById("testVoiceInput").value, "Vietnamese Female");
+            range.load("text");
+            await context.sync();
+            console.log("range.text = " + range.text);
+            
             //if range only contain "," means that it is empty
-            if (range.values == "" || /^[,]*$/.test(range.values)) {
+            if (range.text == "" || /^[,]*$/.test(range.text)) {
               document.getElementById("testVoiceInput").value = "cell rỗng";
             } else {
-              document.getElementById("testVoiceInput").value = range.values;
+              document.getElementById("testVoiceInput").value = range.text;
             }
             responsiveVoice.speak(document.getElementById("testVoiceInput").value, "Vietnamese Female");
+
 
             await context.sync();
           }).catch(function(error) {
