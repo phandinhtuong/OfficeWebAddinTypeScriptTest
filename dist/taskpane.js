@@ -296,6 +296,7 @@ Office.initialize = function () {
   document.getElementById("scrollDownButton").onclick = scrollDown;
   document.getElementById("speakNumberButton").onclick = speakNumber;
   document.getElementById("speakNumberAndDownButton").onclick = speakNumberAndDown;
+  document.getElementById("docsPropsButton").onclick = documentProperties;
 };
 
 function run() {
@@ -1031,6 +1032,46 @@ function soundArrayFromCell(number) {
 
     return ketQua;
   }
+}
+
+function documentProperties() {
+  Excel.run(function (context) {
+    return __awaiter(this, void 0, void 0, function () {
+      var range, wb;
+      return __generator(this, function (_a) {
+        switch (_a.label) {
+          case 0:
+            range = context.workbook.getSelectedRange();
+            wb = context.workbook;
+            wb.properties.load("author");
+            return [4
+            /*yield*/
+            , context.sync()];
+
+          case 1:
+            _a.sent();
+
+            console.log("wb.properties.author = " + wb.properties.author);
+            return [4
+            /*yield*/
+            , context.sync()];
+
+          case 2:
+            _a.sent();
+
+            return [2
+            /*return*/
+            ];
+        }
+      });
+    });
+  }).catch(function (error) {
+    console.log("Error: " + error);
+
+    if (error instanceof OfficeExtension.Error) {
+      console.log("Debug info: " + JSON.stringify(error.debugInfo));
+    }
+  });
 }
 
 /***/ })

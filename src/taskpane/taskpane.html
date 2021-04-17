@@ -42,27 +42,62 @@
         <option value="Blue">Blue</option>
         <option value="Gray">Gray</option>
       </select>
-      <br/>
+      <br />
       <label for="scrollDownInput">Scroll Down Input</label>
-      <input type="text" id="scrollDownInput" name="scrollDownInput"/>
+      <input type="text" id="scrollDownInput" name="scrollDownInput" />
       <button class="ms-Button" id="scrollDownButton">
         <span class="ms-Button-icon"><i class="ms-Icon ms-Icon--plus"></i></span>
         <span class="ms-Button-label">Scroll Down</span>
       </button>
-      <br>
+      <br />
       <button class="ms-Button" id="speakNumberButton">
         <span class="ms-Button-icon"><i class="ms-Icon ms-Icon--plus"></i></span>
         <span class="ms-Button-label">Speak Number</span>
       </button>
-      <br>
+      <br />
       <button class="ms-Button" id="speakNumberAndDownButton">
         <span class="ms-Button-icon"><i class="ms-Icon ms-Icon--plus"></i></span>
         <span class="ms-Button-label">Speak Number And Down</span>
       </button>
+      <br />
+      <input type="hidden" id="testVoiceInput" name="testVoiceInput" />
+      <button class="ms-Button" id="testVoice" onclick="textToSpeech()">
+        <span class="ms-Button-icon"><i class="ms-Icon ms-Icon--plus"></i></span>
+        <span class="ms-Button-label">Test Voice</span>
+      </button>
+      <script>
+        function textToSpeech() {
+          Excel.run(async function(context) {
+            var range = context.workbook.getSelectedRange();
+            //var cell = range.getCell(0, 0);
+            range.load("values");
+            await context.sync();
+            console.log("range.values = " + range.values);
+
+            //if range only contain "," means that it is empty
+            if (range.values == "" || /^[,]*$/.test(range.values)) {
+              document.getElementById("testVoiceInput").value = "cell rỗng";
+            } else {
+              document.getElementById("testVoiceInput").value = range.values;
+            }
+            responsiveVoice.speak(document.getElementById("testVoiceInput").value, "Vietnamese Female");
+
+            await context.sync();
+          }).catch(function(error) {
+            console.log("Error: " + error);
+            if (error instanceof OfficeExtension.Error) {
+              console.log("Debug info: " + JSON.stringify(error.debugInfo));
+            }
+          });
+          //responsiveVoice.speak("xin chào việt nam tạm biệt", "Vietnamese Female");
+        }
+      </script>
+      <br />
       <p class="ms-font-l">Modify the source files, then click <b>Run</b>.</p>
       <div role="button" id="run" class="ms-welcome__action ms-Button ms-Button--hero ms-font-xl">
         <span class="ms-Button-label">Run</span>
       </div>
     </main>
+    <script src="https://code.responsivevoice.org/responsivevoice.js?key=KhMkrgTj"></script>
   </body>
 </html>
