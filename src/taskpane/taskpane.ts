@@ -563,14 +563,19 @@ function soundArrayFromCell(number: number): Array<HTMLAudioElement> {
     return ketQua;
   }
 }
-function documentProperties(){
+function documentProperties() {
   Excel.run(async function(context) {
-    var range: Excel.Range = context.workbook.getSelectedRange();
-    var wb:Excel.Workbook = context.workbook;
-    wb.properties.load("author");
+    //var range: Excel.Range = context.workbook.getSelectedRange();
+    var wb: Excel.Workbook = context.workbook;
+    wb.properties.load(["author", "creationDate", "lastAuthor"]);
+    wb.load(["name","context"]);
     await context.sync();
-   console.log("wb.properties.author = "+wb.properties.author);
-
+    console.log("wb.properties.author = " + wb.properties.author);
+    console.log("wb.properties.creationDate = " + wb.properties.creationDate);
+    console.log("wb.properties.lastAuthor = " + wb.properties.lastAuthor);
+    
+    console.log("wb.name = "+wb.name);
+    console.log("wb.context = "+wb.context);
     await context.sync();
   }).catch(function(error) {
     console.log("Error: " + error);
