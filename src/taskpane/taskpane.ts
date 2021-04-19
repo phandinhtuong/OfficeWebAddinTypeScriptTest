@@ -18,6 +18,7 @@ Office.initialize = () => {
   document.getElementById("speakNumberButton").onclick = speakNumber;
   document.getElementById("speakNumberAndDownButton").onclick = speakNumberAndDown;
   document.getElementById("docsPropsButton").onclick = documentProperties;
+  // document.getElementById("testVoice").onclick = textToSpeech;
 };
 
 async function run() {
@@ -43,7 +44,7 @@ async function run() {
 }
 
 // colorize cells with cells' values
-function colorize() {
+export function colorize() {
   // Excel.run(function(context) {
   //   var range = context.workbook.getSelectedRange();
   //   var saturation = (<HTMLInputElement>document.getElementById("saturation")).value;
@@ -568,14 +569,14 @@ function documentProperties() {
     //var range: Excel.Range = context.workbook.getSelectedRange();
     var wb: Excel.Workbook = context.workbook;
     wb.properties.load(["author", "creationDate", "lastAuthor"]);
-    wb.load(["name","context"]);
+    wb.load(["name", "context"]);
     await context.sync();
     console.log("wb.properties.author = " + wb.properties.author);
     console.log("wb.properties.creationDate = " + wb.properties.creationDate);
     console.log("wb.properties.lastAuthor = " + wb.properties.lastAuthor);
-    
-    console.log("wb.name = "+wb.name);
-    console.log("wb.context = "+wb.context);
+
+    console.log("wb.name = " + wb.name);
+    console.log("wb.context = " + wb.context);
     await context.sync();
   }).catch(function(error) {
     console.log("Error: " + error);
@@ -584,3 +585,4 @@ function documentProperties() {
     }
   });
 }
+

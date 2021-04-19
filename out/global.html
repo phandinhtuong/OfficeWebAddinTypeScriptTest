@@ -41,6 +41,7 @@
 											<li><a href="global.html#decimalToText">decimalToText</a></li>
 											<li><a href="global.html#KipThi">KipThi</a></li>
 											<li><a href="global.html#numberToSpeech">numberToSpeech</a></li>
+											<li><a href="global.html#numberToSpeechGeneral">numberToSpeechGeneral</a></li>
 											<li><a href="global.html#numberToText">numberToText</a></li>
 											<li><a href="global.html#QRCode">QRCode</a></li>
 											<li><a href="global.html#StringCellFormatter">StringCellFormatter</a></li>
@@ -153,7 +154,7 @@
 		</dt>
 <dd class="symbol-details function public  collapsible-symbol">
 	<div class="symbol-details-inner">
-			<div class="callout callout-primary"><h5>Description</h5>		<div class="description">Lấy tỷ giá hối đoái ngoại tệ và vnđ theo niêm yết tại portal.vietcombank.com.vn</div>
+			<div class="callout callout-primary"><h5>Description</h5>		<div class="description">Lấy tỷ giá hối đoái ngoại tệ và vnđ theo niêm yết tại portal.vietcombank.com.vn.</div>
 			</div>			<div class="callout callout-info">
 				<h5>Parameters</h5>
 				<table class="params table table-striped">
@@ -169,21 +170,21 @@
 								<td><code>currency</code></td>
 							<td></td>
 							<td class="last">
-									Mã ngoại tệ.
+									Mã ngoại tệ, vd: "USD".
 							</td>
 						</tr>
 						<tr>
 								<td><code>type</code></td>
 							<td></td>
 							<td class="last">
-									Loại tỷ giá.
+									Loại tỷ giá, vd: "Mua".
 							</td>
 						</tr>
 						<tr>
 								<td><code>date</code></td>
 							<td></td>
 							<td class="last">
-									Ngày lấy tỷ giá.
+									Ngày lấy tỷ giá, để trống = hôm nay.
 							</td>
 						</tr>
 						<tr>
@@ -232,7 +233,7 @@
 		</dt>
 <dd class="symbol-details function public  collapsible-symbol">
 	<div class="symbol-details-inner">
-			<div class="callout callout-primary"><h5>Description</h5>		<div class="description">Returns starting time of the exam</div>
+			<div class="callout callout-primary"><h5>Description</h5>		<div class="description">Returns starting time of the exam based on shift.</div>
 			</div>			<div class="callout callout-info">
 				<h5>Parameters</h5>
 				<table class="params table table-striped">
@@ -248,7 +249,7 @@
 								<td><code>kip</code></td>
 							<td></td>
 							<td class="last">
-									Kip thi index
+									Kip thi index, valid values: 1,2,3,4.
 							</td>
 						</tr>
 					</tbody>
@@ -258,7 +259,7 @@
 							<div class="form-group">
 								<label class="col-sm-3 control-label returns-type"></label>
 								<div class="col-sm-9">
-									<div class="form-control-static returns-description">Starting time of the exam</div>
+									<div class="form-control-static returns-description">Starting time of the exam.</div>
 								</div>
 							</div>
 					</form>
@@ -321,7 +322,7 @@
 								<td><code>cellBackgroundColor</code></td>
 							<td></td>
 							<td class="last">
-									Background color of cell to be applied.
+									Background color of cell to be applied, ex: "red".
 							</td>
 						</tr>
 						<tr>
@@ -401,21 +402,21 @@
 								<td><code>fontName</code></td>
 							<td></td>
 							<td class="last">
-									Font name.
+									Font name, ex: "Arial".
 							</td>
 						</tr>
 						<tr>
 								<td><code>fontSize</code></td>
 							<td></td>
 							<td class="last">
-									Font size.
+									Font size, ex: 30.
 							</td>
 						</tr>
 						<tr>
 								<td><code>fontColor</code></td>
 							<td></td>
 							<td class="last">
-									Font color.
+									Font color, ex: "yellow".
 							</td>
 						</tr>
 						<tr>
@@ -544,7 +545,7 @@
 		</dt>
 <dd class="symbol-details function public  collapsible-symbol">
 	<div class="symbol-details-inner">
-			<div class="callout callout-primary"><h5>Description</h5>		<div class="description">Speak the input number.</div>
+			<div class="callout callout-primary"><h5>Description</h5>		<div class="description">Speak the input integer number in Vietnamese.</div>
 			</div>			<div class="callout callout-info">
 				<h5>Parameters</h5>
 				<table class="params table table-striped">
@@ -560,7 +561,7 @@
 								<td><code>number</code></td>
 							<td></td>
 							<td class="last">
-									Number to be spoken.
+									Integer number to be spoken.
 							</td>
 						</tr>
 					</tbody>
@@ -570,7 +571,7 @@
 							<div class="form-group">
 								<label class="col-sm-3 control-label returns-type"></label>
 								<div class="col-sm-9">
-									<div class="form-control-static returns-description">Number in text.</div>
+									<div class="form-control-static returns-description">Integer number in text.</div>
 								</div>
 							</div>
 					</form>
@@ -610,7 +611,7 @@
 		</dt>
 <dd class="symbol-details function public  collapsible-symbol">
 	<div class="symbol-details-inner">
-			<div class="callout callout-primary"><h5>Description</h5>		<div class="description">Number to text in Vietnamese.</div>
+			<div class="callout callout-primary"><h5>Description</h5>		<div class="description">Integer number to text in Vietnamese.</div>
 			</div>			<div class="callout callout-info">
 				<h5>Parameters</h5>
 				<table class="params table table-striped">
@@ -626,7 +627,212 @@
 								<td><code>number</code></td>
 							<td></td>
 							<td class="last">
-									Number to text.
+									Integer number to text.
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+			<div class="callout callout-success"><h5>Returns</h5>		<form class="form-horizontal returns">
+							<div class="form-group">
+								<label class="col-sm-3 control-label returns-type"></label>
+								<div class="col-sm-9">
+									<div class="form-control-static returns-description">Integer number in text.</div>
+								</div>
+							</div>
+					</form>
+			</div>			<div class="callout callout-default"><h5>Details</h5>		<form class="form-horizontal details">
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+							<!-- source -->
+							<div class="form-group">
+								<label class="col-sm-3 control-label">Source</label>
+								<div class="col-sm-9">
+									<p class="form-control-static"><a href="functions.js.html">functions.js</a>, <a href="functions.js.html#line-414">line 414</a></p>
+								</div>
+							</div>
+			
+			
+			
+			
+					</form>
+			</div>	</div>
+</dd>
+											<hr/>
+											<dt class="symbol-title function public collapsible-symbol">
+			<h4 id="decimalToSpeech" class="function public"><span class="name">decimalToSpeech</span><span class="signature-params">( <span class="signature-param">number</span>&nbsp;)</span><span class="signature-type"></span></h4>
+		</dt>
+<dd class="symbol-details function public  collapsible-symbol">
+	<div class="symbol-details-inner">
+			<div class="callout callout-primary"><h5>Description</h5>		<div class="description">Decimal number to speech in Vietnamese.</div>
+			</div>			<div class="callout callout-info">
+				<h5>Parameters</h5>
+				<table class="params table table-striped">
+					<thead>
+					<tr>
+							<th>Name</th>
+						<th>Type</th>
+						<th class="last">Description</th>
+					</tr>
+					</thead>
+					<tbody>
+						<tr>
+								<td><code>number</code></td>
+							<td></td>
+							<td class="last">
+									Decimal number to be spoken.
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+			<div class="callout callout-success"><h5>Returns</h5>		<form class="form-horizontal returns">
+							<div class="form-group">
+								<label class="col-sm-3 control-label returns-type"></label>
+								<div class="col-sm-9">
+									<div class="form-control-static returns-description">Decimal number in text.</div>
+								</div>
+							</div>
+					</form>
+			</div>			<div class="callout callout-default"><h5>Details</h5>		<form class="form-horizontal details">
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+							<!-- source -->
+							<div class="form-group">
+								<label class="col-sm-3 control-label">Source</label>
+								<div class="col-sm-9">
+									<p class="form-control-static"><a href="functions.js.html">functions.js</a>, <a href="functions.js.html#line-424">line 424</a></p>
+								</div>
+							</div>
+			
+			
+			
+			
+					</form>
+			</div>	</div>
+</dd>
+											<hr/>
+											<dt class="symbol-title function public collapsible-symbol">
+			<h4 id="decimalToText" class="function public"><span class="name">decimalToText</span><span class="signature-params">( <span class="signature-param">number</span>&nbsp;)</span><span class="signature-type"></span></h4>
+		</dt>
+<dd class="symbol-details function public  collapsible-symbol">
+	<div class="symbol-details-inner">
+			<div class="callout callout-primary"><h5>Description</h5>		<div class="description">Decimal number to text in Vietnamese.</div>
+			</div>			<div class="callout callout-info">
+				<h5>Parameters</h5>
+				<table class="params table table-striped">
+					<thead>
+					<tr>
+							<th>Name</th>
+						<th>Type</th>
+						<th class="last">Description</th>
+					</tr>
+					</thead>
+					<tbody>
+						<tr>
+								<td><code>number</code></td>
+							<td></td>
+							<td class="last">
+									Decimal number to text.
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+			<div class="callout callout-success"><h5>Returns</h5>		<form class="form-horizontal returns">
+							<div class="form-group">
+								<label class="col-sm-3 control-label returns-type"></label>
+								<div class="col-sm-9">
+									<div class="form-control-static returns-description">Decimal number in text.</div>
+								</div>
+							</div>
+					</form>
+			</div>			<div class="callout callout-default"><h5>Details</h5>		<form class="form-horizontal details">
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+							<!-- source -->
+							<div class="form-group">
+								<label class="col-sm-3 control-label">Source</label>
+								<div class="col-sm-9">
+									<p class="form-control-static"><a href="functions.js.html">functions.js</a>, <a href="functions.js.html#line-434">line 434</a></p>
+								</div>
+							</div>
+			
+			
+			
+			
+					</form>
+			</div>	</div>
+</dd>
+											<hr/>
+											<dt class="symbol-title function public collapsible-symbol">
+			<h4 id="numberToSpeechGeneral" class="function public"><span class="name">numberToSpeechGeneral</span><span class="signature-params">( <span class="signature-param">number</span>, <span class="signature-param">option</span>&nbsp;)</span><span class="signature-type"></span></h4>
+		</dt>
+<dd class="symbol-details function public  collapsible-symbol">
+	<div class="symbol-details-inner">
+			<div class="callout callout-primary"><h5>Description</h5>		<div class="description">General number to speech function, only for other functions, not usable by end user.</div>
+			</div>			<div class="callout callout-info">
+				<h5>Parameters</h5>
+				<table class="params table table-striped">
+					<thead>
+					<tr>
+							<th>Name</th>
+						<th>Type</th>
+						<th class="last">Description</th>
+					</tr>
+					</thead>
+					<tbody>
+						<tr>
+								<td><code>number</code></td>
+							<td></td>
+							<td class="last">
+									Input number.
+							</td>
+						</tr>
+						<tr>
+								<td><code>option</code></td>
+							<td></td>
+							<td class="last">
+									Option to output: 1. Decimal to speech, 2. Decimal to text, 3. Integer to speech, 4. Integer to text.
 							</td>
 						</tr>
 					</tbody>
@@ -660,139 +866,7 @@
 							<div class="form-group">
 								<label class="col-sm-3 control-label">Source</label>
 								<div class="col-sm-9">
-									<p class="form-control-static"><a href="functions.js.html">functions.js</a>, <a href="functions.js.html#line-607">line 607</a></p>
-								</div>
-							</div>
-			
-			
-			
-			
-					</form>
-			</div>	</div>
-</dd>
-											<hr/>
-											<dt class="symbol-title function public collapsible-symbol">
-			<h4 id="decimalToSpeech" class="function public"><span class="name">decimalToSpeech</span><span class="signature-params">( <span class="signature-param">number</span>&nbsp;)</span><span class="signature-type"></span></h4>
-		</dt>
-<dd class="symbol-details function public  collapsible-symbol">
-	<div class="symbol-details-inner">
-			<div class="callout callout-primary"><h5>Description</h5>		<div class="description">Decimal number to speech.</div>
-			</div>			<div class="callout callout-info">
-				<h5>Parameters</h5>
-				<table class="params table table-striped">
-					<thead>
-					<tr>
-							<th>Name</th>
-						<th>Type</th>
-						<th class="last">Description</th>
-					</tr>
-					</thead>
-					<tbody>
-						<tr>
-								<td><code>number</code></td>
-							<td></td>
-							<td class="last">
-									Number to be spoken.
-							</td>
-						</tr>
-					</tbody>
-				</table>
-			</div>
-			<div class="callout callout-success"><h5>Returns</h5>		<form class="form-horizontal returns">
-							<div class="form-group">
-								<label class="col-sm-3 control-label returns-type"></label>
-								<div class="col-sm-9">
-									<div class="form-control-static returns-description">Decimal number in text.</div>
-								</div>
-							</div>
-					</form>
-			</div>			<div class="callout callout-default"><h5>Details</h5>		<form class="form-horizontal details">
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-							<!-- source -->
-							<div class="form-group">
-								<label class="col-sm-3 control-label">Source</label>
-								<div class="col-sm-9">
-									<p class="form-control-static"><a href="functions.js.html">functions.js</a>, <a href="functions.js.html#line-756">line 756</a></p>
-								</div>
-							</div>
-			
-			
-			
-			
-					</form>
-			</div>	</div>
-</dd>
-											<hr/>
-											<dt class="symbol-title function public collapsible-symbol">
-			<h4 id="decimalToText" class="function public"><span class="name">decimalToText</span><span class="signature-params">( <span class="signature-param">number</span>&nbsp;)</span><span class="signature-type"></span></h4>
-		</dt>
-<dd class="symbol-details function public  collapsible-symbol">
-	<div class="symbol-details-inner">
-			<div class="callout callout-primary"><h5>Description</h5>		<div class="description">Decimal number to text in Vietnamese.</div>
-			</div>			<div class="callout callout-info">
-				<h5>Parameters</h5>
-				<table class="params table table-striped">
-					<thead>
-					<tr>
-							<th>Name</th>
-						<th>Type</th>
-						<th class="last">Description</th>
-					</tr>
-					</thead>
-					<tbody>
-						<tr>
-								<td><code>number</code></td>
-							<td></td>
-							<td class="last">
-									Number to text.
-							</td>
-						</tr>
-					</tbody>
-				</table>
-			</div>
-			<div class="callout callout-success"><h5>Returns</h5>		<form class="form-horizontal returns">
-							<div class="form-group">
-								<label class="col-sm-3 control-label returns-type"></label>
-								<div class="col-sm-9">
-									<div class="form-control-static returns-description">Decimal number in text.</div>
-								</div>
-							</div>
-					</form>
-			</div>			<div class="callout callout-default"><h5>Details</h5>		<form class="form-horizontal details">
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-							<!-- source -->
-							<div class="form-group">
-								<label class="col-sm-3 control-label">Source</label>
-								<div class="col-sm-9">
-									<p class="form-control-static"><a href="functions.js.html">functions.js</a>, <a href="functions.js.html#line-1026">line 1026</a></p>
+									<p class="form-control-static"><a href="functions.js.html">functions.js</a>, <a href="functions.js.html#line-444">line 444</a></p>
 								</div>
 							</div>
 			
@@ -813,7 +887,7 @@
 	</div>
 	<footer>
 				<div class="copyright">FooDoc Copyright © 2016 The contributors to the JSDoc3 and FooDoc projects.</div>
-			<div class="generated-by">Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.6</a> on 14th Apr 2021 using the <a href="https://github.com/steveush/foodoc">FooDoc template</a>.</div>
+			<div class="generated-by">Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.6</a> on 19th Apr 2021 using the <a href="https://github.com/steveush/foodoc">FooDoc template</a>.</div>
 	</footer>
 	<script src="js/jquery.min.js"></script>
 	<script src="js/bootstrap.min.js"></script>

@@ -66,10 +66,10 @@
         <span class="ms-Button-label">Document Properties</span>
       </button>
       <br />
-      <input type="hidden" id="testVoiceInput" name="testVoiceInput" />
-      <button class="ms-Button" id="testVoice" onclick="textToSpeech()">
+      <input type="hidden" id="textToSpeechInput" name="textToSpeechInput" />
+      <button class="ms-Button" id="textToSpeech" onclick="textToSpeech()">
         <span class="ms-Button-icon"><i class="ms-Icon ms-Icon--plus"></i></span>
-        <span class="ms-Button-label">Test Voice</span>
+        <span class="ms-Button-label">Text To Speech</span>
       </button>
       <script>
         function textToSpeech() {
@@ -94,11 +94,11 @@
             
             //if range only contain "," means that it is empty
             if (range.text == "" || /^[,]*$/.test(range.text)) {
-              document.getElementById("testVoiceInput").value = "cell rỗng";
+              document.getElementById("textToSpeechInput").value = "cell rỗng";
             } else {
-              document.getElementById("testVoiceInput").value = range.text;
+              document.getElementById("textToSpeechInput").value = range.text;
             }
-            responsiveVoice.speak(document.getElementById("testVoiceInput").value, "Vietnamese Female");
+            responsiveVoice.speak(document.getElementById("textToSpeechInput").value, "Vietnamese Female");
 
 
             await context.sync();

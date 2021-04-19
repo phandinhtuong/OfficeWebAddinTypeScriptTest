@@ -56,11 +56,11 @@ export function TacGia(nameAndID: string): string[][] {
   ];
 }
 /**
- * Lấy tỷ giá hối đoái ngoại tệ và vnđ theo niêm yết tại portal.vietcombank.com.vn
+ * Lấy tỷ giá hối đoái ngoại tệ và vnđ theo niêm yết tại portal.vietcombank.com.vn.
  * @customfunction
- * @param currency Mã ngoại tệ.
- * @param type Loại tỷ giá.
- * @param date Ngày lấy tỷ giá.
+ * @param currency Mã ngoại tệ, vd: "USD".
+ * @param type Loại tỷ giá, vd: "Mua".
+ * @param date Ngày lấy tỷ giá, để trống = hôm nay.
  * @param invocation Invocation for updating cell's value
  */
 export async function TyGia(
@@ -154,10 +154,10 @@ export async function TyGia(
   });
 }
 /**
- * Returns starting time of the exam
+ * Returns starting time of the exam based on shift.
  * @customfunction
- * @param kip Kip thi index
- * @returns Starting time of the exam
+ * @param kip Kip thi index, valid values: 1,2,3,4.
+ * @returns Starting time of the exam.
  */
 export function KipThi(kip: number): string {
   var startingTime;
@@ -184,7 +184,7 @@ export function KipThi(kip: number): string {
  * Return input text and change background color.
  * @customfunction
  * @param text Input text.
- * @param cellBackgroundColor Background color of cell to be applied.
+ * @param cellBackgroundColor Background color of cell to be applied, ex: "red".
  * @param invocation Invocation object to get current cell.
  * @requiresAddress
  * @returns Input text and change background color.
@@ -214,9 +214,9 @@ export function StringCellFormatter(
  * Return the input text and change the font type, font size, font color.
  * @customfunction
  * @param text Input text.
- * @param fontName Font name.
- * @param fontSize Font size.
- * @param fontColor Font color.
+ * @param fontName Font name, ex: "Arial".
+ * @param fontSize Font size, ex: 30.
+ * @param fontColor Font color, ex: "yellow".
  * @param invocation Invocation object to get current cell.
  * @requiresAddress
  * @returns Input text.
@@ -344,27 +344,27 @@ export function QRCode(text: string, ShapeName: string, invocation: CustomFuncti
   return text;
 }
 /**
- * Speak the input number.
+ * Speak the input integer number in Vietnamese.
  * @customfunction
- * @param number Number to be spoken.
- * @returns Number in text.
+ * @param number Integer number to be spoken.
+ * @returns Integer number in text.
  */
 export function numberToSpeech(number: number): string {
   return numberToSpeechGeneral(number,3);
 }
 /**
- * Number to text in Vietnamese.
+ * Integer number to text in Vietnamese.
  * @customfunction
- * @param number Number to text.
- * @returns Number in text.
+ * @param number Integer number to text.
+ * @returns Integer number in text.
  */
 export function numberToText(number: number): string {
   return numberToSpeechGeneral(number,4);
 }
 /**
- * Decimal number to speech.
+ * Decimal number to speech in Vietnamese.
  * @customfunction
- * @param number Number to be spoken.
+ * @param number Decimal number to be spoken.
  * @returns Decimal number in text.
  */
 export function decimalToSpeech(number: number): string {
@@ -373,17 +373,17 @@ export function decimalToSpeech(number: number): string {
 /**
  * Decimal number to text in Vietnamese.
  * @customfunction
- * @param number Number to text.
+ * @param number Decimal number to text.
  * @returns Decimal number in text.
  */
 export function decimalToText(number: number): string {
   return numberToSpeechGeneral(number,2);
 }
 /**
- * General number to speech function
- * @param number Input number
- * @param option Option to output: 1. decimal to speech, 2. decimal to text, 3. integer to speech, 4. integer to text
- * @returns Number in text
+ * General number to speech function, only for other functions, not usable by end user.
+ * @param number Input number.
+ * @param option Option to output: 1. Decimal to speech, 2. Decimal to text, 3. Integer to speech, 4. Integer to text.
+ * @returns Number in text.
  */
 function numberToSpeechGeneral(number: number, option: number): string {
   console.log(typeof number);
