@@ -78,6 +78,125 @@
                 </Control>
               </Group>
             </OfficeTab>
+            <CustomTab id="Mycel.Tab">
+							<Label resid="Mycel.Tab.TabLabel" />
+							<Group id="Mycel.CommandsGroup">
+								<Label resid="Mycel.CommandsGroup.Label" />
+								<Icon>
+									<bt:Image size="16" resid="Mycel.TaskpaneButton.Icon" />
+									<bt:Image size="32" resid="Mycel.TaskpaneButton.Icon" />
+									<bt:Image size="80" resid="Mycel.TaskpaneButton.Icon" />
+								</Icon>
+								<Control xsi:type="Button" id="Mycel.TaskpaneButton">
+									<Label resid="Mycel.TaskpaneButton.Label" />
+									<Supertip>
+										<Title resid="Mycel.TaskpaneButton.Label" />
+										<Description resid="Mycel.TaskpaneButton.Tooltip" />
+									</Supertip>
+									<Icon>
+										<bt:Image size="16" resid="Mycel.TaskpaneButton.Icon" />
+										<bt:Image size="32" resid="Mycel.TaskpaneButton.Icon" />
+										<bt:Image size="80" resid="Mycel.TaskpaneButton.Icon" />
+									</Icon>
+									<Action xsi:type="ShowTaskpane">
+										<TaskpaneId>ButtonId1</TaskpaneId>
+										<SourceLocation resid="Taskpane.Url" />
+									</Action>
+								</Control>
+							</Group>
+							<Group id="Mycel.ColorizeGroup">
+								<Label resid="Mycel.ColorizeGroup.Label"/>
+								<Icon>
+									<bt:Image size="16" resid="Mycel.TaskpaneButton.Icon" />
+									<bt:Image size="32" resid="Mycel.TaskpaneButton.Icon" />
+									<bt:Image size="80" resid="Mycel.TaskpaneButton.Icon" />
+								</Icon>
+								<Control xsi:type="Button" id="Mycel.ColorizeButton">
+									<Label resid="Mycel.ColorizeButton.Label"/>
+									<Supertip>
+										<Title resid="Mycel.ColorizeButton.Label"/>
+										<Description resid="Mycel.ColorizeButton.Tooltip"/>
+									</Supertip>
+									<Icon>
+										<bt:Image size="16" resid="Mycel.TaskpaneButton.Icon" />
+										<bt:Image size="32" resid="Mycel.TaskpaneButton.Icon" />
+										<bt:Image size="80" resid="Mycel.TaskpaneButton.Icon" />
+									</Icon>
+									<Action xsi:type="ExecuteFunction">
+										<FunctionName>colorizeCommandFunction</FunctionName>
+									</Action>
+								</Control>
+							</Group>
+							<Group id="Mycel.TTSGroup"> <!-- TTS = Text To Speech in Vietnamese-->
+								<Label resid="Mycel.TTSGroup.Label"/>
+								<Icon>
+									<bt:Image size="16" resid="Mycel.TaskpaneButton.Icon" />
+									<bt:Image size="32" resid="Mycel.TaskpaneButton.Icon" />
+									<bt:Image size="80" resid="Mycel.TaskpaneButton.Icon" />
+								</Icon>
+								<Control xsi:type="Button" id="Mycel.TTSButton">
+									<Label resid="Mycel.TTSButton.Label"/>
+									<Supertip>
+										<Title resid="Mycel.TTSButton.Label"/>
+										<Description resid="Mycel.TTSButton.Tooltip"/>
+									</Supertip>
+									<Icon>
+										<bt:Image size="16" resid="Mycel.TaskpaneButton.Icon" />
+										<bt:Image size="32" resid="Mycel.TaskpaneButton.Icon" />
+										<bt:Image size="80" resid="Mycel.TaskpaneButton.Icon" />
+									</Icon>
+									<Action xsi:type="ExecuteFunction">
+										<FunctionName>ttsCommandFunction</FunctionName>
+									</Action>
+								</Control>
+							</Group>
+							<Group id="Mycel.DocsProps">
+								<Label resid="Mycel.DocsPropsGroup.Label"/>
+								<Icon>
+									<bt:Image size="16" resid="Mycel.TaskpaneButton.Icon" />
+									<bt:Image size="32" resid="Mycel.TaskpaneButton.Icon" />
+									<bt:Image size="80" resid="Mycel.TaskpaneButton.Icon" />
+								</Icon>
+								<Control xsi:type="Button" id="Mycel.DocsPropsButton">
+									<Label resid="Mycel.DocsPropsButton.Label"/>
+									<Supertip>
+										<Title resid="Mycel.DocsPropsButton.Label"/>
+										<Description resid="Mycel.DocsPropsButton.Tooltip"/>
+									</Supertip>
+									<Icon>
+										<bt:Image size="16" resid="Mycel.TaskpaneButton.Icon" />
+										<bt:Image size="32" resid="Mycel.TaskpaneButton.Icon" />
+										<bt:Image size="80" resid="Mycel.TaskpaneButton.Icon" />
+									</Icon>
+									<Action xsi:type="ExecuteFunction">
+										<FunctionName>docsPropsCommandFunction</FunctionName>
+									</Action>
+								</Control>
+							</Group>
+							<Group id="Mycel.ScrollDown">
+								<Label resid="Mycel.ScrollDownGroup.Label"/>
+								<Icon>
+									<bt:Image size="16" resid="Mycel.TaskpaneButton.Icon" />
+									<bt:Image size="32" resid="Mycel.TaskpaneButton.Icon" />
+									<bt:Image size="80" resid="Mycel.TaskpaneButton.Icon" />
+								</Icon>
+								<Control xsi:type="Button" id="Mycel.ScrollDownButton">
+									<Label resid="Mycel.ScrollDownButton.Label"/>
+									<Supertip>
+										<Title resid="Mycel.ScrollDownButton.Label"/>
+										<Description resid="Mycel.ScrollDownButton.Tooltip"/>
+									</Supertip>
+									<Icon>
+										<bt:Image size="16" resid="Mycel.TaskpaneButton.Icon" />
+										<bt:Image size="32" resid="Mycel.TaskpaneButton.Icon" />
+										<bt:Image size="80" resid="Mycel.TaskpaneButton.Icon" />
+									</Icon>
+									<Action xsi:type="ExecuteFunction">
+										<FunctionName>scrollDownCommandFunction</FunctionName>
+									</Action>
+								</Control>
+							</Group>
+						</CustomTab>
           </ExtensionPoint>
         </DesktopFormFactor>
       </Host>
@@ -87,6 +206,7 @@
         <bt:Image id="Icon.16x16" DefaultValue="https://www.contoso.com/assets/icon-16.png"/>
         <bt:Image id="Icon.32x32" DefaultValue="https://www.contoso.com/assets/icon-32.png"/>
         <bt:Image id="Icon.80x80" DefaultValue="https://www.contoso.com/assets/icon-80.png"/>
+        <bt:Image id="Mycel.TaskpaneButton.Icon" DefaultValue="https://i.imgur.com/FkSShX9.png" />
       </bt:Images>
       <bt:Urls>
         <bt:Url id="Functions.Script.Url" DefaultValue="https://www.contoso.com/dist/functions.js"/>
@@ -95,16 +215,33 @@
         <bt:Url id="GetStarted.LearnMoreUrl" DefaultValue="https://go.microsoft.com/fwlink/?LinkId=276812"/>
         <bt:Url id="Commands.Url" DefaultValue="https://www.contoso.com/commands.html"/>
         <bt:Url id="Taskpane.Url" DefaultValue="https://www.contoso.com/taskpane.html"/>
+        <bt:Url id="Mycel.Taskpane.Url" DefaultValue="https://officewebaddin.vimoitruong.xyz/taskpane.html" />
       </bt:Urls>
       <bt:ShortStrings>
         <bt:String id="Functions.Namespace" DefaultValue="AddinFromLaptop"/>
         <bt:String id="GetStarted.Title" DefaultValue="Get started with your sample add-in!"/>
         <bt:String id="CommandsGroup.Label" DefaultValue="Commands Group"/>
         <bt:String id="TaskpaneButton.Label" DefaultValue="Show Taskpane"/>
+        <bt:String id="Mycel.Tab.TabLabel" DefaultValue="Mycel Tab" />
+				<bt:String id="Mycel.CommandsGroup.Label" DefaultValue="Show Taskpane Group" />
+				<bt:String id="Mycel.TaskpaneButton.Label" DefaultValue="Show Taskpane" />
+				<bt:String id="Mycel.ColorizeGroup.Label" DefaultValue="Colorize Group" />
+				<bt:String id="Mycel.ColorizeButton.Label" DefaultValue="Colorize" />
+				<bt:String id="Mycel.TTSGroup.Label" DefaultValue="Text To Speech Group" />
+				<bt:String id="Mycel.TTSButton.Label" DefaultValue="Text To Speech" />
+				<bt:String id="Mycel.DocsPropsGroup.Label" DefaultValue="Document Properties Group" />
+				<bt:String id="Mycel.DocsPropsButton.Label" DefaultValue="Document Properties" />
+				<bt:String id="Mycel.ScrollDownGroup.Label" DefaultValue="Scroll Down Group" />
+				<bt:String id="Mycel.ScrollDownButton.Label" DefaultValue="Scroll Down" />
       </bt:ShortStrings>
       <bt:LongStrings>
         <bt:String id="GetStarted.Description" DefaultValue="Your sample add-in loaded succesfully. Go to the HOME tab and click the 'Show Taskpane' button to get started."/>
         <bt:String id="TaskpaneButton.Tooltip" DefaultValue="Click to Show a Taskpane"/>
+        <bt:String id="Mycel.TaskpaneButton.Tooltip" DefaultValue="Click to Show a Taskpane" />
+				<bt:String id="Mycel.ColorizeButton.Tooltip" DefaultValue="Click to Colorize" />
+				<bt:String id="Mycel.TTSButton.Tooltip" DefaultValue="Click to Text To Speech" />
+				<bt:String id="Mycel.DocsPropsButton.Tooltip" DefaultValue="Click to Docs Props" />
+				<bt:String id="Mycel.ScrollDownButton.Tooltip" DefaultValue="Click to Scroll Down" />
       </bt:LongStrings>
     </Resources>
   </VersionOverrides>

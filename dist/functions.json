@@ -17,7 +17,7 @@
             }
         },
         {
-            "description": "Lấy tỷ giá hối đoái ngoại tệ và vnđ theo niêm yết tại portal.vietcombank.com.vn",
+            "description": "Lấy tỷ giá hối đoái ngoại tệ và vnđ theo niêm yết tại portal.vietcombank.com.vn.",
             "id": "TYGIA",
             "name": "TYGIA",
             "options": {
@@ -25,17 +25,17 @@
             },
             "parameters": [
                 {
-                    "description": "Mã ngoại tệ.",
+                    "description": "Mã ngoại tệ, vd: \"USD\".",
                     "name": "currency",
                     "type": "string"
                 },
                 {
-                    "description": "Loại tỷ giá.",
+                    "description": "Loại tỷ giá, vd: \"Mua\".",
                     "name": "type",
                     "type": "string"
                 },
                 {
-                    "description": "Ngày lấy tỷ giá.",
+                    "description": "Ngày lấy tỷ giá, để trống = hôm nay.",
                     "name": "date",
                     "type": "string"
                 }
@@ -45,12 +45,12 @@
             }
         },
         {
-            "description": "Returns starting time of the exam",
+            "description": "Returns starting time of the exam based on shift.",
             "id": "KIPTHI",
             "name": "KIPTHI",
             "parameters": [
                 {
-                    "description": "Kip thi index",
+                    "description": "Kip thi index, valid values: 1,2,3,4.",
                     "name": "kip",
                     "type": "number"
                 }
@@ -73,7 +73,7 @@
                     "type": "string"
                 },
                 {
-                    "description": "Background color of cell to be applied.",
+                    "description": "Background color of cell to be applied, ex: \"red\".",
                     "name": "cellBackgroundColor",
                     "type": "string"
                 }
@@ -96,17 +96,17 @@
                     "type": "string"
                 },
                 {
-                    "description": "Font name.",
+                    "description": "Font name, ex: \"Arial\".",
                     "name": "fontName",
                     "type": "string"
                 },
                 {
-                    "description": "Font size.",
+                    "description": "Font size, ex: 30.",
                     "name": "fontSize",
                     "type": "number"
                 },
                 {
-                    "description": "Font color.",
+                    "description": "Font color, ex: \"yellow\".",
                     "name": "fontColor",
                     "type": "string"
                 }
@@ -137,12 +137,12 @@
             "result": {}
         },
         {
-            "description": "Speak the input number.",
+            "description": "Speak the input integer number in Vietnamese.",
             "id": "NUMBERTOSPEECH",
             "name": "NUMBERTOSPEECH",
             "parameters": [
                 {
-                    "description": "Number to be spoken.",
+                    "description": "Integer number to be spoken.",
                     "name": "number",
                     "type": "number"
                 }
@@ -152,12 +152,12 @@
             }
         },
         {
-            "description": "Number to text in Vietnamese.",
+            "description": "Integer number to text in Vietnamese.",
             "id": "NUMBERTOTEXT",
             "name": "NUMBERTOTEXT",
             "parameters": [
                 {
-                    "description": "Number to text.",
+                    "description": "Integer number to text.",
                     "name": "number",
                     "type": "number"
                 }
@@ -167,12 +167,12 @@
             }
         },
         {
-            "description": "Decimal number to speech.",
+            "description": "Decimal number to speech in Vietnamese.",
             "id": "DECIMALTOSPEECH",
             "name": "DECIMALTOSPEECH",
             "parameters": [
                 {
-                    "description": "Number to be spoken.",
+                    "description": "Decimal number to be spoken.",
                     "name": "number",
                     "type": "number"
                 }
@@ -187,7 +187,7 @@
             "name": "DECIMALTOTEXT",
             "parameters": [
                 {
-                    "description": "Number to text.",
+                    "description": "Decimal number to text.",
                     "name": "number",
                     "type": "number"
                 }

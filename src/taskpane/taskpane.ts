@@ -568,15 +568,39 @@ function documentProperties() {
   Excel.run(async function(context) {
     //var range: Excel.Range = context.workbook.getSelectedRange();
     var wb: Excel.Workbook = context.workbook;
-    wb.properties.load(["author", "creationDate", "lastAuthor"]);
-    wb.load(["name", "context"]);
+    // wb.properties.load(["author", "creationDate", "lastAuthor"]);
+    wb.load(["name"]);
     await context.sync();
-    console.log("wb.properties.author = " + wb.properties.author);
-    console.log("wb.properties.creationDate = " + wb.properties.creationDate);
-    console.log("wb.properties.lastAuthor = " + wb.properties.lastAuthor);
+    // console.log("wb.properties.author = " + wb.properties.author);
+    // console.log("wb.properties.creationDate = " + wb.properties.creationDate);
+    // console.log("wb.properties.lastAuthor = " + wb.properties.lastAuthor);
 
     console.log("wb.name = " + wb.name);
-    console.log("wb.context = " + wb.context);
+    // console.log("wb.context = " + wb.context);
+
+    // Office.context.ui.displayDialogAsync('https://officewebaddin.vimoitruong.xyz/', {height: 30, width: 20, displayInIframe: true});
+    const url = "https://mycelwebapi.vimoitruong.xyz/excelDB";
+
+    let xhttp = new XMLHttpRequest();
+    await new Promise(function(resolve, reject) {
+      xhttp.onreadystatechange = function() {
+        if (xhttp.readyState !== 4) return;
+        if (xhttp.status == 200) {
+          // resolve(JSON.parse(xhttp.responseText).result);
+          // invocation.setResult(JSON.parse(xhttp.responseText).result);
+          console.log(JSON.parse(xhttp.responseText).result);
+        } else {
+          reject({
+            status: xhttp.status,
+            statusText: xhttp.statusText
+          });
+          console.log("Request was rejected");
+          // invocation.setResult("Request was rejected");
+        }
+      };
+      xhttp.open("GET", url, true);
+      xhttp.send();
+    });
     await context.sync();
   }).catch(function(error) {
     console.log("Error: " + error);
@@ -585,4 +609,3 @@ function documentProperties() {
     }
   });
 }
-
