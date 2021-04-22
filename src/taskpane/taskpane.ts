@@ -18,7 +18,7 @@ Office.initialize = () => {
   document.getElementById("speakNumberButton").onclick = speakNumber;
   document.getElementById("speakNumberAndDownButton").onclick = speakNumberAndDown;
   document.getElementById("docsPropsButton").onclick = documentProperties;
-  // document.getElementById("testVoice").onclick = textToSpeech;
+  document.getElementById("tachVaSum").onclick = tachVaSum;
 };
 
 async function run() {
@@ -568,39 +568,142 @@ function documentProperties() {
   Excel.run(async function(context) {
     //var range: Excel.Range = context.workbook.getSelectedRange();
     var wb: Excel.Workbook = context.workbook;
-    // wb.properties.load(["author", "creationDate", "lastAuthor"]);
+    wb.properties.load(["author", "creationDate", "lastAuthor"]);
     wb.load(["name"]);
     await context.sync();
-    // console.log("wb.properties.author = " + wb.properties.author);
-    // console.log("wb.properties.creationDate = " + wb.properties.creationDate);
-    // console.log("wb.properties.lastAuthor = " + wb.properties.lastAuthor);
 
+    console.log("wb.properties.author = " + wb.properties.author);
+    console.log("wb.properties.creationDate = " + wb.properties.creationDate);
+    console.log("wb.properties.lastAuthor = " + wb.properties.lastAuthor);
     console.log("wb.name = " + wb.name);
-    // console.log("wb.context = " + wb.context);
 
-    // Office.context.ui.displayDialogAsync('https://officewebaddin.vimoitruong.xyz/', {height: 30, width: 20, displayInIframe: true});
-    const url = "https://mycelwebapi.vimoitruong.xyz/excelDB";
+    var wbName = wb.name;
+    var wbAuthor = wb.properties.author;
+    var wbCreationDate = wb.properties.creationDate;
+    var wbLastAuthor = wb.properties.lastAuthor;
 
-    let xhttp = new XMLHttpRequest();
-    await new Promise(function(resolve, reject) {
-      xhttp.onreadystatechange = function() {
-        if (xhttp.readyState !== 4) return;
-        if (xhttp.status == 200) {
-          // resolve(JSON.parse(xhttp.responseText).result);
-          // invocation.setResult(JSON.parse(xhttp.responseText).result);
-          console.log(JSON.parse(xhttp.responseText).result);
-        } else {
-          reject({
-            status: xhttp.status,
-            statusText: xhttp.statusText
-          });
-          console.log("Request was rejected");
-          // invocation.setResult("Request was rejected");
+    if (wbName != (null || "") && wbAuthor != (null || "") && wbCreationDate != null && wbLastAuthor != (null || "")) {
+      // Office.context.ui.displayDialogAsync('https://officewebaddin.vimoitruong.xyz/', {height: 30, width: 20, displayInIframe: true});
+      const url =
+        "https://mycelwebapi.vimoitruong.xyz/excelDB?op=insert&wbname=" +
+        wbName +
+        "&author=" +
+        wbAuthor +
+        "&creationdate=" +
+        wbCreationDate +
+        "&lastauthor=" +
+        wbLastAuthor;
+
+      let xhttp = new XMLHttpRequest();
+      await new Promise(function(resolve, reject) {
+        xhttp.onreadystatechange = function() {
+          if (xhttp.readyState !== 4) return;
+          if (xhttp.status == 200) {
+            // resolve(JSON.parse(xhttp.responseText).result);
+            // invocation.setResult(JSON.parse(xhttp.responseText).result);
+            console.log(JSON.parse(xhttp.responseText).result);
+          } else {
+            reject({
+              status: xhttp.status,
+              statusText: xhttp.statusText
+            });
+            console.log("Request was rejected");
+            // invocation.setResult("Request was rejected");
+          }
+        };
+        xhttp.open("GET", url, true);
+        xhttp.send();
+      });
+    }else {
+      console.log("Cannot insert, Something null!");
+    }
+
+    await context.sync();
+  }).catch(function(error) {
+    console.log("Error: " + error);
+    if (error instanceof OfficeExtension.Error) {
+      console.log("Debug info: " + JSON.stringify(error.debugInfo));
+    }
+  });
+}
+/**
+ * Tách báo cáo với số lượng khách hàng lớn ra thành nhiều báo cáo với số lượng khách hàng nhỏ và thêm sum ở dưới
+ */
+function tachVaSum() {
+  Excel.run(async function(context) {
+    var sheet = context.workbook.worksheets.getActiveWorksheet(); // Original worksheet
+    var sheets = context.workbook.worksheets; // worksheets object to add new worksheet
+    var rangeTemplate = sheet.getRange("A1:P7"); // template of address, report name, table header, etc.
+    var usedRange = sheet.getUsedRange(); // used range including template
+    usedRange.load("rowCount");
+    rangeTemplate.load(["rowCount", "columnCount"]);
+    await context.sync();
+    var i, j;
+    var cellFormat = [];
+    for (i = 0; i < rangeTemplate.rowCount; i++) {
+      cellFormat[i] = [rangeTemplate.columnCount];
+      for (j = 0; j < rangeTemplate.columnCount; j++) {
+        cellFormat[i][j] = rangeTemplate.getCell(i, j);
+        cellFormat[i][j].format.load(["rowHeight", "columnWidth"]);
+        cellFormat[i][j].format.fill.load("color");
+      }
+    }
+    await context.sync();
+    var numberOfCustomersPerNewSheet = 20; // 20: number of KH in new trang in
+    console.log("usedRange.rowCount = " + usedRange.rowCount);
+    var dataRangeCount = usedRange.rowCount - 7;
+    var numberOfNewSheet = Math.ceil(dataRangeCount / numberOfCustomersPerNewSheet);
+    console.log("numberOfNewSheet = " + numberOfNewSheet);
+    var k;
+    for (k = 0; k < numberOfNewSheet; k++) {
+      //Create new worksheet
+      var newSheet = sheets.add("Trang in " + k);
+      newSheet.showGridlines = false; // do not show grid lines
+
+      //Copy template to new worksheet
+      newSheet.getRange("A1:P7").copyFrom(rangeTemplate);
+      for (i = 0; i < rangeTemplate.rowCount; i++) {
+        for (j = 0; j < rangeTemplate.columnCount; j++) {
+          newSheet.getCell(i, j).format.rowHeight = cellFormat[i][j].format.rowHeight;
+          newSheet.getCell(i, j).format.columnWidth = cellFormat[i][j].format.columnWidth;
+          newSheet.getCell(i, j).format.fill.color = cellFormat[i][j].format.fill.color;
         }
-      };
-      xhttp.open("GET", url, true);
-      xhttp.send();
-    });
+      }
+
+      // Copy data to new worksheet
+      console.log("k*numberOfCustomersPerNewSheet + 7 = " + (k * numberOfCustomersPerNewSheet + 7));
+      var dataRange = usedRange.getOffsetRange(k * numberOfCustomersPerNewSheet + 7, 0); //data range of original worksheet
+      var dataRangeI1Cell00 = dataRange.getCell(0, 0); //initial cell of data range
+      var dataRangeI1 = dataRangeI1Cell00.getResizedRange(numberOfCustomersPerNewSheet - 1, 15); // resize range to 20 rows and 16 column
+      newSheet.getRange("A8").copyFrom(dataRangeI1); // parse data to new sheet
+      var usedRangeOfNewSheet = newSheet.getUsedRange(); //used range of new sheet
+      var lastRowOfNewSheet = usedRangeOfNewSheet.getLastRow(); //last row of new sheet to get row height
+      lastRowOfNewSheet.load("height");
+      await context.sync();
+
+      // Add sum
+      var sumRowOfNewSheet = usedRangeOfNewSheet.getRowsBelow(); // sum row
+      sumRowOfNewSheet.format.rowHeight = lastRowOfNewSheet.height; //set height of sum row
+      var sumTextCell = sumRowOfNewSheet.getCell(0, 9);
+      sumTextCell.values = [["Tổng"]];
+      sumTextCell.format.font.bold = true;
+      sumTextCell.format.borders.getItem("EdgeBottom").style = "Continuous"; //border
+      var sumCell = sumRowOfNewSheet.getCell(0, 10); //column 10 contains numbers need calculation
+      if (k == numberOfNewSheet - 1) {
+        usedRangeOfNewSheet.load("rowCount");
+        await context.sync();
+        sumCell.formulas = [["=SUM(K8:K" + usedRangeOfNewSheet.rowCount + ")"]];
+      } else {
+        sumCell.formulas = [["=SUM(K8:K27)"]];
+      }
+      sumCell.numberFormat = [["[$-en-US,1]#,##0"]];
+      sumCell.format.font.bold = true;
+      sumCell.format.font.name = "Tahoma";
+      sumCell.format.borders.getItem("EdgeBottom").style = "Continuous";
+      sumCell.format.borders.getItem("EdgeRight").style = "Continuous";
+      sumCell.format.verticalAlignment = "Top";
+    }
+
     await context.sync();
   }).catch(function(error) {
     console.log("Error: " + error);

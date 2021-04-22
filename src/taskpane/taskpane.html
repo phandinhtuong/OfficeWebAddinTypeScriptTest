@@ -71,12 +71,17 @@
         <span class="ms-Button-icon"><i class="ms-Icon ms-Icon--plus"></i></span>
         <span class="ms-Button-label">Text To Speech</span>
       </button>
+      <br />
+      <button class="ms-Button" id="tachVaSum">
+        <span class="ms-Button-icon"><i class="ms-Icon ms-Icon--plus"></i></span>
+        <span class="ms-Button-label">Tạo trang in</span>
+      </button>
       <script>
         function textToSpeech() {
           Excel.run(async function(context) {
             var range = context.workbook.getSelectedRange();
             //var cell = range.getCell(0, 0);
-           
+
             // range.load("values");
             // await context.sync();
             // console.log("range.values = " + range.values);
@@ -91,7 +96,7 @@
             range.load("text");
             await context.sync();
             console.log("range.text = " + range.text);
-            
+
             //if range only contain "," means that it is empty
             if (range.text == "" || /^[,]*$/.test(range.text)) {
               document.getElementById("textToSpeechInput").value = "cell rỗng";
@@ -99,7 +104,6 @@
               document.getElementById("textToSpeechInput").value = range.text;
             }
             responsiveVoice.speak(document.getElementById("textToSpeechInput").value, "Vietnamese Female");
-
 
             await context.sync();
           }).catch(function(error) {

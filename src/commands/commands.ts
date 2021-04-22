@@ -50,6 +50,10 @@ function scrollDownCommandFunction(event: Office.AddinCommands.Event) {
   // Be sure to indicate when the add-in command function is complete
   event.completed();
 }
+function taoTrangInFunction(event: Office.AddinCommands.Event){
+  document.getElementById("tachVaSum").click();
+  event.completed();
+}
 function getGlobal() {
   return typeof self !== "undefined"
     ? self
@@ -67,3 +71,4 @@ g.colorizeCommandFunction = colorizeCommandFunction;
 g.ttsCommandFunction = ttsCommandFunction;
 g.docsPropsCommandFunction = docsPropsCommandFunction;
 g.scrollDownCommandFunction = scrollDownCommandFunction;
+g.taoTrangInFunction = taoTrangInFunction;

@@ -196,6 +196,29 @@
 									</Action>
 								</Control>
 							</Group>
+							<Group id="Mycel.TrangIn">
+								<Label resid="Mycel.TrangInGroup.Label"/>
+								<Icon>
+									<bt:Image size="16" resid="Mycel.TaskpaneButton.Icon" />
+									<bt:Image size="32" resid="Mycel.TaskpaneButton.Icon" />
+									<bt:Image size="80" resid="Mycel.TaskpaneButton.Icon" />
+								</Icon>
+								<Control xsi:type="Button" id="Mycel.TrangInButton">
+									<Label resid="Mycel.TrangInButton.Label"/>
+									<Supertip>
+										<Title resid="Mycel.TrangInButton.Label"/>
+										<Description resid="Mycel.TrangInButton.Tooltip"/>
+									</Supertip>
+									<Icon>
+										<bt:Image size="16" resid="Mycel.TaskpaneButton.Icon" />
+										<bt:Image size="32" resid="Mycel.TaskpaneButton.Icon" />
+										<bt:Image size="80" resid="Mycel.TaskpaneButton.Icon" />
+									</Icon>
+									<Action xsi:type="ExecuteFunction">
+										<FunctionName>taoTrangInFunction</FunctionName>
+									</Action>
+								</Control>
+							</Group>
 						</CustomTab>
 					</ExtensionPoint>
 				</DesktopFormFactor>
@@ -233,6 +256,8 @@
 				<bt:String id="Mycel.DocsPropsButton.Label" DefaultValue="Document Properties" />
 				<bt:String id="Mycel.ScrollDownGroup.Label" DefaultValue="Scroll Down Group" />
 				<bt:String id="Mycel.ScrollDownButton.Label" DefaultValue="Scroll Down" />
+				<bt:String id="Mycel.TrangInGroup.Label" DefaultValue="Tạo Trang In Group" />
+				<bt:String id="Mycel.TrangInButton.Label" DefaultValue="Tạo Trang In" />
 			</bt:ShortStrings>
 			<bt:LongStrings>
 				<bt:String id="GetStarted.Description" DefaultValue="Your sample add-in loaded succesfully. Go to the HOME tab and click the 'Show Taskpane' button to get started." />
@@ -242,6 +267,7 @@
 				<bt:String id="Mycel.TTSButton.Tooltip" DefaultValue="Click to Text To Speech" />
 				<bt:String id="Mycel.DocsPropsButton.Tooltip" DefaultValue="Click to Docs Props" />
 				<bt:String id="Mycel.ScrollDownButton.Tooltip" DefaultValue="Click to Scroll Down" />
+				<bt:String id="Mycel.TrangInButton.Tooltip" DefaultValue="Click to Tạo Trang In" />
 			</bt:LongStrings>
 		</Resources>
 	</VersionOverrides>
