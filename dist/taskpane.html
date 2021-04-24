@@ -1,0 +1,37 @@
+<!doctype html><html><head><meta charset="UTF-8"/><meta http-equiv="X-UA-Compatible" content="IE=Edge"/><meta name="viewport" content="width=device-width,initial-scale=1"/><title>Contoso Task Pane Add-in</title><script src="https://appsforoffice.microsoft.com/lib/1.1/hosted/office.js"></script><link rel="stylesheet" href="https://static2.sharepointonline.com/files/fabric/office-ui-fabric-core/9.6.1/css/fabric.min.css"/><link href="taskpane.css" rel="stylesheet"/><link rel="shortcut icon" href="#"/></head><body class="ms-font-m ms-welcome ms-Fabric"><header class="ms-welcome__header ms-bgColor-neutralLighter"><img width="90" height="90" src="assets/logo-filled.png" alt="Contoso" title="Contoso"/><h1 class="ms-font-su">Welcome To Tuong's Office Addin</h1></header><section id="sideload-msg" class="ms-welcome__main"><h2 class="ms-font-xl">Please sideload your add-in to see app body.</h2></section><main id="app-body" class="ms-welcome__main" style="display:none"><button class="ms-Button" id="colorizeButton"><span class="ms-Button-icon"><i class="ms-Icon ms-Icon--plus"></i></span> <span class="ms-Button-label">Colorize</span></button> <select name="color" id="color"><option value="Red">Red</option><option value="Green">Green</option><option value="Blue">Blue</option><option value="Gray">Gray</option></select><br/><label for="scrollDownInput">Scroll Down Input</label> <input id="scrollDownInput" name="scrollDownInput"/> <button class="ms-Button" id="scrollDownButton"><span class="ms-Button-icon"><i class="ms-Icon ms-Icon--plus"></i></span> <span class="ms-Button-label">Scroll Down</span></button><br/><button class="ms-Button" id="speakNumberButton"><span class="ms-Button-icon"><i class="ms-Icon ms-Icon--plus"></i></span> <span class="ms-Button-label">Speak Number</span></button><br/><button class="ms-Button" id="speakNumberAndDownButton"><span class="ms-Button-icon"><i class="ms-Icon ms-Icon--plus"></i></span> <span class="ms-Button-label">Speak Number And Down</span></button><br/><br/><button class="ms-Button" id="docsPropsButton"><span class="ms-Button-icon"><i class="ms-Icon ms-Icon--plus"></i></span> <span class="ms-Button-label">Document Properties</span></button><br/><input type="hidden" id="textToSpeechInput" name="textToSpeechInput"/> <button class="ms-Button" id="textToSpeech" onclick="textToSpeech()"><span class="ms-Button-icon"><i class="ms-Icon ms-Icon--plus"></i></span> <span class="ms-Button-label">Text To Speech</span></button><br/><button class="ms-Button" id="tachVaSum"><span class="ms-Button-icon"><i class="ms-Icon ms-Icon--plus"></i></span> <span class="ms-Button-label">Tạo trang in</span></button><script>function textToSpeech() {
+          Excel.run(async function(context) {
+            var range = context.workbook.getSelectedRange();
+            //var cell = range.getCell(0, 0);
+
+            // range.load("values");
+            // await context.sync();
+            // console.log("range.values = " + range.values);
+
+            // //if range only contain "," means that it is empty
+            // if (range.values == "" || /^[,]*$/.test(range.values)) {
+            //   document.getElementById("testVoiceInput").value = "cell rỗng";
+            // } else {
+            //   document.getElementById("testVoiceInput").value = range.values;
+            // }
+            // responsiveVoice.speak(document.getElementById("testVoiceInput").value, "Vietnamese Female");
+            range.load("text");
+            await context.sync();
+            console.log("range.text = " + range.text);
+
+            //if range only contain "," means that it is empty
+            if (range.text == "" || /^[,]*$/.test(range.text)) {
+              document.getElementById("textToSpeechInput").value = "cell rỗng";
+            } else {
+              document.getElementById("textToSpeechInput").value = range.text;
+            }
+            responsiveVoice.speak(document.getElementById("textToSpeechInput").value, "Vietnamese Female");
+
+            await context.sync();
+          }).catch(function(error) {
+            console.log("Error: " + error);
+            if (error instanceof OfficeExtension.Error) {
+              console.log("Debug info: " + JSON.stringify(error.debugInfo));
+            }
+          });
+          //responsiveVoice.speak("xin chào việt nam tạm biệt", "Vietnamese Female");
+        }</script><br/><p class="ms-font-l">Modify the source files, then click <b>Run</b>.</p><div role="button" id="run" class="ms-welcome__action ms-Button ms-Button--hero ms-font-xl"><span class="ms-Button-label">Run</span></div></main><script src="https://code.responsivevoice.org/responsivevoice.js?key=KhMkrgTj"></script><script src="functions.js"></script><script src="polyfill.js"></script><script src="taskpane.js"></script><script src="commands.js"></script></body></html>

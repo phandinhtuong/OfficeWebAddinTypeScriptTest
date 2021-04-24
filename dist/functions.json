@@ -1,12 +1,12 @@
 {
     "functions": [
         {
-            "description": "Returns author's name and ID in 4 cells.",
+            "description": "Returns author's name and ID in 4 cells",
             "id": "TACGIA",
             "name": "TACGIA",
             "parameters": [
                 {
-                    "description": "The author's name and ID, ex: \"Phan Dinh Tuong 20164582\".",
+                    "description": "The author's name and ID",
                     "name": "nameAndID",
                     "type": "string"
                 }
@@ -17,7 +17,7 @@
             }
         },
         {
-            "description": "Lấy tỷ giá hối đoái ngoại tệ và vnđ theo niêm yết tại portal.vietcombank.com.vn.",
+            "description": "Lấy tỷ giá hối đoái ngoại tệ và vnđ theo niêm yết tại portal.vietcombank.com.vn",
             "id": "TYGIA",
             "name": "TYGIA",
             "options": {
@@ -25,17 +25,17 @@
             },
             "parameters": [
                 {
-                    "description": "Mã ngoại tệ, vd: \"USD\".",
+                    "description": "Mã ngoại tệ, vd: \"USD\"",
                     "name": "currency",
                     "type": "string"
                 },
                 {
-                    "description": "Loại tỷ giá, vd: \"Mua\".",
+                    "description": "Loại tỷ giá, vd: \"Mua\"",
                     "name": "type",
                     "type": "string"
                 },
                 {
-                    "description": "Ngày lấy tỷ giá, để trống = hôm nay.",
+                    "description": "Ngày lấy tỷ giá, để trống = hôm nay",
                     "name": "date",
                     "type": "string"
                 }
@@ -45,12 +45,12 @@
             }
         },
         {
-            "description": "Returns starting time of the exam based on shift.",
+            "description": "Returns starting time of the exam based on shift",
             "id": "KIPTHI",
             "name": "KIPTHI",
             "parameters": [
                 {
-                    "description": "Kip thi index, valid values: 1,2,3,4.",
+                    "description": "Kip thi index, valid values: 1,2,3,4",
                     "name": "kip",
                     "type": "number"
                 }
@@ -60,7 +60,7 @@
             }
         },
         {
-            "description": "Return input text and change background color.",
+            "description": "Return input text and change background color",
             "id": "STRINGCELLFORMATTER",
             "name": "STRINGCELLFORMATTER",
             "options": {
@@ -68,12 +68,12 @@
             },
             "parameters": [
                 {
-                    "description": "Input text.",
+                    "description": "Input text",
                     "name": "text",
                     "type": "string"
                 },
                 {
-                    "description": "Background color of cell to be applied, ex: \"red\".",
+                    "description": "Background color of cell to be applied, ex: \"red\"",
                     "name": "cellBackgroundColor",
                     "type": "string"
                 }
@@ -83,7 +83,7 @@
             }
         },
         {
-            "description": "Return the input text and change the font type, font size, font color.",
+            "description": "Return the input text and change the font type, font size, font color",
             "id": "STRINGFONTFORMATTER",
             "name": "STRINGFONTFORMATTER",
             "options": {
@@ -91,22 +91,22 @@
             },
             "parameters": [
                 {
-                    "description": "Input text.",
+                    "description": "Input text",
                     "name": "text",
                     "type": "string"
                 },
                 {
-                    "description": "Font name, ex: \"Arial\".",
+                    "description": "Font name",
                     "name": "fontName",
                     "type": "string"
                 },
                 {
-                    "description": "Font size, ex: 30.",
+                    "description": "Font size",
                     "name": "fontSize",
                     "type": "number"
                 },
                 {
-                    "description": "Font color, ex: \"yellow\".",
+                    "description": "Font color",
                     "name": "fontColor",
                     "type": "string"
                 }
@@ -116,7 +116,7 @@
             }
         },
         {
-            "description": "Generate QR code from text.",
+            "description": "Generate QR code from text",
             "id": "QRCODE",
             "name": "QRCODE",
             "options": {
@@ -124,12 +124,12 @@
             },
             "parameters": [
                 {
-                    "description": "Context of QR code.",
+                    "description": "Context of QR code",
                     "name": "text",
                     "type": "string"
                 },
                 {
-                    "description": "Name of the shape will be filled with QR code.",
+                    "description": "Name of the shape will be filled with QR code",
                     "name": "ShapeName",
                     "type": "string"
                 }
@@ -137,12 +137,12 @@
             "result": {}
         },
         {
-            "description": "Speak the input integer number in Vietnamese.",
+            "description": "Speak the input integer number in Vietnamese",
             "id": "NUMBERTOSPEECH",
             "name": "NUMBERTOSPEECH",
             "parameters": [
                 {
-                    "description": "Integer number to be spoken.",
+                    "description": "Integer number to be spoken",
                     "name": "number",
                     "type": "number"
                 }
@@ -152,12 +152,12 @@
             }
         },
         {
-            "description": "Integer number to text in Vietnamese.",
+            "description": "Integer number to text in Vietnamese",
             "id": "NUMBERTOTEXT",
             "name": "NUMBERTOTEXT",
             "parameters": [
                 {
-                    "description": "Integer number to text.",
+                    "description": "Integer number to text",
                     "name": "number",
                     "type": "number"
                 }
@@ -167,12 +167,12 @@
             }
         },
         {
-            "description": "Decimal number to speech in Vietnamese.",
+            "description": "Decimal number to speech in Vietnamese",
             "id": "DECIMALTOSPEECH",
             "name": "DECIMALTOSPEECH",
             "parameters": [
                 {
-                    "description": "Decimal number to be spoken.",
+                    "description": "Decimal number to be spoken",
                     "name": "number",
                     "type": "number"
                 }
@@ -182,12 +182,12 @@
             }
         },
         {
-            "description": "Decimal number to text in Vietnamese.",
+            "description": "Decimal number to text in Vietnamese",
             "id": "DECIMALTOTEXT",
             "name": "DECIMALTOTEXT",
             "parameters": [
                 {
-                    "description": "Decimal number to text.",
+                    "description": "Decimal number to text",
                     "name": "number",
                     "type": "number"
                 }
