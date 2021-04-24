@@ -38,10 +38,12 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 exports.__esModule = true;
 exports.decimalToText = exports.decimalToSpeech = exports.numberToText = exports.numberToSpeech = exports.QRCode = exports.StringFontFormatter = exports.StringCellFormatter = exports.KipThi = exports.TyGia = exports.TacGia = void 0;
 /**
- * Returns author's name and ID in 4 cells.
+ * Returns author's name and ID in 4 cells
  * @customfunction
- * @param nameAndID - The author's name and ID, ex: "Phan Dinh Tuong 20164582".
- * @returns The name and ID of author separatedly.
+ * @param {string} nameAndID - The author's name and ID
+ * @returns {string[][]} The name and ID of author separatedly
+ * @example =TacGia("Phan Dinh Tuong 20164582") =
+ *          [[Phan,Dinh],[Tuong,20164582]]
  */
 function TacGia(nameAndID) {
     if (Number(nameAndID))

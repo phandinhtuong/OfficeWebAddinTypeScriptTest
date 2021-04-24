@@ -1,8 +1,10 @@
 ﻿/**
- * Returns author's name and ID in 4 cells.
+ * Returns author's name and ID in 4 cells
  * @customfunction
- * @param nameAndID - The author's name and ID, ex: "Phan Dinh Tuong 20164582".
- * @returns The name and ID of author separatedly.
+ * @param {string} nameAndID - The author's name and ID
+ * @returns {string[][]} The name and ID of author separatedly
+ * @example =TacGia("Phan Dinh Tuong 20164582") =
+ *          [[Phan,Dinh],[Tuong,20164582]]
  */
 export function TacGia(nameAndID: string): string[][] {
   if (Number(nameAndID))
@@ -56,12 +58,13 @@ export function TacGia(nameAndID: string): string[][] {
   ];
 }
 /**
- * Lấy tỷ giá hối đoái ngoại tệ và vnđ theo niêm yết tại portal.vietcombank.com.vn.
+ * Lấy tỷ giá hối đoái ngoại tệ và vnđ theo niêm yết tại portal.vietcombank.com.vn
  * @customfunction
- * @param currency Mã ngoại tệ, vd: "USD".
- * @param type Loại tỷ giá, vd: "Mua".
- * @param date Ngày lấy tỷ giá, để trống = hôm nay.
- * @param invocation Invocation for updating cell's value
+ * @param {string} currency Mã ngoại tệ, vd: "USD"
+ * @param {string} type Loại tỷ giá, vd: "Mua"
+ * @param {string} date Ngày lấy tỷ giá, để trống = hôm nay
+ * @param {CustomFunctions.StreamingInvocation<string>} invocation Invocation for updating cell's value, as a return
+ * @example =TyGia("usd","buy","24/04/2021")=22,945.00
  */
 export async function TyGia(
   currency: string,
@@ -154,10 +157,11 @@ export async function TyGia(
   });
 }
 /**
- * Returns starting time of the exam based on shift.
+ * Returns starting time of the exam based on shift
  * @customfunction
- * @param kip Kip thi index, valid values: 1,2,3,4.
- * @returns Starting time of the exam.
+ * @param {number} kip Kip thi index, valid values: 1,2,3,4
+ * @returns {string} Starting time of the exam
+ * @example =KipThi(1)=07:00
  */
 export function KipThi(kip: number): string {
   var startingTime;
@@ -181,13 +185,14 @@ export function KipThi(kip: number): string {
   return startingTime;
 }
 /**
- * Return input text and change background color.
+ * Return input text and change background color
  * @customfunction
- * @param text Input text.
- * @param cellBackgroundColor Background color of cell to be applied, ex: "red".
- * @param invocation Invocation object to get current cell.
+ * @param {string} text Input text
+ * @param {string} cellBackgroundColor Background color of cell to be applied, ex: "red"
+ * @param {CustomFunctions.Invocation} invocation Invocation object to get current cell
  * @requiresAddress
- * @returns Input text and change background color.
+ * @returns Input text and change background color
+ * @example =StringCellFormatter("Tuong","red")=Tuong
  */
 export function StringCellFormatter(
   text: string,
@@ -211,15 +216,16 @@ export function StringCellFormatter(
   return text;
 }
 /**
- * Return the input text and change the font type, font size, font color.
+ * Return the input text and change the font type, font size, font color
  * @customfunction
- * @param text Input text.
- * @param fontName Font name, ex: "Arial".
- * @param fontSize Font size, ex: 30.
- * @param fontColor Font color, ex: "yellow".
- * @param invocation Invocation object to get current cell.
+ * @param {string} text Input text
+ * @param {string} fontName Font name
+ * @param {number} fontSize Font size
+ * @param {string} fontColor Font color
+ * @param {CustomFunctions.Invocation} invocation Invocation object to get current cell
  * @requiresAddress
- * @returns Input text.
+ * @returns Input text
+ * @example =StringFontFormatter("Tuong","Arial",30,"blue")=Tuong
  */
 export function StringFontFormatter(
   text: string,
@@ -247,11 +253,11 @@ export function StringFontFormatter(
   return text;
 }
 /**
- * Generate QR code from text.
+ * Generate QR code from text
  * @customfunction
- * @param text Context of QR code.
- * @param ShapeName Name of the shape will be filled with QR code.
- * @param invocation Invocation object to get current cell.
+ * @param {string} text Context of QR code
+ * @param {string} ShapeName Name of the shape will be filled with QR code
+ * @param {CustomFunctions.Invocation} invocation Invocation object to get current cell
  * @requiresAddress
  */
 export function QRCode(text: string, ShapeName: string, invocation: CustomFunctions.Invocation) {
@@ -344,48 +350,52 @@ export function QRCode(text: string, ShapeName: string, invocation: CustomFuncti
   return text;
 }
 /**
- * Speak the input integer number in Vietnamese.
+ * Speak the input integer number in Vietnamese
  * @customfunction
- * @param number Integer number to be spoken.
- * @returns Integer number in text.
+ * @param {number} number Integer number to be spoken
+ * @returns {string} Integer number in text
+ * @example =NumberToSpeech(12)=Mười hai
  */
-export function numberToSpeech(number: number): string {
-  return numberToSpeechGeneral(number,3);
+export function NumberToSpeech(number: number): string {
+  return NumberToSpeechGeneral(number, 3);
 }
 /**
- * Integer number to text in Vietnamese.
+ * Integer number to text in Vietnamese
  * @customfunction
- * @param number Integer number to text.
- * @returns Integer number in text.
+ * @param {number} number Integer number to text
+ * @returns {string} Integer number in text
+ * @example =NumberToText(12)=Mười hai
  */
-export function numberToText(number: number): string {
-  return numberToSpeechGeneral(number,4);
+export function NumberToText(number: number): string {
+  return NumberToSpeechGeneral(number, 4);
 }
 /**
- * Decimal number to speech in Vietnamese.
+ * Decimal number to speech in Vietnamese
  * @customfunction
- * @param number Decimal number to be spoken.
- * @returns Decimal number in text.
+ * @param {number} number Decimal number to be spoken
+ * @returns {string} Decimal number in text
+ * @example =DecimalToSpeech(12.7)=Mười hai phẩy bẩy
  */
-export function decimalToSpeech(number: number): string {
-  return numberToSpeechGeneral(number,1);
+export function DecimalToSpeech(number: number): string {
+  return NumberToSpeechGeneral(number, 1);
 }
 /**
- * Decimal number to text in Vietnamese.
+ * Decimal number to text in Vietnamese
  * @customfunction
- * @param number Decimal number to text.
- * @returns Decimal number in text.
+ * @param {number} number Decimal number to text
+ * @returns {string} Decimal number in text
+ * @example =DecimalToText(12.7)=Mười hai phẩy bẩy
  */
-export function decimalToText(number: number): string {
-  return numberToSpeechGeneral(number,2);
+export function DecimalToText(number: number): string {
+  return NumberToSpeechGeneral(number, 2);
 }
 /**
- * General number to speech function, only for other functions, not usable by end user.
- * @param number Input number.
- * @param option Option to output: 1. Decimal to speech, 2. Decimal to text, 3. Integer to speech, 4. Integer to text.
- * @returns Number in text.
+ * General number to speech function, only for other functions, not usable by end user
+ * @param {number} number Input number
+ * @param {number} option Option to output: 1. Decimal to speech, 2. Decimal to text, 3. Integer to speech, 4. Integer to text
+ * @returns {string} Number in text
  */
-function numberToSpeechGeneral(number: number, option: number): string {
+function NumberToSpeechGeneral(number: number, option: number): string {
   console.log(typeof number);
   console.log(number);
   var chuSo = [" không", " một", " hai", " ba", " bốn", " năm", " sáu", " bẩy", " tám", " chín"];

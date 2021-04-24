@@ -10,19 +10,18 @@ Office.onReady(() => {
 });
 
 /**
- * Shows a notification when the add-in command is executed.
- * @param event
+ * Colorize cells command function
+ * @param event 
  */
-import { colorize } from "../taskpane/taskpane";
-function colorizeCommandFunction(event: Office.AddinCommands.Event) {
-  // Your code goes here
-  console.log("Colorizing");
-
-  colorize();
-  console.log("Colorized");
+ function colorizeCommandFunction(event: Office.AddinCommands.Event){
+  document.getElementById("colorizeButton").click();
   // Be sure to indicate when the add-in command function is complete
   event.completed();
 }
+/**
+ * Text To Speech command function
+ * @param event 
+ */
 function ttsCommandFunction(event: Office.AddinCommands.Event) {
   // Your code goes here
   console.log("TTS Working");
@@ -32,6 +31,10 @@ function ttsCommandFunction(event: Office.AddinCommands.Event) {
   // Be sure to indicate when the add-in command function is complete
   event.completed();
 }
+/**
+ * Documents Properties command function
+ * @param event 
+ */
 function docsPropsCommandFunction(event: Office.AddinCommands.Event) {
   // Your code goes here
   console.log("docsProps Working");
@@ -41,6 +44,10 @@ function docsPropsCommandFunction(event: Office.AddinCommands.Event) {
   // Be sure to indicate when the add-in command function is complete
   event.completed();
 }
+/**
+ * Scroll Down Command Function
+ * @param event 
+ */
 function scrollDownCommandFunction(event: Office.AddinCommands.Event) {
   // Your code goes here
   console.log("scrollDown Working");
@@ -50,7 +57,11 @@ function scrollDownCommandFunction(event: Office.AddinCommands.Event) {
   // Be sure to indicate when the add-in command function is complete
   event.completed();
 }
-function taoTrangInFunction(event: Office.AddinCommands.Event){
+/**
+ * Tạo trang in command function
+ * @param event 
+ */
+function taoTrangInCommandFunction(event: Office.AddinCommands.Event){
   document.getElementById("tachVaSum").click();
   event.completed();
 }
@@ -71,4 +82,4 @@ g.colorizeCommandFunction = colorizeCommandFunction;
 g.ttsCommandFunction = ttsCommandFunction;
 g.docsPropsCommandFunction = docsPropsCommandFunction;
 g.scrollDownCommandFunction = scrollDownCommandFunction;
-g.taoTrangInFunction = taoTrangInFunction;
+g.taoTrangInCommandFunction = taoTrangInCommandFunction;
